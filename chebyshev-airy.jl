@@ -6,7 +6,7 @@ xsub      = x[2:N]
 T         = cos(acos(x)*n);
 Tsub      = T[2:N,:]
 Usub      = diagm(1./sqrt(1-xsub.^2))*sin(acos(xsub)*n);
-dTsub     = Usub*diag(n);
+dTsub     = Usub*diagm(n);
 dT        = [-((-1).^n).*n.^2; dTsub; n.^2];
 # Second derivative of T(x) on extrema grid without endpoints
 d2Tsub    = diagm(1./(1-xsub.^2))*(diagm(xsub)*Usub-Tsub*diagm(n))*diagm(n);

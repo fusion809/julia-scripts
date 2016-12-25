@@ -2,9 +2,9 @@
 N         = 1000;
 n         = linspace(0,N,N+1)';
 x         = -1 + 2*n'/N;
-xsub      = x[2:N]
+xsub      = x[2:N];
 T         = cos(acos(x)*n);
-Tsub      = T[2:N,:]
+Tsub      = T[2:N,:];
 Usub      = diagm(1./sqrt(1-xsub.^2))*sin(acos(xsub)*n);
 dTsub     = Usub*diagm(n);
 dT        = [-((-1).^n).*n.^2; dTsub; n.^2];

@@ -1,4 +1,6 @@
+# This is largely copied from the ODE.jl repository
 using ODE;
+
 function f(t, r)
     # Extract the coordinates from the r vector
     (x, y, z) = r

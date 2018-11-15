@@ -26,7 +26,7 @@ const tf   = 1000.0
 t          = 0:dt:tf
 
 # Initial position in space
-const r0   = [pi; 0.0; -pi/2; 0.0]
+const r0   = [pi; 0.0; pi/2; 0.0]
 
 (t, pos)   = ode78(f, r0, t)
 x          = map(v -> v[1], pos)

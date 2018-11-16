@@ -37,14 +37,23 @@ figure(1)
 plot(x, dx);
 title("Phase plot");
 xlabel("x")
-ylabel("dx")
+ylabel(L"$\dot{x}$")
 
 figure(2)
 plot(t, x);
+title(L"$x$ vs $t$")
 xlabel("t")
 ylabel("x")
 
 figure(3)
 plot(t,dx);
+title(L"$\dot{x}$ vs $t$")
 xlabel("t")
-ylabel("dx")
+ylabel(L"$\dot{x}$")
+
+figure(4)
+plot3D(t,x,dx)
+title(L"Phase plot vs $t$")
+xlabel("t")
+ylabel("x")
+zlabel(L"$\dot{x}$")

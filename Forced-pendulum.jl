@@ -36,7 +36,7 @@ figure(1)
 plot(x, dx);
 title("Phase plot");
 xlabel("x")
-ylabel("dx")
+ylabel(L"$\frac{dx}{dt}$")
 
 figure(2)
 plot(t, x);
@@ -46,4 +46,10 @@ ylabel("x")
 figure(3)
 plot(t,dx);
 xlabel("t")
-ylabel("dx")
+ylabel(L"$\frac{dx}{dt}$")
+
+figure(4)
+plot3D(t,x,dx)
+xlabel("t")
+ylabel("x")
+zlabel(L"$\frac{dx}{dt}$")

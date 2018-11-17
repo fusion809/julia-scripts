@@ -1,3 +1,5 @@
+# This script solves the problem of the double pendulum, but does not plot it
+# It exists, in case I wish to try out other plotting methods than PyPlot
 using ODE;
 
 function f(t, r)
@@ -33,40 +35,3 @@ x          = map(v -> v[1], pos)
 dx         = map(v -> v[2], pos)
 y          = map(v -> v[3], pos)
 dy         = map(v -> v[4], pos);
-
-using PyPlot
-PyPlot.figure(1)
-PyPlot.plot(x, y)
-PyPlot.xlabel(L"$\theta_1$")
-PyPlot.ylabel(L"$\theta_2$")
-
-PyPlot.figure(2)
-PyPlot.plot(x, dx)
-PyPlot.xlabel(L"$\theta_1$")
-PyPlot.ylabel(L"$\dot{\theta_1}$")
-
-PyPlot.figure(3)
-PyPlot.plot(y, dy)
-PyPlot.xlabel(L"$\theta_2$")
-PyPlot.ylabel(L"$\dot{\theta_2}$")
-
-PyPlot.figure(4)
-PyPlot.plot(dx,dy)
-PyPlot.xlabel(L"$\dot{\theta_{1}}$")
-PyPlot.ylabel(L"$\dot{\theta_{2}}$")
-
-PyPlot.figure(5)
-PyPlot.plot(t, x)
-PyPlot.xlabel("t")
-PyPlot.ylabel(L"$\theta_1$")
-
-PyPlot.figure(6)
-PyPlot.plot(t, y)
-PyPlot.xlabel("t")
-PyPlot.ylabel(L"$\theta_2$")
-
-PyPlot.figure(7)
-PyPlot.plot3D(t, x, y)
-PyPlot.xlabel("t")
-PyPlot.ylabel("x")
-PyPlot.zlabel("y")

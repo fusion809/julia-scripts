@@ -1,2 +1,4 @@
 octave-workspace
 .*.swp
+*.svg
+*.png

@@ -2,6 +2,7 @@
 using ODE;
 
 function f(t, r)
+
     # Extract the coordinates from the r vector
     (x, y, z) = r
 
@@ -20,7 +21,7 @@ const tf = 100.0
 t = 0:dt:tf
 
 # Initial position in space
-const r0 = [0.1; 0.0; 0.0]
+const r0 = [-2.0; 3.0; 0.5]
 
 # Constants sigma, rho and beta
 const sigma = 10.0
@@ -33,15 +34,24 @@ y = map(v -> v[2], pos)
 z = map(v -> v[3], pos);
 
 using PyPlot
-plot3D(x, y, z);
 
-fig, ax = subplots(1, 3, sharex=true, sharey=true, figsize=(16,8))
-
-ax[1][:plot](x, y)
-ax[1][:set_title]("X-Y cut")
-
-ax[2][:plot](x, z)
-ax[2][:set_title]("X-Z cut")
-
-ax[3][:plot](y, z)
-ax[3][:set_title]("Y-Z cut");
+PyPlot.figure(1)
+PyPlot.plot3D(x, y, z);
+PyPlot.xlabel("x")
+PyPlot.ylabel("y")
+PyPlot.zlabel("z")
+PyPlot.figure(2)
+PyPlot.plot3D(t, x, y);
+PyPlot.xlabel("t")
+PyPlot.ylabel("x")
+PyPlot.zlabel("y")
+PyPlot.figure(3)
+PyPlot.plot3D(t, y, z);
+PyPlot.xlabel("t")
+PyPlot.ylabel("y")
+PyPlot.zlabel("z")
+PyPlot.figure(4)
+PyPlot.plot3D(t, x, z);
+PyPlot.xlabel("t")
+PyPlot.ylabel("x")
+PyPlot.zlabel("z")

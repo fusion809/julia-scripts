@@ -1,4 +1,9 @@
 # This is largely copied from the ODE.jl repository
+# Import package manager
+using Pkg;
+
+# Install and import ODE
+Pkg.add("ODE")
 using ODE;
 
 function f(t, r)
@@ -32,7 +37,10 @@ const omega = 1
 x = map(v -> v[1], pos)
 dx = map(v -> v[2], pos)
 
+# Get PyPlot and load it
+Pkg.add("PyPlot")
 using PyPlot
+
 figure(1)
 plot(x, dx);
 title("Phase plot");

@@ -1,5 +1,11 @@
 # My first Julia program
-using LinearAlgebra
+# Import package manager
+using Pkg;
+
+# Install and import ODE
+Pkg.add("LinearAlgebra")
+using LinearAlgebra;
+
 N         = 1000;
 a         = 0;
 b         = 10;

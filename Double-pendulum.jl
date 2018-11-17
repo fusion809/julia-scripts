@@ -1,4 +1,8 @@
-# This script solves the problem of the double pendulum
+# Import package manager
+using Pkg;
+
+# Install and import ODE
+Pkg.add("ODE")
 using ODE;
 
 function f(t, r)
@@ -41,7 +45,10 @@ y          = map(v -> v[3], pos)
 dy         = map(v -> v[4], pos);
 
 # Plot the data, against time and in phase space
+# Get PyPlot and load it
+Pkg.add("PyPlot")
 using PyPlot
+
 PyPlot.figure(1)
 PyPlot.plot(x, y)
 PyPlot.xlabel(L"$\theta_1$")

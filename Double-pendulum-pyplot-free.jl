@@ -1,5 +1,10 @@
 # This script solves the problem of the double pendulum, but does not plot it
 # It exists, in case I wish to try out other plotting methods than PyPlot
+# Import package manager
+using Pkg;
+
+# Install and import ODE
+Pkg.add("ODE")
 using ODE;
 
 function f(t, r)

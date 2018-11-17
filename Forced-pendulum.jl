@@ -1,4 +1,8 @@
-# This is largely copied from the ODE.jl repository
+# Import package manager
+using Pkg;
+
+# Install and import ODE
+Pkg.add("ODE")
 using ODE;
 
 function f(t, r)
@@ -31,25 +35,28 @@ const omega = 1
 x = map(v -> v[1], pos)
 dx = map(v -> v[2], pos)
 
+# Get PyPlot and load it
+Pkg.add("PyPlot")
 using PyPlot
-figure(1)
-plot(x, dx);
-title("Phase plot");
-xlabel("x")
-ylabel(L"$\frac{dx}{dt}$")
 
-figure(2)
-plot(t, x);
-xlabel("t")
-ylabel("x")
+PyPlot.figure(1)
+PyPlot.plot(x, dx);
+PyPlot.title("Phase plot");
+PyPlot.xlabel("x")
+PyPlot.ylabel(L"$\frac{dx}{dt}$")
 
-figure(3)
-plot(t,dx);
-xlabel("t")
-ylabel(L"$\frac{dx}{dt}$")
+PyPlot.figure(2)
+PyPlot.plot(t, x);
+PyPlot.xlabel("t")
+PyPlot.ylabel("x")
 
-figure(4)
-plot3D(t,x,dx)
-xlabel("t")
-ylabel("x")
-zlabel(L"$\frac{dx}{dt}$")
+PyPlot.figure(3)
+PyPlot.plot(t,dx);
+PyPlot.xlabel("t")
+PyPlot.ylabel(L"$\frac{dx}{dt}$")
+
+PyPlot.figure(4)
+PyPlot.plot3D(t,x,dx)
+PyPlot.xlabel("t")
+PyPlot.ylabel("x")
+PyPlot.zlabel(L"$\frac{dx}{dt}$")

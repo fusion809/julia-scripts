@@ -40,3 +40,5 @@ H         = -4/((b-a)^2) * E2 + k * Diagonal(ysub);
 EIG       = eigen(H);
 Y         = EIG.vectors;
 Lam       = EIG.values;
+
+Pkg.a

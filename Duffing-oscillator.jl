@@ -41,27 +41,27 @@ dx = map(v -> v[2], pos)
 Pkg.add("PyPlot")
 using PyPlot
 
-figure(1)
-plot(x, dx);
-title("Phase plot");
-xlabel("x")
-ylabel(L"$\dot{x}$")
+PyPlot.figure(1)
+PyPlot.plot(x, dx);
+PyPlot.title("Phase plot");
+PyPlot.xlabel("x")
+PyPlot.ylabel(L"$\dot{x}$")
 
-figure(2)
-plot(t, x);
-title(L"$x$ vs $t$")
-xlabel("t")
-ylabel("x")
+PyPlot.figure(2)
+PyPlot.plot(t, x);
+PyPlot.title(L"$x$ vs $t$")
+PyPlot.xlabel("t")
+PyPlot.ylabel("x")
 
-figure(3)
-plot(t,dx);
-title(L"$\dot{x}$ vs $t$")
-xlabel("t")
-ylabel(L"$\dot{x}$")
+PyPlot.figure(3)
+PyPlot.plot(t,dx);
+PyPlot.title(L"$\dot{x}$ vs $t$")
+PyPlot.xlabel("t")
+PyPlot.ylabel(L"$\dot{x}$")
 
-figure(4)
+PyPlot.figure(4)
 plot3D(t,x,dx)
-title(L"Phase plot vs $t$")
-xlabel("t")
-ylabel("x")
+PyPlot.title(L"Phase plot vs $t$")
+PyPlot.xlabel("t")
+PyPlot.ylabel("x")
 zlabel(L"$\dot{x}$")

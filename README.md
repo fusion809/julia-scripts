@@ -1,10 +1,10 @@
 # Julia scripts
 
-My Julia scripts used for numerical computation. I like [chaotic systems](https://en.wikipedia.org/wiki/Chaos_theory) and [Sturm-Liouville problems](https://en.wikipedia.org/wiki/Sturm%E2%80%93Liouville_theory) the most, so they are the main ones I solve in it.
+My Julia scripts used for numerical computation. I like [chaotic systems][1] and [Sturm-Liouville problems][2] the most, so they are the main ones I solve in it.
 
-## [Double pendulum](Double-pendulum.jl)
+## [Double pendulum][3]
 
-This script, as per its name, solves the problem of the double pendulum. Its differential function is largely copied from https://viewer.mathworks.com/?viewer=plain_code&url=https%3A%2F%2Fau.mathworks.com%2Fmatlabcentral%2Fmlc-downloads%2Fdownloads%2Fsubmissions%2F27212%2Fversions%2F2%2Fcontents%2Fdouble_pendulum_ODE.m&embed=web (largely to save me a lot of time converting what equations I had from the Euler-Lagrange equations into a problem I could plug into ode78) therefore that segment of the script (which has been significantly modified to the point I don't think it even meets the threshold of originality to need this license) may fall under this license:
+This script, as per its name, solves the problem of the double pendulum. Its differential function is largely copied from [here][4] (largely to save me a lot of time converting what equations I had from the Euler-Lagrange equations into a problem I could plug into ode78) therefore that segment of the script (which has been significantly modified to the point I don't think it even meets the threshold of originality to need this license) may fall under this license:
 
 > Copyright (c) 2010, Alexander Erlich
 > All rights reserved.
@@ -29,20 +29,31 @@ This script, as per its name, solves the problem of the double pendulum. Its dif
 >OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 >OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-![Figure 1](https://fusion809.github.io/images/Graphs/Double-pendulum/Figure%201:%20theta2%20vs%20theta1.svg)
+![Figure 1][5]
 **Figure 1 (as of commit d43a31d97ec05ff896dc6246f742f8309c184a9e)**
 
-![Figure 2](https://fusion809.github.io/images/Graphs/Double-pendulum/Figure%202:%20dtheta1%20vs%20theta1.svg)
+![Figure 2][6]
 **Figure 2 (as of commit d43a31d97ec05ff896dc6246f742f8309c184a9e)**
 
-![Figure 3](https://fusion809.github.io/images/Graphs/Double-pendulum/Figure%203:%20dtheta2%20vs%20theta2.svg)
+![Figure 3][7]
 **Figure 3 (as of commit d43a31d97ec05ff896dc6246f742f8309c184a9e)**
 
-![Figure 4](https://fusion809.github.io/images/Graphs/Double-pendulum/Figure%204:%20dtheta2%20vs%20dtheta1.svg)
+![Figure 4][8]
 **Figure 4 (as of commit d43a31d97ec05ff896dc6246f742f8309c184a9e)**
 
-![Figure 5](https://fusion809.github.io/images/Graphs/Double-pendulum/Figure%205:%20theta1%20vs%20t.svg)
+![Figure 5][9]
 **Figure 5 (as of commit d43a31d97ec05ff896dc6246f742f8309c184a9e)**
 
-![Figure 6](https://fusion809.github.io/images/Graphs/Double-pendulum/Figure%206:%20theta2%20vs%20t.svg)
+![Figure 6][10]
 **Figure 6 (as of commit d43a31d97ec05ff896dc6246f742f8309c184a9e)**
+
+[1]: https://en.wikipedia.org/wiki/Chaos_theory
+[2]: https://en.wikipedia.org/wiki/Sturm%E2%80%93Liouville_theory
+[3]: Double-pendulum.jl
+[4]: https://viewer.mathworks.com/?viewer=plain_code&url=https%3A%2F%2Fau.mathworks.com%2Fmatlabcentral%2Fmlc-downloads%2Fdownloads%2Fsubmissions%2F27212%2Fversions%2F2%2Fcontents%2Fdouble_pendulum_ODE.m&embed=web
+[5]: https://fusion809.github.io/images/Graphs/Double-pendulum/Figure%201:%20theta2%20vs%20theta1.svg
+[6]: https://fusion809.github.io/images/Graphs/Double-pendulum/Figure%202:%20dtheta1%20vs%20theta1.svg
+[7]: https://fusion809.github.io/images/Graphs/Double-pendulum/Figure%203:%20dtheta2%20vs%20theta2.svg
+[8]: https://fusion809.github.io/images/Graphs/Double-pendulum/Figure%204:%20dtheta2%20vs%20dtheta1.svg
+[9]: https://fusion809.github.io/images/Graphs/Double-pendulum/Figure%205:%20theta1%20vs%20t.svg
+[10]: https://fusion809.github.io/images/Graphs/Double-pendulum/Figure%206:%20theta2%20vs%20t.svg

@@ -40,6 +40,7 @@ TT   = cos.(acos.(xx)*n');
 yy   = TT*a ;
 # Error
 diff = abs.(airyai.(pxx)-yy);
+err  = sqrt(diff'*diff);
 # Plot interpolated y
 PyPlot.figure(1)
 PyPlot.plot(pxx,yy)

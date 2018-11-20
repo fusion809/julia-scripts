@@ -45,3 +45,8 @@ x          = map(v -> v[1], pos)
 dx         = map(v -> v[2], pos)
 y          = map(v -> v[3], pos)
 dy         = map(v -> v[4], pos);
+
+# Plots produces non-interative plots, unlike PyPlot
+Pkg.add("Plots")
+using Plots;
+plot(x,y)

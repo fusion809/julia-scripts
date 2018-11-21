@@ -29,8 +29,8 @@ const l1    = 1     # Length of pendulum 1 in metres
 const l2    = 1     # Length of pendulum 2 in metres
 
 # Define time vector and interval grid
-const dt    = 0.001   # Time increments
-const tf    = 1000.0  # Time at which the simulation ends
+const dt    = 0.001    # Time increments
+const tf    = 10.0     # Time at which the simulation ends
 # A column vector containing discrete, dt-spaced, time values between 0 and tf
 t           = 0:dt:tf
 
@@ -39,14 +39,27 @@ const r0    = [pi; 0.0; pi/2; 0.0]
 
 # Solve the equations
 (t, pos)    = ode78(f, r0, t)
+# N cannot be defined before ode78, as it redefines it
+N           = length(t)
 
 # Map pos values to x, dx, y and dy
 x           = map(v -> v[1], pos)
+xf          = x[end];
 dx          = map(v -> v[2], pos)
+dxf         = dx[end];
 y           = map(v -> v[3], pos)
+yf          = y[end];
 dy          = map(v -> v[4], pos);
-
+dyf         = dy[end];
+L           = "$tf $xf $dxf $yf $dyf"
 # Plots produces non-interative plots, unlike PyPlot
 Pkg.add("Plots")
 using Plots;
 plot(x,y)
+
+# Write t, x, dx, y and dy to a file
+A           = hcat(t, x, dx, y, dy);
+Af          = A[N,:];
+open("/data/GitHub/mine/scripts/julia-scripts/Double-pendulum-dt-$dt-tf-$tf.txt", "w") do file
+	write(file, "$Af");
+end

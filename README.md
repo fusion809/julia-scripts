@@ -2,6 +2,8 @@
 
 My Julia scripts used for numerical computation. I like [chaotic systems][1] and [Sturm-Liouville problems][2] the most, so they are the main ones I solve in it.
 
+To (hopefully) install all dependencies required for the scripts in this repository, and for turning Atom and VSCode into suitable IDEs run [all-deps.jl](all-deps.jl) in Julia. 
+
 ## [Double pendulum][3]
 
 This script, as per its name, solves the problem of the double pendulum. Its differential function is largely copied from [here][4] (largely to save me a lot of time converting what equations I had from the Euler-Lagrange equations into a problem I could plug into ode78) therefore that segment of the script (which has been significantly modified to the point I don't think it even meets the threshold of originality to need this license) may fall under this license:

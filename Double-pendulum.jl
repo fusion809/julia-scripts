@@ -10,13 +10,13 @@ function f(t, r)
 	(x, dx, y, dy) = r
 
 	# The double pendulum equations
-	dx_dt  = dx
-	d2x_dt = - ((g * (2 * m1 + m2) * sin(x) + m2 * (g * sin(x-2*y) + 2*(l2 * (dy^2) + l1 * (dx^2) * cos(x-y)) * sin(x-y)))/(2 *l1 * (m1 + m2 - m2 * cos(x-y)^2)))
-	dy_dt  = dy
-	d2y_dt = (((m1 + m2) * (l1 * (dx^2) + g * cos(x)) + l2*m2*(dy^2)*cos(x-y)) * sin(x-y)) / (l2 * (m1 + m2 - m2 * cos(x-y)^2));
+	dx_dt   = dx
+	d2x_dt2 = - ((g * (2 * m1 + m2) * sin(x) + m2 * (g * sin(x-2*y) + 2*(l2 * (dy^2) + l1 * (dx^2) * cos(x-y)) * sin(x-y)))/(2 *l1 * (m1 + m2 - m2 * cos(x-y)^2)))
+	dy_dt   = dy
+	d2y_dt2 = (((m1 + m2) * (l1 * (dx^2) + g * cos(x)) + l2*m2*(dy^2)*cos(x-y)) * sin(x-y)) / (l2 * (m1 + m2 - m2 * cos(x-y)^2));
 
 	# Return the derivatives as a vector
-	[dx_dt; d2x_dt; dy_dt; d2y_dt]
+	[dx_dt; d2x_dt2; dy_dt; d2y_dt2]
 end;
 
 # Constants, I do like that I do not have to parse them manually to ode78

@@ -23,8 +23,9 @@ const g     = 9.8   # Acceleration due to gravity in m/s^2
 const l     = 1     # Length of pendulum 1 in metres
 
 # Define time vector and interval grid
-const dt    = 1e-5       # Time increments
-const tf    = 1e2        # Time at which the simulation ends
+const dt    = 1e-6       # Time increments
+const tf    = 1e1        # Time at which the simulation ends, at 1e2 and 
+# dt=1e-6 RAM usage gets >/~16 GB
 # A column vector containing discrete, dt-spaced, time values between 0 and tf
 t           = 0:dt:tf
 
@@ -65,7 +66,7 @@ PyPlot.zlabel(L"$\dot{\theta}$")
 
 # Write t, x, dx, y and dy to a file
 A           = hcat(t, x, dx);
-#Af          = A[N,:];
+#Af         = A[N,:];
 open("/data/GitHub/mine/scripts/julia-scripts/Simple-pendulum-dt-$dt-tf-$tf.txt", "w") do file
 	write(file, "$A");
 end

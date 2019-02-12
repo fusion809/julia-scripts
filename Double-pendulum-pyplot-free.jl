@@ -59,6 +59,6 @@ plot(x,y)
 # Write t, x, dx, y and dy to a file
 A           = hcat(t, x, dx, y, dy);
 #Af          = A[N,:];
-open("/data/GitHub/mine/scripts/julia-scripts/Double-pendulum-dt-$dt-tf-$tf.txt", "w") do file
+open("/data/GitHub/mine/math/julia-scripts/Double-pendulum-dt-$dt-tf-$tf.txt", "w") do file
 	write(file, "$A");
 end

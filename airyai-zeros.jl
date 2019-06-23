@@ -1,4 +1,4 @@
-using SpecialFunctions
+using SpecialFunctions;
 tol = 1.25e-16
 x = -4.5;
 

@@ -64,4 +64,4 @@ View [airy-sle-problem-explanation.pdf][12] for a technical explanation of the p
 [9]: https://fusion809.github.io/images/Graphs/Double-pendulum/Figure%205:%20theta1%20vs%20t.svg
 [10]: https://fusion809.github.io/images/Graphs/Double-pendulum/Figure%206:%20theta2%20vs%20t.svg
 [11]: airy-sle-rat.jl
-[12]: airy-sle-problem-expalantion.pdf
+[12]: airy-sle-problem-explanation.pdf

@@ -24,7 +24,7 @@
   method. If <math|t<rsub|m>> comprises points on the Chebyshev extrema grid,
   that is:
 
-  <math|t<rsub|m>=-cos<around*|(|<frac|\<pi\>m|N>|)>>,<space|2em><math|n\<in\><around*|[|0,1,2,\<ldots\>,N|]>>
+  <math|t<rsub|m>=-cos<around*|(|<frac|\<pi\>m|N>|)>>,<space|2em><math|m\<in\><around*|[|0,1,2,\<ldots\>,N|]>>
 
   then:
 

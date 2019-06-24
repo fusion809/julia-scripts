@@ -2,6 +2,5 @@ octave-workspace
 .*.swp
 *.svg
 *.png
-*.pdf
 *.txt
 .ipynb_checkpoints

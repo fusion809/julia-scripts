@@ -1,0 +1,40 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb}
+
+%%%%%%%%%% Start TeXmacs macros
+\newcommand{\tmmathbf}[1]{\ensuremath{\boldsymbol{#1}}}
+\newcommand{\tmop}[1]{\ensuremath{\operatorname{#1}}}
+\newcommand{\tmtextmd}[1]{{\mdseries{#1}}}
+%%%%%%%%%% End TeXmacs macros
+
+\begin{document}
+
+$- \frac{\mathbf{d}^2 y_n \swell{}}{\mathit{\mathbf{d}}
+\text{\tmtextmd{\ensuremath{\tmmathbf{x}}}}^2} +\tmmathbf{x}y_n = \lambda_n
+y_n$
+
+on $0 \leqslant x \leqslant \infty$, with $y (0) = y (\infty) = 0$.
+
+To this equation the solution is:
+
+$y_n = C_1 \tmop{Ai} (x + \lambda_n)$
+
+Where $C_1$ is an arbitrary constant, and $\lambda_n$ are the zeros of the
+Airy function, $\tmop{Ai} (x)$, on the negative x axis (e.g. $\lambda_1
+\approx - 2.338$).
+
+To numerically integrate this solution let us use a Chebyshev spectral
+method. If $t_m$ comprises points on the Chebyshev extrema grid, that is:
+
+$t_m = - \cos \left( \frac{\pi m}{N} \right)$, \qquad$n \in [0, 1, 2, \ldots,
+N]$
+
+then:
+
+$x_m = L \left( \frac{1 + t_m}{1 - t_m} \right)$
+
+This is a rational transformation from the Chebyshev extrema grid to the
+semi-infinite domain.
+
+\end{document}

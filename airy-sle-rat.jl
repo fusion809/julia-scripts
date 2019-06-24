@@ -18,6 +18,7 @@ N         = 10000;
 maxindex  = Int(3*N/5);
 prec      = 0.27;
 Nfrag     = Int(N*prec);
+# N=10,000
 # At L=300; eigerrrms=4.56e-8 at prec=0.27
 # At L=320; eigerrrms=1.73e-9 at prec=0.27
 # At L=330; eigerrrms=4.82e-10 at prec=0.27
@@ -27,7 +28,8 @@ Nfrag     = Int(N*prec);
 # At L=370, prec=0.27 eigerrrms=1.06e-10
 # @ L=365, prec=0.27, eigerrrms=7.89e-11
 # @ L=366, prec=0.27, eigerrrms=6.70e-11
-L         = 367;
+# @ L=367, prec=0.27, eigerrrms=1.05e-10
+L         = 366;
 k         = 1;
 # Column vector of integers from 0 to N
 n         = 0:1:N;

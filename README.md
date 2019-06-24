@@ -2,7 +2,7 @@
 
 My Julia scripts used for numerical computation. I like [chaotic systems][1] and [Sturm-Liouville problems][2] the most, so they are the main ones I solve in it.
 
-To (hopefully) install all dependencies required for the scripts in this repository, and for turning Atom and VSCode into suitable IDEs run [all-deps.jl](all-deps.jl) in Julia. 
+To (hopefully) install all dependencies required for the scripts in this repository, and for turning Atom and VSCode into suitable IDEs run [all-deps.jl](all-deps.jl) in Julia.
 
 ## [Double pendulum][3]
 
@@ -49,6 +49,10 @@ This script, as per its name, solves the problem of the double pendulum. Its dif
 ![Figure 6][10]
 **Figure 6 (as of commit d43a31d97ec05ff896dc6246f742f8309c184a9e)**
 
+## [Airy Sturm-Liouville problem solved using rational transformation of Chebyshev extrema grid to [0,∞]][11]
+
+View [airy-sle-problem-explanation.pdf][12] for a technical explanation of the problem and the method of numerically solving it.
+
 [1]: https://en.wikipedia.org/wiki/Chaos_theory
 [2]: https://en.wikipedia.org/wiki/Sturm%E2%80%93Liouville_theory
 [3]: Double-pendulum.jl
@@ -59,3 +63,5 @@ This script, as per its name, solves the problem of the double pendulum. Its dif
 [8]: https://fusion809.github.io/images/Graphs/Double-pendulum/Figure%204:%20dtheta2%20vs%20dtheta1.svg
 [9]: https://fusion809.github.io/images/Graphs/Double-pendulum/Figure%205:%20theta1%20vs%20t.svg
 [10]: https://fusion809.github.io/images/Graphs/Double-pendulum/Figure%206:%20theta2%20vs%20t.svg
+[11]: airy-sle-rat.jl
+[12]: airy-sle-problem-expalantion.pdf

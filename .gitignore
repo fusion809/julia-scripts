@@ -4,3 +4,5 @@ octave-workspace
 *.png
 *.txt
 .ipynb_checkpoints
+*.gz
+*.log

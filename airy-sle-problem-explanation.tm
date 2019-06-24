@@ -32,6 +32,8 @@
     x<rsub|m>=L<around*|(|<frac|1+t<rsub|m>|1-t<rsub|m>>|)>
   </math>
 
+  .
+
   This is a rational transformation from the Chebyshev extrema grid to the
   semi-infinite domain.\ 
 </body>

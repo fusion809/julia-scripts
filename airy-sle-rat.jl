@@ -15,6 +15,7 @@ Pkg.add("PyPlot")
 using PyPlot;
 
 N         = 10000;
+# Maximum index in ysub and the corresponding solution vector to be displayed in plot (as displaying the entire vectors makes it impossible to see any real details).
 maxindex  = Int(3*N/5);
 prec      = 0.27;
 Nfrag     = Int(N*prec);

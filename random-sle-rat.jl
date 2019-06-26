@@ -48,6 +48,8 @@ EIG       = eigen(H);
 Y         = EIG.vectors;
 Lam       = EIG.values;
 Y         = Y[:, sortperm(Lam, rev=true)];
+Y         = [zeros(1,N-1); Y; zeros(1,N-1)];
+DY        = D1*Y;
 Lam       = sort(Lam, rev=true);
 Lamexact  = -4*n[1:Nfrag].-3;
 Lamerr    = abs.(Lam[1:Nfrag]-Lamexact);

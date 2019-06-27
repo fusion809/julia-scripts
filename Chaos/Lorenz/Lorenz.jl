@@ -44,42 +44,42 @@ using PyPlot;
 #Pkg.add("Iterators")
 #using Plots
 
-#PyPlot.figure(1)
-#PyPlot.plot3D(x, y, z);
-#PyPlot.xlabel("x")
-#PyPlot.ylabel("y")
-#PyPlot.zlabel("z")
+PyPlot.figure(1)
+PyPlot.plot3D(x, y, z);
+PyPlot.xlabel("x")
+PyPlot.ylabel("y")
+PyPlot.zlabel("z")
 
-#PyPlot.figure(2)
-#PyPlot.plot3D(t, x, y);
-#PyPlot.xlabel("t")
-#PyPlot.ylabel("x")
-#PyPlot.zlabel("y")
+PyPlot.figure(2)
+PyPlot.plot3D(t, x, y);
+PyPlot.xlabel("t")
+PyPlot.ylabel("x")
+PyPlot.zlabel("y")
 
-#PyPlot.figure(3)
-#PyPlot.plot3D(t, y, z);
-#PyPlot.xlabel("t")
-#PyPlot.ylabel("y")
-#PyPlot.zlabel("z")
+PyPlot.figure(3)
+PyPlot.plot3D(t, y, z);
+PyPlot.xlabel("t")
+PyPlot.ylabel("y")
+PyPlot.zlabel("z")
 
-#PyPlot.figure(4)
-#PyPlot.plot3D(t, x, z);
-#PyPlot.xlabel("t")
-#PyPlot.ylabel("x")
-#PyPlot.zlabel("z")
+PyPlot.figure(4)
+PyPlot.plot3D(t, x, z);
+PyPlot.xlabel("t")
+PyPlot.ylabel("x")
+PyPlot.zlabel("z")
 
-#fig, ax = subplots(1, 3, sharex=true, sharey=true, figsize=(16,8))
+fig, ax = subplots(1, 3, sharex=true, sharey=true, figsize=(16,8))
 
-#ax[1][:plot](x, y)
-#ax[1][:set_title]("X-Y cut")
+ax[1][:plot](x, y)
+ax[1][:set_title]("X-Y cut")
 
-#ax[2][:plot](x, z)
-#ax[2][:set_title]("X-Z cut")
+ax[2][:plot](x, z)
+ax[2][:set_title]("X-Z cut")
 
-#ax[3][:plot](y, z)
-#ax[3][:set_title]("Y-Z cut");
+ax[3][:plot](y, z)
+ax[3][:set_title]("Y-Z cut");
 
-anim = @animate for i=1:length(t)
-    plot3D(x[i],y[i],z[i])
-end
-gif(anim, "/tmp/anim_fps15.gif", fps = 15)
+#anim = @animate for i=1:length(t)
+#    plot3D(x[i],y[i],z[i])
+#end
+#gif(anim, "/tmp/anim_fps15.gif", fps = 15)

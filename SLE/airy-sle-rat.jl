@@ -62,12 +62,20 @@ Lam       = sort(Lam);
 eigerr    = abs.(airyai.(-Lam[1:Nfrag]));
 eigerrrms = sqrt(eigerr'*eigerr/(Nfrag));
 Y         = [zeros(1,N-1); Y; zeros(1,N-1)];
-D1IY2     = D1\(Y.^2);
-IntY2     = abs.(D1IY2[N+1,:]-D1IY2[1,:]);
-normcoef  = (IntY2).^(-0.5);
-Y         = Y*Diagonal(normcoef);
-
+D1IY2     = D1\(Y.^2); # Integral of Y
+Y         = Y*Diagonal((abs.(D1IY2[N+1,:]-D1IY2[1,:])).^(-0.5));
+Yexact    = zeros(maxindex,Int(N/5));
+errrms    = zeros(maxindex,1);
+err       = zeros(maxindex,Int(N/5));
+Ymaxindex = Y[1:maxindex,:];
+for i in 1:1:1296
+    Yexact[:,i] = airyai.(y[1:maxindex].-Lam[i])/abs(airyaiprime(-Lam[i]));
+    err[:,i]=abs.(abs.(Yexact[:,i])-abs.(Ymaxindex[:,i]));
+    errrms[i,1]=sqrt(err[:,i]'*err[:,i]/maxindex);
+end
 PyPlot.figure(1)
-PyPlot.plot(ysub[1:maxindex],Y[1:maxindex,20])
+PyPlot.plot(y[1:maxindex],Y[1:maxindex,20])
 PyPlot.figure(2)
 PyPlot.semilogy(eigerr)
+PyPlot.figure(3)
+PyPlot.plot(y[1:maxindex],Yexact[:,20])

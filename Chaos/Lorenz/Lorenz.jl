@@ -21,7 +21,7 @@ end;
 
 # Define time vector and interval grid
 const dt = 0.001
-const tf = 2e2
+const tf = 1e2
 t = 0:dt:tf
 
 # Initial position in space

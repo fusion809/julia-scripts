@@ -11,10 +11,9 @@ function f(t, r)
 	(x, y, z) = r
 
 	# The Lorenz equations
-	f = c*x + 0.5*(d-c)*(abs(x+1)-abs(x-1))
-    dx_dt = alpha*(y-x-f)
-	dy_dt = (x - y + z)
-	dz_dt = -beta*y
+    dx_dt = y - a*x.^3 + b*x.^2 - z + I
+	dy_dt = c - d*x.^3 - y
+	dz_dt = r*(s*(x-xr)-z)
 
 	# Return the derivatives as a vector
 	[dx_dt; dy_dt; dz_dt]
@@ -29,10 +28,14 @@ t = 0:dt:tf
 const r0 = [0.7; 0.0; 0.0]
 
 # Constants sigma, rho and beta
-const alpha = 15.6;
-const beta = 28.0;
-const c = -0.714;
-const d = -1.143;
+const a  = 1.0;
+const b  = 3.0;
+const c  = 1.0;
+const d  = 5.0;
+const r  = 1e-3;
+const s  = 4.0;
+const xr = -1.6;
+const I  = -10.0;
 
 (t, pos) = ode78(f, r0, t)
 x = map(v -> v[1], pos)

@@ -10,7 +10,7 @@ function f(t, r)
 	# Extract the coordinates from the r vector
 	(x, y, z) = r
 
-	# The Lorenz equations
+	# The Chua equations
 	f = c*x + 0.5*(d-c)*(abs(x+1)-abs(x-1))
     dx_dt = alpha*(y-x-f)
 	dy_dt = (x - y + z)

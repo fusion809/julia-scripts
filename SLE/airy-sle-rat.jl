@@ -10,6 +10,9 @@ using LinearAlgebra;
 Pkg.add("SpecialFunctions")
 using SpecialFunctions;
 
+Pkg.add("PyCall")
+using PyCall;
+pygui(:qt)
 # Install and import PyPlot
 Pkg.add("PyPlot")
 using PyPlot;
@@ -28,9 +31,11 @@ Nfrag     = Int(N*prec);
 # At L=360, prec=0.27 eigerrrms=8.49e-11
 # At L=370, prec=0.27 eigerrrms=1.06e-10
 # @ L=365, prec=0.27, eigerrrms=7.89e-11
+# @ L=365.9, prec=0.27, eigerrms=8.517802623658321e-11
 # @ L=366, prec=0.27, eigerrrms=6.70e-11
+# @ L=366.1, prec=0.27, eigerrrms=1.0010701888393075e-10
 # @ L=367, prec=0.27, eigerrrms=1.05e-10
-L         = 366;
+L         = 365.99;
 k         = 1;
 # Column vector of integers from 0 to N
 n         = 0:1:N;
@@ -40,10 +45,9 @@ x         = cos.(t);
 xsub      = x[2:N];
 y         = L*((cot.(t./2)).^2);
 ysub      = y[2:N];
-T         = cos.(acos.(x)*n');
+T         = cos.(t*n');
 Tsub      = T[2:N,:];
-sqx       = -((xsub.^2).-1);
-Usub      = Diagonal(((sqx).^(-0.5)))*sin.(acos.(xsub)*n');
+Usub      = Diagonal(((-((xsub.^2).-1)).^(-0.5)))*sin.(t*n');
 dTsub     = Usub * Diagonal(n);
 dT        = [(-((-1).^n).*n.^2)'; dTsub; (n.^2)'];
 dT        = Diagonal(2*L./(((y.+L).^2)))*dT;
@@ -73,6 +77,7 @@ for i in 1:1:1296
     err[:,i]=abs.(abs.(Yexact[:,i])-abs.(Ymaxindex[:,i]));
     errrms[i,1]=sqrt(err[:,i]'*err[:,i]/maxindex);
 end
+@printf(eigerrrms)
 PyPlot.figure(1)
 PyPlot.plot(y[1:maxindex],Y[1:maxindex,20])
 PyPlot.figure(2)

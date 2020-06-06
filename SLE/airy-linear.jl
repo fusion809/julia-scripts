@@ -119,12 +119,14 @@ rms_of_eigenvalue_error = sqrt(eigenvalue_error'*eigenvalue_error/Nfrag);
 print("RMS of eigenvalue error is ", rms_of_eigenvalue_error, "\n")
 
 # Plots
-# Plot of 20th eigenfunction
 PyPlot.figure(1)
-PyPlot.plot(y[1:1001],eigenfunction_approx[1:1001,20])
-# Semilog plot of eigenvalue errors
+PyPlot.plot(y[1:501],eigenfunction_approx[1:501,1])
+# Plot of 20th eigenfunction
 PyPlot.figure(2)
+PyPlot.plot(y[1:1301],eigenfunction_approx[1:1301,20])
+# Semilog plot of eigenvalue errors
+PyPlot.figure(3)
 PyPlot.semilogy(eigenvalue_error)
 # Semilog plot of root mean square of eigenfunction errors
-plt.figure(3)
+PyPlot.figure(4)
 PyPlot.semilogy(rms_of_eigenfunction_error)

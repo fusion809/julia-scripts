@@ -1,9 +1,5 @@
 using PyPlot
 
-# Clear all variables
-clear all()
-# Show numbers in a long; yet intuitive form
-format long g
 # Number of collocation points
 N         = 1000
 NN        = 100000

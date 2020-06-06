@@ -104,20 +104,20 @@ Lam       = sort(Lam, by=abs);
 # Calculate more precise values of the eigenvalues
 # We know from the analytical solution that the exact eigenvalues
 # are the zeros of the function Ai(-x).
-Lamex = Lam[1:Nfrag];
-for i in 1:1:Nfrag
-    Ai=1;
+function f(xinput)
+    Ai = airyai(-xinput);
+    xoutput = xinput;
     while abs(Ai) > 1e-12
-        Ai = airy(-Lamex[i]);
-        Aip = airyprime(-Lamex[i]);
-        Lamex[i] = Lamex[i] + Ai/Aip;
+        Ai = airyai(-xoutput);
+        Aip = airyaiprime(-xoutput);
+        xoutput = xoutput + Ai/Aip;
     end
+    Ai = nothing;
+    Aip = nothing;
+    return xoutput
 end
-Ai     = nothing;
-Aip    = nothing;
-Lamerr = abs.((Lam[1:Nfrag]-Lamex)./Lamex);
-Lamerrrms = sqrt(Lamerr'*Lamerr/Nfrag);
 
+Lamex     = Lam[1:Nfrag];
 Y         = [zeros(1,N-1); Y; zeros(1,N-1)];
 D1IY2     = D1\(Y.^2); # Integral of Y
 D1        = nothing;
@@ -127,10 +127,14 @@ Yexact    = zeros(maxindex,Nfrag);
 errrms    = zeros(Nfrag,1);
 err       = zeros(maxindex,Nfrag);
 for i in 1:1:Nfrag
+    Lamex[i] = f(Lamex[i]);
     Yexact[:,i] = airyai.(y[1:maxindex].-Lamex[i])/abs(airyaiprime(-Lamex[i]));
     err[:,i]=abs.(abs.(Yexact[:,i])-abs.(Y[1:maxindex,i]));
     errrms[i,1]=sqrt(err[:,i]'*err[:,i]/maxindex);
 end
+
+Lamerr = abs.((Lam[1:Nfrag]-Lamex)./Lamex);
+Lamerrrms = sqrt(Lamerr'*Lamerr/Nfrag);
 
 print("Lamerrrms is ", Lamerrrms)
 PyPlot.figure(1)

@@ -18,41 +18,41 @@ using SpecialFunctions;
 Pkg.add("PyPlot");
 using PyPlot;
 
-N         = 10000;
+N                       = 10000;
 # The number of eigenvalues and eigenvectors we're computing
-Nfrag     = 5360;
+Nfrag                   = 5361;
 # Our truncated integration domain is [a,b]
-a         = 0;
-b         = 870;
+a                       = 0;
+b                       = 870;
 # The coefficient in -d2y/dx2 + kxy = lambda y
-k         = 1;
+k                       = 1;
 # Column vector of integers from 0 to N
-n         = 0:1:N;
+n                       = 0:1:N;
 # Chebyshev extrema grid
-t         = pi*(-n/N.+1);
-x         = cos.(t);
-ysub      = (b-a)/2*x[2:N].+(a+b)/2;
-y         = [a; ysub; b];
-T         = cos.(t*n');
+t                       = pi*(-n/N.+1);
+x                       = cos.(t);
+ysub                    = (b-a)/2*x[2:N].+(a+b)/2;
+y                       = [a; ysub; b];
+T                       = cos.(t*n');
 # T'_n(x_m)
-dT        = [(-((-1).^n).*n.^2)'; Diagonal(((-((x[2:N].^2).-1)).^(-0.5)))*sin.(t[2:N]*n')*Diagonal(n); (n.^2)'];
+dT                      = [(-((-1).^n).*n.^2)'; Diagonal(((-((x[2:N].^2).-1)).^(-0.5)))*sin.(t[2:N]*n')*Diagonal(n); (n.^2)'];
 # Calculate first order differentiation matrix
-D1        = dT/T;
+D1                      = dT/T;
 # Clearing x as it's unused henceforth
-x         = nothing;
+x                       = nothing;
 # Second order differentiation matrix
-D2        = D1*D1;
-D1        = nothing;
+D2                      = D1*D1;
+D1                      = nothing;
 # Second-order differentiation matrix for extrema grid without endpoints
-E2        = D2[2:N,2:N];
+E2                      = D2[2:N,2:N];
 # Clearing D2
-D2        = nothing;
+D2                      = nothing;
 # Hy = lambda y is our problem
-H         = -4/((b-a)^2) * E2 + k * Diagonal(ysub);
+H                       = -4/((b-a)^2) * E2 + k * Diagonal(ysub);
 # Clearing ysub; unused in the rest of the script
-ysub      = nothing;
+ysub                    = nothing;
 # Clearing E2
-E2        = nothing;
+E2                      = nothing;
 # Eigenfunctions and eigenvalues for the operator H
 EIG                     = eigen(H);
 # Clear H to free up RAM
@@ -113,14 +113,14 @@ eigenfunction_error     = nothing;
 # Error in the Chebyshev approximation of the eigenvalues
 eigenvalue_error        = abs.((eigenvalue_approx[1:Nfrag]-eigenvalue_exact)./eigenvalue_exact);
 # Calculate root mean square of eigenvalue relative error
-rms_of_eigenvalue_error = sqrt(eigenvalue_error'*eigenvalue_error/Nfrag);
+rms_of_eigenvalue_error = sqrt(eigenvalue_error'*eigenvalue_error/(Nfrag));
 
 # Print this root mean square error in eigenvalues
 print("RMS of eigenvalue error is ", rms_of_eigenvalue_error, "\n")
 
 # Plots
 PyPlot.figure(1)
-PyPlot.plot(y[1:501],eigenfunction_approx[1:501,1])
+PyPlot.plot(y[1:801],eigenfunction_approx[1:801,1])
 # Plot of 20th eigenfunction
 PyPlot.figure(2)
 PyPlot.plot(y[1:1301],eigenfunction_approx[1:1301,20])
@@ -129,4 +129,5 @@ PyPlot.figure(3)
 PyPlot.semilogy(eigenvalue_error)
 # Semilog plot of root mean square of eigenfunction errors
 PyPlot.figure(4)
+PyPlot.xlim((1,Nfrag))
 PyPlot.semilogy(rms_of_eigenfunction_error)

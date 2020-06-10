@@ -1,7 +1,9 @@
 octave-workspace
 .*.swp
 *.svg
-*.png
+Chebyshev*/*.png
+Chaos/*.png
+Chaos/*/*.png
 *.txt
 .ipynb_checkpoints
 *.gz

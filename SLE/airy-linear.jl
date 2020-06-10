@@ -128,22 +128,22 @@ PyPlot.figure(1)
 PyPlot.xlim((y[1],y[801]))
 PyPlot.plot(y[1:801],eigenfunction_approx[1:801,1])
 PyPlot.title(latexstring("Plot of the ", L"1^\mathrm{st}", " eigenfunction, corresponding to ", L"\lambda = ", 
-@sprintf("%.10f", eigenvalue_approx[1])))
+@sprintf("%.10g", eigenvalue_approx[1])))
 PyPlot.figure(2)
 PyPlot.xlim((y[1],y[1201]))
 PyPlot.plot(y[1:1201],eigenfunction_approx[1:1201,10])
 PyPlot.title(latexstring("Plot of the ", L"10^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ", 
-@sprintf("%.10f", eigenvalue_approx[10])))
+@sprintf("%.10g", eigenvalue_approx[10])))
 PyPlot.figure(3)
 PyPlot.xlim((y[1],y[2501]))
 PyPlot.plot(y[1:2501],eigenfunction_approx[1:2501,100])
 PyPlot.title(latexstring("Plot of the ", L"100^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ", 
-@sprintf("%.10f", eigenvalue_approx[100])))
+@sprintf("%.10g", eigenvalue_approx[100])))
 PyPlot.figure(4)
 PyPlot.xlim((y[1],y[2501]))
 PyPlot.plot(y[1:2501],eigenfunction_approx[1:2501,200])
 PyPlot.title(latexstring("Plot of the ", L"200^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ", 
-@sprintf("%.10f", eigenvalue_approx[200])))
+@sprintf("%.10g", eigenvalue_approx[200])))
 # Semilog plot of eigenvalue errors
 PyPlot.figure(5)
 PyPlot.xlim((1,Nfrag))

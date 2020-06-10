@@ -33,13 +33,13 @@ k                       = 1.0;
 # Column vector of integers from 0 to N
 n                       = 0:1:N;
 # Chebyshev extrema grid
-t                       = pi*(-n/N.+1);
+t                       = pi*(-n/N.+1.0);
 x                       = cos.(t);
 ysub                    = (b-a)/2*x[2:N].+(a+b)/2;
 y                       = [a; ysub; b];
 T                       = cos.(t*n');
 # T'_n(x_m)
-dT                      = [(-((-1).^n).*n.^2)'; Diagonal(((-((x[2:N].^2).-1)).^(-0.5)))*sin.(t[2:N]*n')*Diagonal(n); (n.^2)'];
+dT                      = [(-((-1.0).^n).*n.^2)'; Diagonal(((-((x[2:N].^2).-1)).^(-0.5)))*sin.(t[2:N]*n')*Diagonal(n); (n.^2)'];
 # Calculate first order differentiation matrix
 D1                      = dT/T;
 # Clearing x as it's unused henceforth

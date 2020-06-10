@@ -123,6 +123,7 @@ rms_of_eigenvalue_error = sqrt(eigenvalue_error'*eigenvalue_error/(Nfrag));
 print("RMS of eigenvalue error is ", rms_of_eigenvalue_error, "\n")
 
 # Plots
+# Eigenfunction plots
 PyPlot.figure(1)
 PyPlot.xlim((y[1],y[801]))
 PyPlot.plot(y[1:801],eigenfunction_approx[1:801,1])

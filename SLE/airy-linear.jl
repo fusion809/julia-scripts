@@ -1,6 +1,6 @@
 # Approximate the solution to the problem
 # -d2y/dx2 + kxy = lambda y
-# using Chebyshev spectral methods with a linear 
+# using Chebyshev spectral methods with a linear
 # transformation from the Chebyshev extrema grid
 
 # Import package manager
@@ -17,15 +17,19 @@ using SpecialFunctions;
 # Matplotlib plotting function
 Pkg.add("PyPlot");
 using PyPlot;
+pygui(true)
+
+# Shouldn't need installing, but needed for useful plot annotations
+using Printf;
 
 N                       = 10000;
 # The number of eigenvalues and eigenvectors we're computing
 Nfrag                   = 5361;
 # Our truncated integration domain is [a,b]
-a                       = 0;
-b                       = 870;
+a                       = 0.0;
+b                       = 870.0;
 # The coefficient in -d2y/dx2 + kxy = lambda y
-k                       = 1;
+k                       = 1.0;
 # Column vector of integers from 0 to N
 n                       = 0:1:N;
 # Chebyshev extrema grid
@@ -120,14 +124,34 @@ print("RMS of eigenvalue error is ", rms_of_eigenvalue_error, "\n")
 
 # Plots
 PyPlot.figure(1)
+PyPlot.xlim((y[1],y[801]))
 PyPlot.plot(y[1:801],eigenfunction_approx[1:801,1])
-# Plot of 20th eigenfunction
+PyPlot.title(latexstring("Plot of the ", L"1^\mathrm{st}", " eigenfunction, corresponding to ", L"\lambda = ", 
+@sprintf("%.10f", eigenvalue_approx[1])))
 PyPlot.figure(2)
-PyPlot.plot(y[1:1301],eigenfunction_approx[1:1301,20])
-# Semilog plot of eigenvalue errors
+PyPlot.xlim((y[1],y[1201]))
+PyPlot.plot(y[1:1201],eigenfunction_approx[1:1201,10])
+PyPlot.title(latexstring("Plot of the ", L"10^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ", 
+@sprintf("%.10f", eigenvalue_approx[10])))
 PyPlot.figure(3)
-PyPlot.semilogy(eigenvalue_error)
-# Semilog plot of root mean square of eigenfunction errors
+PyPlot.xlim((y[1],y[2501]))
+PyPlot.plot(y[1:2501],eigenfunction_approx[1:2501,100])
+PyPlot.title(latexstring("Plot of the ", L"100^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ", 
+@sprintf("%.10f", eigenvalue_approx[100])))
 PyPlot.figure(4)
+PyPlot.xlim((y[1],y[2501]))
+PyPlot.plot(y[1:2501],eigenfunction_approx[1:2501,200])
+PyPlot.title(latexstring("Plot of the ", L"200^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ", 
+@sprintf("%.10f", eigenvalue_approx[200])))
+# Semilog plot of eigenvalue errors
+PyPlot.figure(5)
+PyPlot.xlim((1,Nfrag))
+PyPlot.semilogy(eigenvalue_error)
+PyPlot.title("Semilog plot of eigenvalue errors")
+# Semilog plot of root mean square of eigenfunction errors
+PyPlot.figure(6)
+# The following line is required, as otherwise
+# x from 0 to 10,000 is shown.
 PyPlot.xlim((1,Nfrag))
 PyPlot.semilogy(rms_of_eigenfunction_error)
+PyPlot.title("Semilog plot of the root mean square of eigenfunction error")

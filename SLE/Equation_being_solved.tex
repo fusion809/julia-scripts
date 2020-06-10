@@ -1,0 +1,46 @@
+\documentclass[12pt,a4paper,openright]{article}
+\usepackage{gensymb}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{sansmath}
+\usepackage{pst-eucl}
+\usepackage{float}
+\usepackage[numbered,framed]{matlab-prettifier}
+\usepackage[T1]{fontenc}
+\usepackage{setspace}
+\usepackage{sectsty}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=black,bookmarksopen=true]{hyperref}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1.5}
+
+\begin{document}
+	In scripts within this directory that start with \texttt{airy-}, Chebyshev spectral methods are used to numerically approximate the solution to the Sturm-Liouville problem (where $\lambda$ is an eigenvalue):
+
+	\[
+	- \dfrac{d^2 y}{dx^2} + xy = \lambda y, \hspace{0.1cm}\mathrm{on} \hspace{0.1cm} x\in[0,\infty].
+	\]
+
+	With the boundary conditions $y(0)=y(\infty)=0$. Both such scripts use the Chebyshev extrema grid that has been transformed to an approximation of the semi-infinite domain. 
+
+	\texttt{airy-linear.jl} uses a linear transformation of this grid to approximate the semi-infinite domain. The transformed domain goes from 0 to 870.
+	
+	\texttt{airy-rat.jl} uses a rational transformation of this grid to approximate the semi-infinite domain, with $L=366$ and the transformation:
+	
+	\[
+	x = L \left(\dfrac{1+x'}{1-x'}\right)
+	\]
+
+	where $x'$ is the variable of the Chebyshev extrema grid and $x$ is the variable of the transformed grid. I should clarify, however, that in \texttt{airy-rat.jl} the variable of the transformed grid is represented as $ y $ and the extrema grid is represented as $ x $. 
+	
+	The analytical solutions to this problem are:
+
+	\[
+	y_n(x) = a_n \mathrm{Ai}(x-\lambda_n)
+	\]
+
+	where the eigenvalues, $\lambda_n$, are the negative of the zeros of the Airy $\mathrm{Ai}(x)$ function and $a_n$ are arbitrary constants.
+
+	Out of the two methods, the linear transformation yields the most accurate eigenvalues with almost 5,400 possible with $b~870$ and $N=10000$, whilst the rational transformation yields at best ~2,700 accurate eigenvalues with the same $N$ value (which is achieved at $L=366$). 
+\end{document}

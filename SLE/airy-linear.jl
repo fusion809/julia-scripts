@@ -102,10 +102,10 @@ for i in 1:1:Nfrag
     # Refine eigenvalue approximations using Newton's method
     eigenvalue_exact[i]             = newtons(eigenvalue_exact[i]);
     # An eigenfunction approximation that uses the analytical solution
-    eigenfunction_exact[:,i]        = airyai.(y.-eigenvalue_exact[i])/abs(airyaiprime(-eigenvalue_exact[i]));
+    eigenfunction_exact[:,i]        = airyai.(y.-eigenvalue_exact[i])
     # Our Chebyshev-approximated eigenfunctions may be off from our
-    # analytical ones by a constant multiplier.
-    eigenfunction_approx[:,i]       = eigenfunction_exact[2,i]/eigenfunction_approx[2,i]*eigenfunction_approx[:,i];
+    # analytical ones by a constant multiplier, so let's scale it
+    eigenfunction_approx[:,i]       = (sign(eigenfunction_exact[2,i])/sign(eigenfunction_approx[2,i]))*(findmax(abs.(eigenfunction_exact[:,i]))[1]/findmax(abs.(eigenfunction_approx[:,i]))[1])*eigenfunction_approx[:,i];
     # Relative error in eigenfunctions (absolute error/
     # max of exact eigenfunction)
     eigenfunction_error[:,i]        = abs.(eigenfunction_exact[:,i]-eigenfunction_approx[:,i])./findmax(eigenfunction_exact[:,i])[1];
@@ -123,36 +123,40 @@ rms_of_eigenvalue_error = sqrt(eigenvalue_error'*eigenvalue_error/(Nfrag));
 print("RMS of eigenvalue error is ", rms_of_eigenvalue_error, "\n")
 
 # Plots
-# Eigenfunction plots
-PyPlot.figure(1)
-PyPlot.xlim((y[1],y[801]))
-PyPlot.plot(y[1:801],eigenfunction_approx[1:801,1])
-PyPlot.title(latexstring("Plot of the ", L"1^\mathrm{st}", " eigenfunction, corresponding to ", L"\lambda = ", 
-@sprintf("%.10g", eigenvalue_approx[1])))
-PyPlot.figure(2)
-PyPlot.xlim((y[1],y[1201]))
-PyPlot.plot(y[1:1201],eigenfunction_approx[1:1201,10])
-PyPlot.title(latexstring("Plot of the ", L"10^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ", 
-@sprintf("%.10g", eigenvalue_approx[10])))
-PyPlot.figure(3)
-PyPlot.xlim((y[1],y[2501]))
-PyPlot.plot(y[1:2501],eigenfunction_approx[1:2501,100])
-PyPlot.title(latexstring("Plot of the ", L"100^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ", 
-@sprintf("%.10g", eigenvalue_approx[100])))
-PyPlot.figure(4)
-PyPlot.xlim((y[1],y[2501]))
-PyPlot.plot(y[1:2501],eigenfunction_approx[1:2501,200])
-PyPlot.title(latexstring("Plot of the ", L"200^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ", 
-@sprintf("%.10g", eigenvalue_approx[200])))
-# Semilog plot of eigenvalue errors
-PyPlot.figure(5)
-PyPlot.xlim((1,Nfrag))
-PyPlot.semilogy(eigenvalue_error)
-PyPlot.title("Semilog plot of eigenvalue errors")
-# Semilog plot of root mean square of eigenfunction errors
-PyPlot.figure(6)
-# The following line is required, as otherwise
-# x from 0 to 10,000 is shown.
-PyPlot.xlim((1,Nfrag))
-PyPlot.semilogy(rms_of_eigenfunction_error)
-PyPlot.title("Semilog plot of the root mean square of eigenfunction error")
+function eigenplots()
+    # Eigenfunction plots
+    PyPlot.figure(1)
+    PyPlot.xlim((y[1],y[801]))
+    PyPlot.plot(y[1:801],eigenfunction_approx[1:801,1])
+    PyPlot.title(latexstring("Plot of the ", L"1^\mathrm{st}", " eigenfunction, corresponding to ", L"\lambda = ", 
+    @sprintf("%.10g", eigenvalue_approx[1])))
+    PyPlot.figure(2)
+    PyPlot.xlim((y[1],y[1201]))
+    PyPlot.plot(y[1:1201],eigenfunction_approx[1:1201,10])
+    PyPlot.title(latexstring("Plot of the ", L"10^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ", 
+    @sprintf("%.10g", eigenvalue_approx[10])))
+    PyPlot.figure(3)
+    PyPlot.xlim((y[1],y[2501]))
+    PyPlot.plot(y[1:2501],eigenfunction_approx[1:2501,100])
+    PyPlot.title(latexstring("Plot of the ", L"100^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ", 
+    @sprintf("%.10g", eigenvalue_approx[100])))
+    PyPlot.figure(4)
+    PyPlot.xlim((y[1],y[2501]))
+    PyPlot.plot(y[1:2501],eigenfunction_approx[1:2501,200])
+    PyPlot.title(latexstring("Plot of the ", L"200^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ", 
+    @sprintf("%.10g", eigenvalue_approx[200])))
+    # Semilog plot of eigenvalue errors
+    PyPlot.figure(5)
+    PyPlot.xlim((1,Nfrag))
+    PyPlot.semilogy(eigenvalue_error)
+    PyPlot.title("Semilog plot of eigenvalue errors")
+    # Semilog plot of root mean square of eigenfunction errors
+    PyPlot.figure(6)
+    # The following line is required, as otherwise
+    # x from 0 to 10,000 is shown.
+    PyPlot.xlim((1,Nfrag))
+    PyPlot.semilogy(rms_of_eigenfunction_error)
+    PyPlot.title("Semilog plot of the root mean square of eigenfunction error")
+end
+
+eigenplots()

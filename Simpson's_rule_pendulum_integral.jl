@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 # This script essentially finds the time taken for a
 # simple pendulum that starts with zero velocity at the 
 # positive x-axis to reach the negative x-axis (theta=-pi)

@@ -16,8 +16,11 @@ using SpecialFunctions;
 
 # Matplotlib plotting function
 Pkg.add("PyPlot");
-using PyPlot;
+Pkg.add("PyCall");
+using PyCall;
 pygui(true)
+pygui(:qt5)
+using PyPlot;
 
 # Shouldn't need installing, but needed for useful plot annotations
 using Printf;
@@ -40,7 +43,7 @@ x                       = cos.(t);
 y                       = (b-a)/2*x.+(a+b)/2;
 # Clearing x as it's unused henceforth
 x                       = nothing;
-# T_{mn} = T_n(x_m), where T_n is the Chebyshev polynomial of 
+# T_{mn} = T_n(x_m), where T_n is the Chebyshev polynomial of
 # the first kind, and x_m are points on the Chebyshev extrema grid
 T                       = cos.(t*n');
 # T'_n(x_m) = nU_{n-1}(x_m), m=1,2,3,...,N-1
@@ -143,25 +146,25 @@ function eigenplots()
     PyPlot.clf()
     PyPlot.xlim((y[1],y[801]))
     PyPlot.plot(y[1:801],eigenfunction_approx[1:801,1])
-    PyPlot.title(latexstring("Plot of the ", L"1^\mathrm{st}", " eigenfunction, corresponding to ", L"\lambda = ", 
+    PyPlot.title(latexstring("Plot of the ", L"1^\mathrm{st}", " eigenfunction, corresponding to ", L"\lambda = ",
     @sprintf("%.10g", eigenvalue_approx[1])))
     PyPlot.figure(2)
     PyPlot.clf()
     PyPlot.xlim((y[1],y[1201]))
     PyPlot.plot(y[1:1201],eigenfunction_approx[1:1201,10])
-    PyPlot.title(latexstring("Plot of the ", L"10^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ", 
+    PyPlot.title(latexstring("Plot of the ", L"10^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ",
     @sprintf("%.10g", eigenvalue_approx[10])))
     PyPlot.figure(3)
     PyPlot.clf()
     PyPlot.xlim((y[1],y[2501]))
     PyPlot.plot(y[1:2501],eigenfunction_approx[1:2501,100])
-    PyPlot.title(latexstring("Plot of the ", L"100^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ", 
+    PyPlot.title(latexstring("Plot of the ", L"100^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ",
     @sprintf("%.10g", eigenvalue_approx[100])))
     PyPlot.figure(4)
     PyPlot.clf()
     PyPlot.xlim((y[1],y[2501]))
     PyPlot.plot(y[1:2501],eigenfunction_approx[1:2501,200])
-    PyPlot.title(latexstring("Plot of the ", L"200^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ", 
+    PyPlot.title(latexstring("Plot of the ", L"200^\mathrm{th}", " eigenfunction, corresponding to ", L"\lambda = ",
     @sprintf("%.10g", eigenvalue_approx[200])))
     # Semilog plot of eigenvalue errors
     PyPlot.figure(5)
@@ -180,4 +183,4 @@ function eigenplots()
 end
 
 # Commented out, as plots are no longer needed
-#eigenplots()
+eigenplots()

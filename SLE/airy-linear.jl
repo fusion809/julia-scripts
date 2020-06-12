@@ -17,9 +17,8 @@ using SpecialFunctions;
 # Matplotlib plotting function
 Pkg.add("PyPlot");
 Pkg.add("PyCall");
-using PyCall;
-pygui(true)
 using PyPlot;
+pygui(true)
 
 # Shouldn't need installing, but needed for useful plot annotations
 using Printf;

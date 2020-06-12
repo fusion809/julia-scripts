@@ -15,7 +15,7 @@ Pkg.add("SpecialFunctions")
 using SpecialFunctions;
 
 # Matplotlib plotting function
-Pkg.add("PyPlot");
+Pkg.add("PyPlot")
 using PyPlot;
 pygui(true)
 

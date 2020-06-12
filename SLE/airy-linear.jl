@@ -16,7 +16,6 @@ using SpecialFunctions;
 
 # Matplotlib plotting function
 Pkg.add("PyPlot");
-Pkg.add("PyCall");
 using PyPlot;
 pygui(true)
 
@@ -38,7 +37,7 @@ n                       = 0:1:N;
 t                       = pi*(-n/N.+1.0);
 x                       = cos.(t);
 # Our transformed domain variable
-y                       = (b-a)/2*x.+(a+b)/2;
+y                       = (b-a)/2.0*x.+(a+b)/2.0;
 # Clearing x as it's unused henceforth
 x                       = nothing;
 # T_{mn} = T_n(x_m), where T_n is the Chebyshev polynomial of
@@ -59,7 +58,7 @@ E2                      = D2[2:N,2:N];
 # Clearing D2
 D2                      = nothing;
 # Hy = lambda y is our problem
-H                       = -4/((b-a)^2) * E2 + k * Diagonal(y[2:N]);
+H                       = -4.0/((b-a)^2) * E2 + k * Diagonal(y[2:N]);
 # Clearing E2
 E2                      = nothing;
 # Eigenfunctions and eigenvalues for the operator H

@@ -19,7 +19,6 @@ Pkg.add("PyPlot");
 Pkg.add("PyCall");
 using PyCall;
 pygui(true)
-pygui(:qt5)
 using PyPlot;
 
 # Shouldn't need installing, but needed for useful plot annotations

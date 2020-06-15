@@ -10,7 +10,7 @@ b                       = 10.0;
 # Column vector of integers from 1 to N
 n                       = 1:1:N;
 # Chebyshev-Gauss grid
-tt                      = pi*((2*n.-1)/(2*N));
+tt                      = pi*((2.0*n.-1.0)/(2.0*N));
 x                       = cos.(tt);
 # Our transformed domain variable
 t                       = (b-a)/2.0*x.+(a+b)/2.0;
@@ -23,11 +23,11 @@ tt                      = nothing;
 n                       = nothing;
 t                       = nothing;
 # Chebyshev-Gauss quadrature approximation
-Chebyshev_approx        = ((b-a)*pi)/(2*N)*sum(integrand);
+Chebyshev_approx        = ((b-a)*pi)/(2.0*N)*sum(integrand);
 # Free up RAM by clearing integrand
 integrand               = nothing;
 # Analytical solution to this problem
-exact                   = sqrt(pi)/2;
+exact                   = sqrt(pi)/2.0;
 # Error in our quadrature approximation of the integral
 error                   = abs(Chebyshev_approx-exact);
 

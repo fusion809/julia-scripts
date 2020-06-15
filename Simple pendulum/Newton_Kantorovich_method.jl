@@ -26,7 +26,7 @@ using LinearAlgebra;
 # N+1 is the number of points on our extrema grid
 N                            = 100;
 # NN iterations are used when applying the Newton-Kantorovich method
-NN                           = 10;
+NN                           = 4;
 # Acceleration due to gravity in metres per second squared
 g                            = 9.8;
 # length of the pendulum in metres
@@ -94,7 +94,7 @@ for i=1:1:NN
 end
 
 # NNN+1 is how many points are in our linear grid
-NNN                          = 10000;
+NNN                          = 100000;
 # Basis function coefficients
 a                            = T\theta[:,NN+1];
 # Our linear grid we're using to get less pixelated plots

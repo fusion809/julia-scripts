@@ -1,5 +1,8 @@
 # This approximates
 # \int_0^\infty e^{-t^2} dt
+# (chosen as it is known it rapidly converges, hence 
+# approximation using quadrature should be relatively
+# easy).
 # Using Chebyshev-Gauss quadrature
 
 # Number of steps, excluding starting point

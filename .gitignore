@@ -8,3 +8,7 @@ Chaos/*/*.png
 .ipynb_checkpoints
 *.gz
 *.log
+*.out
+*.aux
+*.fls
+*.fdb_latexmk

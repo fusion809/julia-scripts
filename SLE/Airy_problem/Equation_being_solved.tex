@@ -24,9 +24,9 @@
 
 	With the boundary conditions $y(0)=y(\infty)=0$. Both such scripts use the Chebyshev extrema grid that has been transformed to an approximation of the semi-infinite domain. 
 
-	\texttt{airy-linear.jl} uses a linear transformation of this grid to approximate the semi-infinite domain. The transformed domain goes from 0 to 870.
+	\texttt{Linear\_transformation.jl} uses a linear transformation of this grid to approximate the semi-infinite domain. The transformed domain goes from 0 to 870.
 	
-	\texttt{airy-rat.jl} uses a rational transformation of this grid to approximate the semi-infinite domain, with $L=366$ and the transformation:
+	\texttt{Rational\_transformation.jl} uses a rational transformation of this grid to approximate the semi-infinite domain, with $L=366$ and the transformation:
 	
 	\[
 	x = L \left(\dfrac{1+x'}{1-x'}\right)

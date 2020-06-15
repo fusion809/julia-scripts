@@ -1,4 +1,4 @@
-# b has to be relatively small, as with higher b the result gets very inaccurate, likely due to how much our intgrand oscillates
+# b has to be relatively small, as with higher b the result gets very inaccurate, likely due to how much our integrand oscillates
 # Import package manager
 using Pkg;
 
@@ -19,12 +19,12 @@ b                       = 100.0;
 y                       = 1.0;
 # Column vector of integers from 1 to N
 n                       = 1:1:N;
-# Chebyshev extrema grid
+# Chebyshev-Gauss grid
 tt                      = pi*((2*n.-1)/(2*N));
 x                       = cos.(tt);
 # Our transformed domain variable
 t                       = (b-a)/2.0*x.+(a+b)/2.0;
-integrandish            = sin.(tt).*cos.((t.^3)/3.0+y*t);
-Ai_Chebyshev_approx     = ((b-a))/(2*N)*sum(integrandish);
+integrand               = sin.(tt).*cos.((t.^3)/3.0+y*t);
+Ai_Chebyshev_approx     = ((b-a))/(2*N)*sum(integrand);
 Ai_exact                = airyai(y);
 error                   = abs(Ai_Chebyshev_approx-Ai_exact);

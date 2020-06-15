@@ -1,4 +1,11 @@
 using PyPlot
+using QuadGK
+using LinearAlgebra
+using SpecialFunctions
+
+function gsimp(x)
+    return airyai.(x).*exp.(-x).*log.(x.+1)
+end
 
 # Number of collocation points
 N         = 1000
@@ -8,6 +15,7 @@ xx0       = 0
 xxf       = 50
 # Vector
 n         = 0:N
+t         = pi*(-n/N.+1);
 # Extrema grid()
 x         = -cos(pi*n'/N)
 # Transformation to [xx0, xxf]
@@ -21,7 +29,7 @@ T         = cos(acos(x)*n)
 # Now for arrays that do not include the endpoints
 xsub      = x[2:N]
 Tsub      = T[2:N,:]
-Usub      = diag(1./sqrt(1-xsub.^2))*sin(acos(xsub)*n)
+Usub      = Diagonal(sin.(t[2:N]))*sin(t[2:N]*n)
 dTsub     = Usub*diag(n)
 # Add the endpoints
 dT        = [-(n.^2).*(-1).^(n) dTsub  [n].^2]'
@@ -53,8 +61,7 @@ dylin     = Tlin*dya
 # y approximated by quadratic integration function
 #yquad     = quad("g", 0, inf)
 # y solved from ODE
-lsode_options["absolute tolerance", 1e-18]
-yode      = lsode["g", 0, xtranslin]
+yode      = quadgk(x -> gsimp(x), 0, Inf);
 # error in approximation
 #errquad   = abs(yexact[end]-yquad)
 diffodech = abs(yode-ylin)

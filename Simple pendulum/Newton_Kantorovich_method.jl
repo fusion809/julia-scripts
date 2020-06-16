@@ -4,9 +4,9 @@
 # theta(0) = theta dot (0) = 0
 # Our first guess is theta = pi/2*(cos(2*pi*t/T)+1)
 # Then we iteratively solve the linear ODE:
-# delta_i double dot - g/l sin(theta_i) delta_i = -(theta_i double dot + 
+# delta_i double dot - g/l sin(theta_i) delta_i = -(theta_i double dot +
 # g/l*cos(theta_i))
-# delta_i(0) = delta_i dot(0) = 0 
+# delta_i(0) = delta_i dot(0) = 0
 # theta_(i+1) = theta_i + delta_i
 # for i=1,2,3,...,NN
 using Pkg;
@@ -88,9 +88,6 @@ for i=1:1:NN
     negative_residue[N+1,i]        = 0;
     # Adding our delta to theta[:,i] to get our new theta (theta[:,i+1]) values
     theta[:,i+1]                   = theta[:,i]+differential_operator\negative_residue[:,i];
-    if i==NN
-        negative_residue[:,i+1]    = (-(D2*theta[:,i+1]+g/l*(cos.(theta[:,i+1]))));
-    end
 end
 
 # NNN+1 is how many points are in our linear grid
@@ -108,9 +105,9 @@ theta_linear_grid            = T_linear_grid*a;
 # How much our iteration has improved our initial estimate of theta
 correction                   = abs.(theta[:,NN+1]-theta[:,1]);
 rms_correction               = sqrt(correction'*correction/(N+1));
-# Substitute our values of theta on the extrema grid into the 
+# Substitute our values of theta on the extrema grid into the
 # original equation and find the residue
-residual                     = -negative_residue;
+residual                     = D2*theta+g/l*(cos.(theta));
 rms_residual                 = zeros(NN+1,1);
 # Root mean square of these values
 for i=1:NN+1
@@ -118,7 +115,9 @@ for i=1:NN+1
 end
 
 # Plots
+# Enable separate graph windows
 pygui(true)
+# Compare our first guess of theta with our final solution
 fig, (ax1, ax2) = plt.subplots(2)
 ax1.plot(t,theta[:,1])
 ax2.plot(transformed_linear_grid,theta_linear_grid)
@@ -134,3 +133,6 @@ ax2.plot(transformed_linear_grid,theta_linear_grid)
 figure(5)
 clf()
 semilogy(rms_residual)
+xlabel(L"$i$ in $\theta_i$")
+ylabel("RMS (residual)")
+title("Semilog plot of the root mean square of the residual")

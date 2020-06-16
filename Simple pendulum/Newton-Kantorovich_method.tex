@@ -37,13 +37,11 @@
 	\begin{align*}
 	\theta(t=0) = \dot{\theta}(t=0) = 0.
 	\end{align*}
-	In other words, the pendulum bob starts at the positive $x$ axis with zero velocity and moves solely under the influence of gravity. If we imagine a pendulum subject to these conditions, it becomes clear that theta will range from $-\pi$ (the bob being right on the negative $x$-axis) to $0$. If we wish to determine the period of $\theta$ (i.e. the value of $\chi$ such that $\theta(t+\chi) = \theta(t) \hspace{0.1cm}\forall t$), we must set $\theta_0=0$, $\theta_1 = -\pi$ and multiply our final result by two (as our result will only reflect how long it takes to go from the positive $x$ axis to the negative $x$ axis, not how long it will take to make the return trip)
-
+	In other words, the pendulum bob starts at the positive $x$ axis with zero velocity and moves solely under the influence of gravity. If we imagine a pendulum subject to these conditions, it becomes clear that theta will range from $-\pi$ (the bob being right on the negative $x$-axis) to $0$. If we wish to determine the period of $\theta$ (i.e. the value of $\chi$ such that $\theta(t+\chi) = \theta(t) \hspace{0.1cm}\forall t$), we must set $\theta_0=0$, $\theta_1 = -\pi$ and multiply our final result by two (as our result will only reflect how long it takes to go from the positive $x$ axis to the negative $x$ axis, not how long it will take to make the return trip). Namely:
 	\begin{align*}
 	\chi &= - 2\int_{0}^{-\pi} \dfrac{d\theta}{\sqrt{- \dfrac{2g}{l} \sin{\theta}}} \\
 	  &= 2\int_{-\pi}^{0} \dfrac{d\theta}{\sqrt{- \dfrac{2g}{l} \sin{\theta}}}.
 	\end{align*}
-
 	Above we chose the negative on the $\pm$ sign because otherwise we will get a negative value for $t$, and we are choosing to keep time positive. It is impossible to solve this integral analytically and use it to express $\theta$ in terms of $t$, therefore we are reduced to using numerical methods to approximate $\theta$. The three numerical methods used in this directory are:
 
 	\begin{itemize}
@@ -53,10 +51,25 @@
 	\end{itemize}
 
 	Out of these, only the Newton-Kantorovich method likely needs further explanation. To linearize the problem, we used $\theta_{i+1} = \theta_{i} + \Delta_i$, where ${\theta}_i$ is our ith approximation of $\theta$ and $\Delta_i$ is our ith correction to $\theta$. Substuting $\theta_{i+1}$ into our original equation yields:
-
 	\begin{align*}
 		\ddot{\theta}_i + \ddot{\Delta}_i &= -\dfrac{g}{l} \cos{(\theta_i+\Delta_i)} \\
 		&\approx -\dfrac{g}{l} \left(\cos{\theta_i} - \sin{\theta_i} \Delta_i\right) \\
-		\therefore \hspace{0.1cm} \ddot{\Delta}_i - \dfrac{g}{l} \sin{\theta_i} \Delta_i &= -\ddot{\theta}_i - \dfrac{g}{l} \cos{\theta_i}
 	\end{align*}
+
+	Rearranging we get the following linear ordinary differential equation for $\Delta_i$:
+	\[
+	\ddot{\Delta}_i - \dfrac{g}{l} \sin{\theta_i} \Delta_i = -\ddot{\theta}_i - \dfrac{g}{l} \cos{\theta_i}
+	\]
+	where $\Delta_i(0) = \dot{\Delta}_i(0) = 0$. Alternatively, $\Delta_i$'s initial conditions can be expressed in terms of the initial values of $\theta_i$, such as:
+	\begin{align*}
+		\Delta_i(0) &= -\theta_i(0) \\
+		\dot{\Delta}_i(0) &= -\dot{\theta}_i(0).
+	\end{align*}
+	which can be useful if the matrices are ill-conditioned and the initial values start to markedly deviate from what they are supposed to as a result. Naturally, as is the case with Newton's method for approximating the solution to a nonlinear algebraic equation, one needs an initial guess as to the solution in order to apply the Newton-Kantorovich method. As we know the solution will be periodic, have a minimum of $\theta = -\pi$ and a maximum of $\theta = 0$, we can use the following as our first guess:
+
+	\[
+	\theta_0 = \dfrac{\pi}{2} \left(\cos{\left(\dfrac{2\pi t}{\chi}\right)}-1\right).
+	\]
+
+	With this first guess, our initial conditions are met (as $\theta_0(t=0)=0$ and $\dot{\theta}_0(t=0)=0$), our solution is periodic with a period of $\chi$, and at $t=\dfrac{\chi}{2}$, $\theta_0 = -\pi$, which is what we would also expect from our solution.
 \end{document}

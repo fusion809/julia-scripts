@@ -56,6 +56,13 @@ end
 error_theta_min = abs(findmin(theta)[1]+pi);
 error_dtheta_min = abs(findmin(dtheta)[1] + sqrt(2*g/l));
 
+# We know from integrating our original equation with
+# respect to theta that:
+# \dot{\theta} = \pm \sqrt{-2g/l \sin{\theta}}
+# this simply calculates the difference between our
+# RK4 calculated theta dot and this analytical
+# expression for it based on our RK4-calculated
+# theta values.
 residual_dtheta = abs.(abs.(dtheta)-abs.(sqrt.(abs.(2*g/l*sin.(theta)))));
 rms_residual_dtheta = sqrt(residual_dtheta'*residual_dtheta/(N+1))[1];
 

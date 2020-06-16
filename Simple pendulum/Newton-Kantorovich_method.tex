@@ -27,28 +27,36 @@
 		\implies C &= \dot{\theta}_0^2 \\
 		\therefore \hspace{0.1cm} \dot{\theta} &= \pm \sqrt{\dot{\theta}_0^2 - \dfrac{2g}{l} \sin{\theta}}
 	\end{align*}
-	
+
 	where $\dot{\theta}_0$ is $\dot{\theta}$ when $\sin{\theta} = 0$ (therefore $\theta =n\pi$ where $n\in\mathbb{Z}$). $t$ can therefore be computed as:
 	\begin{align*}
 	t = \pm \int_{\theta_0}^{\theta_1} \dfrac{d\theta}{\sqrt{\dot{\theta}_0^2 - \dfrac{2g}{l} \sin{\theta}}}.
 	\end{align*}
-	
+
 	In this repository, the initial conditions are:
 	\begin{align*}
 	\theta(t=0) = \dot{\theta}(t=0) = 0.
 	\end{align*}
 	In other words, the pendulum bob starts at the positive $x$ axis with zero velocity and moves solely under the influence of gravity. If we imagine a pendulum subject to these conditions, it becomes clear that theta will range from $-\pi$ (the bob being right on the negative $x$-axis) to $0$. If we wish to determine the period of $\theta$ (i.e. the value of $\chi$ such that $\theta(t+\chi) = \theta(t) \hspace{0.1cm}\forall t$), we must set $\theta_0=0$, $\theta_1 = -\pi$ and multiply our final result by two (as our result will only reflect how long it takes to go from the positive $x$ axis to the negative $x$ axis, not how long it will take to make the return trip)
-	
+
 	\begin{align*}
 	\chi &= - 2\int_{0}^{-\pi} \dfrac{d\theta}{\sqrt{- \dfrac{2g}{l} \sin{\theta}}} \\
 	  &= 2\int_{-\pi}^{0} \dfrac{d\theta}{\sqrt{- \dfrac{2g}{l} \sin{\theta}}}.
 	\end{align*}
-	
+
 	Above we chose the negative on the $\pm$ sign because otherwise we will get a negative value for $t$, and we are choosing to keep time positive. It is impossible to solve this integral analytically and use it to express $\theta$ in terms of $t$, therefore we are reduced to using numerical methods to approximate $\theta$. The three numerical methods used in this directory are:
-	
+
 	\begin{itemize}
-		\item \texttt{ode78} from the  ODE.jl Julia module.
-		\item Runge-Kutta 4th order method. 
+		\item \texttt{ode78} from the ODE.jl Julia module.
+		\item Runge-Kutta 4th order method.
 		\item The Newton-Kantorovich method to linearize the problem, and then a Chebyshev spectral method to approximate the solution to the linearized version of the problem.
 	\end{itemize}
+
+	Out of these, only the Newton-Kantorovich method likely needs further explanation. To linearize the problem, we used $\theta_{i+1} = \theta_{i} + \Delta_i$, where ${\theta}_i$ is our ith approximation of $\theta$ and $\Delta_i$ is our ith correction to $\theta$. Substuting $\theta_{i+1}$ into our original equation yields:
+
+	\begin{align*}
+		\ddot{\theta}_i + \ddot{\Delta}_i &= -\dfrac{g}{l} \cos{(\theta_i+\Delta_i)} \\
+		&\approx -\dfrac{g}{l} \left(\cos{\theta_i} - \sin{\theta_i} \Delta_i\right) \\
+		\therefore \hspace{0.1cm} \ddot{\Delta}_i - \dfrac{g}{l} \sin{\theta_i} \Delta_i &= -\ddot{\theta}_i - \dfrac{g}{l} \cos{\theta_i}
+	\end{align*}
 \end{document}

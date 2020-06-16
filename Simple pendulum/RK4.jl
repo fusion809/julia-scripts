@@ -82,6 +82,7 @@ figure(4)
 clf()
 semilogy(t,residual_dtheta)
 
+# Print scalar measures of error
 println("error_theta_min is $(error_theta_min).")
 println("error_dtheta_min is $(error_dtheta_min).")
 println("rms_residual_dtheta is $(rms_residual_dtheta).")

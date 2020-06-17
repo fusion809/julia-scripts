@@ -112,15 +112,16 @@ rms_residual                 = zeros(NN+1,1);
 # Root mean square of these values
 for i=1:NN+1
     rms_residual[i]          = sqrt(residual[:,i]'*residual[:,i]/(N+1));
+    println("rms_residual[$(i)] is $(rms_residual[i])")
 end
 
 # Plots
 # Enable separate graph windows
-pygui(true)
+#pygui(true)
 # Compare our first guess of theta with our final solution
-fig, (ax1, ax2) = plt.subplots(2)
-ax1.plot(t,theta[:,1])
-ax2.plot(transformed_linear_grid,theta_linear_grid)
+#fig, (ax1, ax2) = plt.subplots(2)
+#ax1.plot(t,theta[:,1])
+#ax2.plot(transformed_linear_grid,theta_linear_grid)
 #figure(2)
 #clf()
 #semilogy(t,residual[:,1])
@@ -130,9 +131,9 @@ ax2.plot(transformed_linear_grid,theta_linear_grid)
 #figure(4)
 #clf()
 #semilogy(t,residual[:,NN+1])
-figure(5)
-clf()
-semilogy(1:NN+1,rms_residual)
-xlabel(L"$i$ in $\theta_i$")
-ylabel("RMS (residual)")
-title("Semilog plot of the root mean square of the residual")
+#figure(5)
+#clf()
+#semilogy(1:NN+1,rms_residual)
+#xlabel(L"$i$ in $\theta_i$")
+#ylabel("RMS (residual)")
+#title("Semilog plot of the root mean square of the residual")

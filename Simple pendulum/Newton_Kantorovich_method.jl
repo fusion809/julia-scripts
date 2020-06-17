@@ -33,6 +33,7 @@ l                            = 1.0;
 n                            = 1:1:N;
 x                            = cos.(pi/2*((2*n.-1)./N));
 period                       = (pi^2)/N*sqrt(l/(2*g))*sum((sqrt.((-(x.^2).+1)./cos.(pi/2*x))));
+println("period is $(period).")
 n                            = nothing;
 x                            = nothing;
 # Column vector of integers from 0 to N
@@ -116,21 +117,22 @@ end
 # Enable separate graph windows
 #pygui(true)
 # Compare our first guess of theta with our final solution
-#fig, (ax1, ax2) = plt.subplots(2)
-#ax1.plot(t,theta[:,1])
-#ax2.plot(transformed_linear_grid,theta_linear_grid)
-#figure(2)
-#clf()
-#semilogy(t,residual[:,1])
-#figure(3)
-#clf()
-#semilogy(t,residual[:,6])
-#figure(4)
-#clf()
-#semilogy(t,residual[:,NN+1])
-#figure(5)
-#clf()
-#semilogy(1:NN+1,rms_residual)
-#xlabel(L"$i$ in $\theta_i$")
-#ylabel("RMS (residual)")
-#title("Semilog plot of the root mean square of the residual")
+figure(1)
+clf()
+plot(t,theta[:,1])
+plot(transformed_linear_grid,theta_linear_grid)
+title(L"First plot is of $\theta_0$ and $\theta_{NN+1}$")
+figure(2)
+clf()
+semilogy(t,residual[:,1])
+title(L"Second plot shows the residual for $\theta_0$")
+figure(3)
+clf()
+semilogy(t,residual[:,NN+1])
+title(L"Third plot shows the residual for $\theta_{NN+1}$")
+figure(4)
+clf()
+semilogy(1:NN+1,rms_residual)
+xlabel(L"$i$ in $\theta_i$")
+ylabel("RMS (residual)")
+title("Semilog plot of the root mean square of the residual")

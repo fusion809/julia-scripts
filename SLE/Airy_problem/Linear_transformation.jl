@@ -179,5 +179,4 @@ function eigenplots()
     PyPlot.title("Semilog plot of the root mean square of eigenfunction error")
 end
 
-# Commented out, as plots are no longer needed
 eigenplots()

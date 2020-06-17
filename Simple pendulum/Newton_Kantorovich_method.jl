@@ -15,29 +15,26 @@ using Pkg;
 Pkg.add("PyPlot")
 using PyPlot;
 
-# Required to determine the period of the curve
-Pkg.add("QuadGK")
-using QuadGK;
-
 # Installing required Julia modules
 Pkg.add("LinearAlgebra")
 using LinearAlgebra;
 
 # N+1 is the number of points on our extrema grid
-N                            = 100;
+N                            = 150;
 # NN iterations are used when applying the Newton-Kantorovich method
 NN                           = 4;
 # Acceleration due to gravity in metres per second squared
 g                            = 9.8;
 # length of the pendulum in metres
 l                            = 1.0;
-function f(y)
-    # abs is used below to prevent complex number errors due to the sqrt
-    return 1.0 / sqrt(abs(2.0 * g / l * sin(y)))
-end
-# The period of the simple pendulum, that is, how long it takes for
-# it to go from theta=0 back to theta=0
-period                       = 2*quadgk(y -> f(y), -pi, 0, rtol=1e-14)[1];
+# The period of the simple pendulum, that is, how long 
+# it takes for it to go from theta=0 back to theta=0.
+# Computed using Chebyshev-Guass quadrature.
+n                            = 1:1:N;
+x                            = cos.(pi/2*((2*n.-1)./N));
+period                       = (pi^2)/N*sqrt(l/(2*g))*sum((sqrt.((-(x.^2).+1)./cos.(pi/2*x))));
+n                            = nothing;
+x                            = nothing;
 # Column vector of integers from 0 to N
 n                            = 0:1:N;
 # Chebyshev extrema grid; tt is the parameterization

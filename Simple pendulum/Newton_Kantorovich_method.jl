@@ -1,13 +1,13 @@
 # This script uses the Newton-Kantorovich method to approximate
 # the solution to the problem of the simple pendulum.
-# theta double dot = -g/l cos(theta)
-# theta(0) = theta dot (0) = 0
-# Our first guess is theta = pi/2*(cos(2*pi*t/T)+1)
+# \ddot{\theta} = -g/l \cos(\theta)
+# \theta(0) = \dot{\theta} (0) = 0
+# Our first guess is \theta = \pi/2*(\cos{\left(2*\pi*t/T\right)+1)
 # Then we iteratively solve the linear ODE:
-# delta_i double dot - g/l sin(theta_i) delta_i = -(theta_i double dot +
-# g/l*cos(theta_i))
-# delta_i(0) = delta_i dot(0) = 0
-# theta_(i+1) = theta_i + delta_i
+# \ddot{\Delta}_i - g/l \sin(\theta_i) \Delta_i = -
+# (\ddot{\theta}_i + g/l*\cos(\theta_i))
+# \Delta_{i} (0)  = \dot{\Delta}_i (0) = 0
+# \theta_{i+1} = \theta_i + \Delta_i
 # for i=1,2,3,...,NN
 using Pkg;
 
@@ -23,6 +23,8 @@ using LinearAlgebra;
 N                            = 150;
 # NN iterations are used when applying the Newton-Kantorovich method
 NN                           = 4;
+println("N is $(N)")
+println("NN is $(NN)")
 # Acceleration due to gravity in metres per second squared
 g                            = 9.8;
 # length of the pendulum in metres
@@ -115,21 +117,21 @@ end
 
 # Plots
 # Enable separate graph windows
-#pygui(true)
+pygui(false)
 # Compare our first guess of theta with our final solution
 figure(1)
 clf()
 plot(t,theta[:,1])
 plot(transformed_linear_grid,theta_linear_grid)
-title(L"First plot is of $\theta_0$ and $\theta_{NN+1}$")
+title(L"$\theta_0$ vs. $\theta_{NN+1}$")
 figure(2)
 clf()
 semilogy(t,residual[:,1])
-title(L"Second plot shows the residual for $\theta_0$")
+title(L"Residual for $\theta_0$")
 figure(3)
 clf()
 semilogy(t,residual[:,NN+1])
-title(L"Third plot shows the residual for $\theta_{NN+1}$")
+title(L"Residual for $\theta_{NN+1}$")
 figure(4)
 clf()
 semilogy(1:NN+1,rms_residual)

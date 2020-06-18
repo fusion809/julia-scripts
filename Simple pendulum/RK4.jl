@@ -12,6 +12,7 @@ pygui(false)
 
 # Number of steps
 N = 10000000;
+println("N is $(N).")
 # Acceleration due to gravity in metres per second squared
 g = 9.8;
 # Length of the pendulum in metres

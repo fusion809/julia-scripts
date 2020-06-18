@@ -4,12 +4,12 @@ using Pkg;
 Pkg.add("PyPlot")
 using PyPlot;
 
-N     = 10000;
+N     = 10000000;
 sigma = 10.0
 rho   = 28.0
 beta  = 8.0/3.0;
 t0    = 0;
-tf    = 100;
+tf    = 80;
 dt    = (tf-t0)/N;
 t     = t0:dt:tf;
 
@@ -48,11 +48,11 @@ function RK4(beta, rho, sigma, dt, t, x, y, z)
     return dx, dy, dz
 end
 
-x     = zeros(N+1,1);
+x     = zeros(N+1);
 x[1]  = -2.0;
-y     = zeros(N+1,1);
+y     = zeros(N+1);
 y[1]  = 3.0;
-z     = zeros(N+1,1);
+z     = zeros(N+1);
 z[1]  = 0.5;
 
 for i=1:N
@@ -61,6 +61,7 @@ for i=1:N
     y[i+1] = y[i] + diff[2];
     z[i+1] = z[i] + diff[3];
 end
+
 
 PyPlot.figure(1)
 PyPlot.plot3D(x, y, z);

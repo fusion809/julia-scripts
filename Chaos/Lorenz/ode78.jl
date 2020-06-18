@@ -20,17 +20,17 @@ function f(t, r)
 end;
 
 # Define time vector and interval grid
-const dt = 0.001
-const tf = 1e2
+dt = 0.001
+tf = 1e2
 t = 0:dt:tf
 
 # Initial position in space
-const r0 = [-2.0; 3.0; 0.5]
+r0 = [-2.0; 3.0; 0.5]
 
 # Constants sigma, rho and beta
-const sigma = 10.0
-const rho   = 28.0
-const bet   = 8.0/3.0;
+sigma = 10.0
+rho   = 28.0
+bet   = 8.0/3.0;
 
 (t, pos) = ode78(f, r0, t)
 x = map(v -> v[1], pos)

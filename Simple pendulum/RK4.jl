@@ -8,7 +8,7 @@ Pkg.add("QuadGK")
 using QuadGK;
 Pkg.add("PyPlot")
 using PyPlot;
-pygui(true)
+pygui(false)
 
 # Number of steps
 N = 10000000;
@@ -70,17 +70,21 @@ rms_residual_dtheta = sqrt(residual_dtheta'*residual_dtheta/(N+1))[1];
 figure(1)
 clf()
 plot(t,theta)
+title(L"$\theta$ against $t$")
 figure(2)
 clf()
 plot(t,dtheta)
+title(L"$\dot{\theta}$ against $t$")
 # Phase plot
 figure(3)
 clf()
 plot(theta,dtheta)
+title(L"Phase plot of $\dot{\theta}$ against $\theta$")
 # semilog plot of residual in dtheta
 figure(4)
 clf()
 semilogy(t,residual_dtheta)
+title(L"Semilog plot of how much our RK4-computed $\dot{\theta}$ deviates from our analytical expression for $\dot{\theta}$")
 
 # Print scalar measures of error
 println("error_theta_min is $(error_theta_min).")

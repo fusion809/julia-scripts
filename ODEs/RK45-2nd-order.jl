@@ -63,7 +63,7 @@ Pkg.add("Dierckx")
 using Dierckx
 spl = Spline1D(x, y);
 yy = spl(xx);
-error = findmin(yy)+pi;
+error = findmin(yy)[1]+pi;
 using PyPlot
 PyPlot.figure(1)
 PyPlot.clf()

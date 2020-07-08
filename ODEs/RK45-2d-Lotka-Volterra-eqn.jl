@@ -55,6 +55,7 @@ t0 = 0;
 tf = 100;
 x0 = 10;
 y0 = 10;
+t = nothing; x = nothing; y = nothing; xx = nothing; yy=nothing; splx=nothing; sply=nothing; tt = nothing;
 t, x, y = rk45(t0, tf, x0, y0);
 tt = LinRange(t0, tf, Int64(1e7+1));
 using Pkg;
@@ -67,10 +68,10 @@ yy = sply(tt);
 using PyPlot
 PyPlot.figure(1)
 PyPlot.clf()
-PyPlot.plot(tt,xx)
+PyPlot.plot(tt,xx, :red, label=L"$x$")
+PyPlot.plot(tt,yy, :blue, label=L"$y$")
+PyPlot.ylim((-0.5,32))
+PyPlot.legend(loc="upper right",fancybox="true")
 PyPlot.figure(2)
-PyPlot.clf()
-PyPlot.plot(tt,yy)
-PyPlot.figure(3)
 PyPlot.clf()
 PyPlot.plot(xx,yy)

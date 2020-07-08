@@ -5,7 +5,7 @@ function f(t,x, y)
 end
 
 function rk45(t0, tf, x0, y0)
-    epsilon = 1e-9;
+    epsilon = 1e-10;
     h = 0.1;
     t = Float64[t0];
     tfinal = tf;
@@ -52,7 +52,7 @@ function rk45(t0, tf, x0, y0)
 end
 
 t0 = 0;
-tf = 100;
+tf = 30;
 x0 = 10;
 y0 = 10;
 t = nothing; x = nothing; y = nothing; xx = nothing; yy=nothing; splx=nothing; sply=nothing; tt = nothing;
@@ -68,10 +68,15 @@ yy = sply(tt);
 using PyPlot
 PyPlot.figure(1)
 PyPlot.clf()
-PyPlot.plot(tt,xx, :red, label=L"$x$")
-PyPlot.plot(tt,yy, :blue, label=L"$y$")
-PyPlot.ylim((-0.5,32))
+PyPlot.plot(tt,xx, :red, label="Number of prey animals")
+PyPlot.plot(tt,yy, :blue, label="Number of predator animals")
+PyPlot.xlabel("Time")
+PyPlot.ylabel("Species population")
+PyPlot.xlim((-0.1,30.1))
+PyPlot.ylim((-0.1,31.5))
 PyPlot.legend(loc="upper right",fancybox="true")
 PyPlot.figure(2)
 PyPlot.clf()
 PyPlot.plot(xx,yy)
+PyPlot.xlabel("Number of prey animals")
+PyPlot.ylabel("Number of predator animals")

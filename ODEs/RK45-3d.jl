@@ -4,11 +4,11 @@ function f(t, x, y, z)
     rho   = 28;
     dx    = sigma*(y-x);
     dy    = x*(rho-z) - y;
-    dz    = x*y - beta*z;
+    dz    = x*y^2 - beta*z;
     return [dx, dy, dz];
 end
 
-function rk45(h, i, t, x, y, z)
+function RK45(h, i, t, x, y, z)
     K1 = h*f.(t[i], x[i], y[i], z[i]);
     k1 = K1[1];
     l1 = K1[2];
@@ -50,8 +50,7 @@ function rk45(h, i, t, x, y, z)
     return R, x2, y2, z2
 end
 
-function solver(t0, tf, x0, y0, z0)
-    epsilon = 1e-9;
+function solver(epsilon, t0, tf, x0, y0, z0)
     h = 0.1;
     t = Float64[t0];
     x = Float64[x0];
@@ -60,7 +59,7 @@ function solver(t0, tf, x0, y0, z0)
     i = 1;
     while t[i] < tf
         h = min(h, tf-t[i]);
-        R, x2, y2, z2 = rk45(h, i, t, x, y, z);
+        R, x2, y2, z2 = RK45(h, i, t, x, y, z);
         s = 0.84*(epsilon/R)^(1/4);
 
         if R<=epsilon
@@ -80,7 +79,8 @@ tf = 100;
 x0 = 1;
 y0 = 1;
 z0 = 1;
-t, x, y, z = solver(t0, tf, x0, y0, z0);
+epsilon = 1e-9;
+t, x, y, z = solver(epsilon, t0, tf, x0, y0, z0);
 using PyPlot
 PyPlot.figure(1)
 PyPlot.clf()

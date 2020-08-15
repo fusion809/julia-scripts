@@ -32,7 +32,7 @@ function RK45(f, dtInitial, epsilon, t0, tf, x0, y0, z0)
     z = Float64[z0];
     dt = dtInitial;
     while t[i] < tf
-        # h should be the smallest out of tf-t[i] and the h determined
+        # dt should be the smallest out of tf-t[i] and the dt determined
         # the last iteration, as otherwise we won't finish at exactly tf
         dt = min(dt, tf-t[i]);
         
@@ -106,6 +106,8 @@ function RK45(f, dtInitial, epsilon, t0, tf, x0, y0, z0)
     return [t, x, y, z]
 end
 
+# Initial conditions, bounds of integration, error tolerance and initial dt
+# value
 t0 = 0;
 tf = 200;
 x0 = 10;

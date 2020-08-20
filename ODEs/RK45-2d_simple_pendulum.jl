@@ -1,11 +1,33 @@
-using FunctionIntegrator
+using Pkg;
+Pkg.add("FunctionIntegrator");
+using FunctionIntegrator;
 
-function f(x,y, dy)
-    return [dy, -9.8*cos(y)];
+function thetadotroot(x0,theta0,thetadot0,g,l,tol)
+    func = 1;
+    x = x0;
+    while (abs(func) > tol)
+        func = thetadot0^2+2*g/l*(sin(theta0)-sin(x));
+        deltax = - (func)/(-2*g/l*cos(x));
+        x += deltax;
+    end
+    return x
 end
 
-function rk45(t0, tf, theta0, dtheta0)
-    epsilon = 1e-12;
+n = 22;
+theta0 = (n-1)*pi/(2*n);
+thetadot0 = 0.1;
+g = 9.81;
+l = 1;
+finalthetaguess = -pi-theta0;
+N = 1e8;
+finaltheta = thetadotroot(finalthetaguess, theta0, thetadot0, g, l, 1e-15);
+T = 2*abs(chebyshev_quadrature(x -> 1/sqrt(abs(thetadot0^2+2*g/l*(sin(theta0)-sin(x)))), N, 2, theta0, finaltheta))+1;
+
+function f(x,y, dy)
+    return [dy, -g/l*cos(y)];
+end
+
+function rk45(t0, tf, theta0, dtheta0, epsilon)
     h = 0.1;
     x = Float64[t0];
     xfinal = tf;
@@ -43,20 +65,19 @@ function rk45(t0, tf, theta0, dtheta0)
             push!(x, x[i]+h)
             push!(y, y1)
             push!(dy, dy1)
-            i = i+1;
-            h = s*h;
+            i += 1;
+            h *= s;
         else
-            h = s*h;
+            h *= s;
         end
     end
     return [x, y, dy]
 end
 
 t0 = 0;
-tf = 2*chebyshev_quadrature(x -> 1/sqrt(-19.6*sin(x)), 20, 1, -pi, 0);
-theta0 = 0;
-dtheta0 = 0;
-x, y, dy = rk45(t0, tf, theta0, dtheta0);
+tf = T;
+epsilon = 1e-12;
+x, y, dy = rk45(t0, tf, theta0, thetadot0, epsilon);
 xx = LinRange(t0, tf, Int64(1e7+1));
 using Pkg;
 Pkg.add("Dierckx")

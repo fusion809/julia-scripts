@@ -27,7 +27,7 @@ function f(x,y, dy)
     return [dy, -g/l*cos(y)];
 end
 
-function rk45(t0, tf, theta0, dtheta0, epsilon)
+function rkf45(t0, tf, theta0, dtheta0, epsilon)
     h = 0.1;
     x = Float64[t0];
     xfinal = tf;
@@ -77,7 +77,7 @@ end
 t0 = 0;
 tf = T;
 epsilon = 1e-12;
-x, y, dy = rk45(t0, tf, theta0, thetadot0, epsilon);
+x, y, dy = rkf45(t0, tf, theta0, thetadot0, epsilon);
 xx = LinRange(t0, tf, Int64(1e7+1));
 using Pkg;
 Pkg.add("Dierckx")

@@ -9,7 +9,7 @@ function f(t, x, dx, theta, dtheta)
     return [dx, d2x, dtheta, d2theta];
 end
 
-function rk45(h, i, t, x, dx, theta, dtheta)
+function rkf45(h, i, t, x, dx, theta, dtheta)
     K1 = h*f.(t[i], x[i], dx[i], theta[i], dtheta[i]);
     k1 = K1[1];
     l1 = K1[2];
@@ -70,7 +70,7 @@ function solver(t0, tf, x0, dx0, theta0, dtheta0)
     i       = 1;
     while t[i] < tf
         h = min(h, tf-t[i]);
-        R, x2, dx2, theta2, dtheta2 = rk45(h, i, t, x, dx, theta, dtheta);
+        R, x2, dx2, theta2, dtheta2 = rkf45(h, i, t, x, dx, theta, dtheta);
         s = 0.84*(epsilon/R)^(1/4);
 
         if R<=epsilon

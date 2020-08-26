@@ -1,12 +1,13 @@
 function f(t,x, y)
-    alpha = 1.1; beta=0.4;
-    delta = 0.1; gamma = 0.4;
+    alpha = 1.1; 
+    beta=0.4;
+    delta = 0.1; 
+    gamma = 0.4;
     return [alpha*x-beta*x*y, delta*x*y-gamma*y];
 end
 
-function rk45(t0, tf, x0, y0)
-    epsilon = 1e-10;
-    h = 0.1;
+function rkf45(t0, tf, x0, y0, epsilon, dtInitial)
+    h = dtInitial;
     t = Float64[t0];
     tfinal = tf;
     x = Float64[x0];
@@ -39,25 +40,27 @@ function rk45(t0, tf, x0, y0)
         R = abs(x1-x2)/h;
         s = 0.84*(epsilon/R)^(1/4);
         if R<=epsilon
-            push!(t, t[i]+h)
-            push!(x, x2)
-            push!(y, y2)
-            i = i+1;
-            h = s*h;
+            push!(t, t[i]+h);
+            push!(x, x2);
+            push!(y, y2);
+            i += 1;
+            h *= s;
         else
-            h = s*h;
+            h *= s;
         end
     end
-    return [t, x, y]
+    return [t, x, y];
 end
 
 t0 = 0;
-tf = 30;
-x0 = 10;
+tf = 38;
+x0 = 100;
 y0 = 10;
 t = nothing; x = nothing; y = nothing; xx = nothing; yy=nothing; splx=nothing; sply=nothing; tt = nothing;
-t, x, y = rk45(t0, tf, x0, y0);
-tt = LinRange(t0, tf, Int64(1e7+1));
+epsilon = 1e-7;
+dtInitial = 1e-2;
+t, x, y = rkf45(t0, tf, x0, y0, epsilon, dtInitial);
+#=tt = LinRange(t0, tf, Int64(1e7+1));
 using Pkg;
 Pkg.add("Dierckx")
 using Dierckx
@@ -79,4 +82,4 @@ PyPlot.figure(2)
 PyPlot.clf()
 PyPlot.plot(xx,yy)
 PyPlot.xlabel("Number of prey animals")
-PyPlot.ylabel("Number of predator animals")
+PyPlot.ylabel("Number of predator animals") =#

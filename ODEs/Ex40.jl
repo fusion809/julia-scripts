@@ -3,7 +3,7 @@ function f(t,x)
     return t*x
 end
 
-function rk45(h, epsilon, t0, tf, x0)
+function rkf45(h, epsilon, t0, tf, x0)
     t = Float64[t0];
     x = Float64[x0];
     error_in_x = Float64[0];
@@ -42,7 +42,7 @@ t = t0:h:tf;
 N = length(t);
 x_euler = zeros(N); x_euler[1] = x0;
 x_rk4 = zeros(N); x_rk4[1] = x0;
-x_rk45 = 0;
+x_rkf45 = 0;
 
 for i = 1:N-1
     x_euler[i+1] = x_euler[i] + h*(x_euler[i]*t[i]);
@@ -53,14 +53,14 @@ for i = 1:N-1
     x_rk4[i+1] = x_rk4[i] + 1/6*(k1+2*k2+2*k3+k4);
 end
 
-t_rk45, x_rk45, error_in_x_rk45 = rk45(h, epsilon, t0, tf, x0);
+t_rkf45, x_rkf45, error_in_x_rkf45 = rkf45(h, epsilon, t0, tf, x0);
 
 x_analytical = 2*exp.(1/2*t.^2);
 error_in_euler = abs.(x_euler - x_analytical);
 error_in_rk4 = abs.(x_rk4 - x_analytical);
 rms_in_euler = sqrt(error_in_euler[2:end]'*error_in_euler[2:end]/(length(error_in_euler)-1));
 rms_in_rk4 = sqrt(error_in_rk4[2:end]'*error_in_rk4[2:end]/(length(error_in_rk4)-1));
-rms_in_rk45 = sqrt(error_in_x_rk45[2:end]'*error_in_x_rk45[2:end]/(length(error_in_x_rk45)-1));
+rms_in_rkf45 = sqrt(error_in_x_rkf45[2:end]'*error_in_x_rkf45[2:end]/(length(error_in_x_rkf45)-1));
 ["Data" "Euler's" "Runge-Kutta 4th order" "Runge-Kutta-Fehlberg"; 
-"Root mean square of error" rms_in_euler rms_in_rk4 rms_in_rk45; 
-"Number of steps" length(x_euler)-1 length(x_rk4)-1 length(x_rk45)-1]
+"Root mean square of error" rms_in_euler rms_in_rk4 rms_in_rkf45; 
+"Number of steps" length(x_euler)-1 length(x_rk4)-1 length(x_rkf45)-1]

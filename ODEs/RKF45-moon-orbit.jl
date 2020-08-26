@@ -7,7 +7,7 @@ function f(t, r, rdot)
     return [rdot, (massless_momentum^2)/r^3 - G*M/(r^2)];
 end
 
-function rk45(h, epsilon, t0, tf, r0, rdot0)
+function rkf45(h, epsilon, t0, tf, r0, rdot0)
     r = Float64[r0];
     rdot = Float64[rdot0];
     t = Float64[t0];
@@ -58,4 +58,4 @@ r0 = 384399e3;
 rdot0 = (405400e3-362600e3)/(27.321661);
 epsilon = 1e-5;
 h = 0.01;
-t, r, rdot = rk45(h, epsilon, t0, tf, r0, rdot0);
+t, r, rdot = rkf45(h, epsilon, t0, tf, r0, rdot0);

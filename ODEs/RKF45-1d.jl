@@ -2,7 +2,7 @@ function f(x,y)
     return 1+y^2
 end
 
-function rk45()
+function rkf45()
     epsilon = 1e-13;
     h = 0.1;
     x = Float64[0.0];
@@ -35,7 +35,7 @@ function rk45()
     return [x, y, error_in_y]
 end
 
-x, y, error = rk45();
+x, y, error = rkf45();
 using PyPlot;
 PyPlot.figure(1)
 PyPlot.plot(x,y)

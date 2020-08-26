@@ -16,7 +16,7 @@ function f(t, x, y, z)
 end
 
 """
-    RK45(f::Function, dtInitial::Float64, epsilon::Float64, t0::Float64, tf::Float64, x0::Float64, y0::Float64, z0::Float64)
+    RKF45(f::Function, dtInitial::Float64, epsilon::Float64, t0::Float64, tf::Float64, x0::Float64, y0::Float64, z0::Float64)
 
 A function that, using the [Runge-Kutta-Fehlberg method](https://en.wikipedia.org/wiki/Runge-Kutta-Fehlberg_method) with fourth order approximations and fifth order error checking, approximates the solution to the ODE system:
 
@@ -24,7 +24,7 @@ A function that, using the [Runge-Kutta-Fehlberg method](https://en.wikipedia.or
 
 with adaptive step size. 
 """
-function RK45(f, dtInitial, epsilon, t0, tf, x0, y0, z0)
+function RKF45(f, dtInitial, epsilon, t0, tf, x0, y0, z0)
     i = 1;
     t = Float64[t0];
     x = Float64[x0];
@@ -115,7 +115,7 @@ y0 = 10;
 z0 = 10;
 epsilon = 1e-8;
 dtInitial = 0.1;
-t, x, y, z = RK45(f, dtInitial, epsilon, t0, tf, x0, y0, z0);
+t, x, y, z = RKF45(f, dtInitial, epsilon, t0, tf, x0, y0, z0);
 using PyPlot
 PyPlot.figure(1)
 PyPlot.clf()

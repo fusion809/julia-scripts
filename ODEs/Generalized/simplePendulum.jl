@@ -3,7 +3,7 @@ using PyPlot;
 include("RKF45.jl");
 
 # RHS of the problem expressed as a 1st order system
-function f(params, t::Float64, vars::Vector)
+function f(params, t::Float64, vars::Array{Float64,1})
     g = params.g;
     l = params.l;
     x = vars[1];

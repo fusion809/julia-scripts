@@ -1,8 +1,15 @@
 using PyPlot;
 include("RKF45.jl");
 
+# Parameter object
+struct paramObj
+    sigma::Float64
+    beta::Float64
+    rho::Float64
+end
+
 # Function representing the RHS of the problem
-function f(params, t, vars)
+function f(params::paramObj, t::Float64, vars::Array{Float64, 1})
     sigma = params.sigma;
     beta  = params.beta;
     rho   = params.rho;
@@ -13,13 +20,6 @@ function f(params, t, vars)
     dy    = x*(rho-z) - y;
     dz    = x*y - beta*z;
     return [dx, dy, dz];
-end
-
-# Problem parameters
-struct paramObj
-    sigma::Float64
-    beta::Float64
-    rho::Float64
 end
 
 # Problem parameters

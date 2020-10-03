@@ -1,0 +1,61 @@
+using PyPlot;
+include("RKF45.jl");
+
+# Function representing the RHS of the ODE system
+function f(params, t, vars)
+    S     = vars[1];
+    I     = vars[2];
+    R     = vars[3];
+    beta  = params.beta;
+    gamma = params.gamma;
+    delta = params.delta;
+    dS    = -beta*I*(1-delta)*S/N;
+    dI    = beta*I*(1-delta)*S/N-gamma*I;
+    dR    = gamma*I;
+    return [dS, dI, dR];
+end
+
+# Parameter object
+struct paramObj
+    beta::Float64
+    gamma::Float64
+    delta::Float64
+    N::Number
+end
+
+# Define problem parameters
+beta = 1.5;
+gamma = 0.25;
+delta = 0.9;
+N = 100;
+params = paramObj(beta, gamma, delta, N);
+
+# Define initial conditions and domain of integration
+t0 = 0.0;
+tf = 1e2;
+S0 = 89.0;
+I0 = 11.0;
+R0 = 0.0;
+conds = [S0 I0 R0];
+
+# Step size and error tolerance
+epsilon = 1e-11;
+dtInitial = 0.1;
+
+# Solve problem
+solution = RKF45(f, params, t0, tf, conds, epsilon, dtInitial);
+
+# Extract solution values
+t = solution.t;
+vars = solution.vars;
+S = vars[:,1];
+I = vars[:,2];
+R = vars[:,3];
+
+# Plot solution
+# Phase plot is not used, as for SIR it's pretty boring
+PyPlot.figure(1)
+PyPlot.clf();
+PyPlot.plot(t, S);
+PyPlot.plot(t, I);
+PyPlot.plot(t, R);

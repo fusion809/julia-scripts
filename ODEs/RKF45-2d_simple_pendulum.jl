@@ -78,20 +78,5 @@ t0 = 0;
 tf = T;
 epsilon = 1e-12;
 x, y, dy = rkf45(t0, tf, theta0, thetadot0, epsilon);
-xx = LinRange(t0, tf, Int64(1e7+1));
-using Pkg;
-Pkg.add("Dierckx")
-using Dierckx
-spl = Spline1D(x, y);
-yy = spl(xx);
-error = findmin(yy)[1]+pi;
-using PyPlot
-PyPlot.figure(1)
-PyPlot.clf()
-PyPlot.plot(xx,yy)
-PyPlot.figure(2)
-PyPlot.clf()
-PyPlot.plot(x,dy)
-PyPlot.figure(3)
-PyPlot.clf()
-PyPlot.plot(y,dy)
+using DelimitedFiles;
+DelimitedFiles.writedlm("simple_pendulum_solution.txt", [x y dy]);

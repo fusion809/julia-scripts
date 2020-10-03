@@ -3,7 +3,14 @@ function f(t,x)
     return t*x
 end
 
-function rkf45(h, epsilon, t0, tf, x0)
+# Function that integrates the problem using RKF45
+"""
+	rkf45(h::Float64, epsilon::Float64, t0::Number, tf::Number, x0::Number)
+
+uses the 4/5th order Runge-Kutta-Fehlberg method to integrate `f(t,x)` from t0 to tf with the initial condition
+`x(0) = x0` and tolerance level of `epsilon`.
+"""
+function rkf45(h::Float64, epsilon::Float64, t0::Number, tf::Number, x0::Number)
     t = Float64[t0];
     x = Float64[x0];
     error_in_x = Float64[0];

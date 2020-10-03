@@ -1,4 +1,6 @@
 using PyPlot;
+# using Plots;
+# pyplot();
 include("RKF45.jl");
 
 struct paramObj
@@ -44,7 +46,7 @@ params = paramObj(g, l1, l2, m1, m2);
 
 # Initial conditions and domain of integration
 t0 = 0.0;
-tf = 10.0;
+tf = 30.0;
 theta10 = pi/2;
 ptheta10 = 0;
 theta20 = pi/2;
@@ -52,7 +54,7 @@ ptheta20 = 0;
 conds = [theta10 ptheta10 theta20 ptheta20];
 
 # Error tolerance and initial step size
-epsilon = 1e-10;
+epsilon = 1e-7;
 dtInitial = 0.1;
 
 # Solve problem and extract solution values
@@ -63,14 +65,40 @@ theta1 = vars[:,1];
 ptheta1 = vars[:,2];
 theta2 = vars[:,3];
 ptheta2 = vars[:,4];
+# Positions of the pendulum bobs
+x1 = l1*sin.(theta1);
+y1 = -l1*cos.(theta1);
+x2 = x1 + l2*sin.(theta2);
+y2 = y1 - l2*cos.(theta2);
 
 # Plots
 PyPlot.figure(1);
 PyPlot.clf();
-PyPlot.plot(theta1, ptheta1);
+PyPlot.plot(theta1, ptheta1, label=L"p_{\theta_1}");
+PyPlot.xlabel(L"\theta_1");
+PyPlot.ylabel(L"p_{\theta_1}");
+PyPlot.legend();
 PyPlot.figure(2);
 PyPlot.clf();
-PyPlot.plot(theta2, ptheta2);
+PyPlot.plot(theta2, ptheta2, label=L"p_{\theta_2}");
+PyPlot.xlabel(L"\theta_2");
+PyPlot.ylabel(L"p_{\theta_2}");
+PyPlot.legend();
 PyPlot.figure(3);
 PyPlot.clf();
-PyPlot.plot(t, vars);
+PyPlot.plot(t, vars[:,1], label=L"\theta_1");
+PyPlot.plot(t, vars[:,2], label=L"p_{\theta_1}");
+PyPlot.plot(t, vars[:,3], label=L"\theta_2");
+PyPlot.plot(t, vars[:,4], label=L"p_{\theta_2}");
+PyPlot.xlabel(L"t")
+PyPlot.legend()
+# Bob #1
+PyPlot.figure(4);
+PyPlot.clf();
+PyPlot.plot(x1, y1, label="Pendulum bob 1 location")
+PyPlot.legend()
+# Bob #2
+PyPlot.figure(5);
+PyPlot.clf();
+PyPlot.plot(x2, y2, label="Pendulum bob 2 location")
+PyPlot.legend()

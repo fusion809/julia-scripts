@@ -24,7 +24,7 @@ l = 1.0;
 params = paramObj(g, l);
 
 # Initial conditions
-theta0 = 0;
+theta0 = 0.0;
 thetaDot0 = sqrt(2*g/l)-1e-10;
 
 # Error tolerance and step size

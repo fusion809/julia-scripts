@@ -2,7 +2,7 @@ using PyPlot;
 include("RKF45.jl");
 
 # Function representing the RHS of the ODE system
-function f(params, t, vars)
+function SIR(params::NamedTuple, t, vars)
     S     = vars[1];
     I     = vars[2];
     R     = vars[3];
@@ -15,20 +15,13 @@ function f(params, t, vars)
     return [dS, dI, dR];
 end
 
-# Parameter object
-struct paramObj
-    beta::Float64
-    gamma::Float64
-    delta::Float64
-    N::Number
-end
-
 # Define problem parameters
 beta = 1.5;
 gamma = 0.25;
 delta = 0.9;
 N = 100;
-params = paramObj(beta, gamma, delta, N);
+params = nothing;
+params = (beta = beta, gamma = gamma, delta = delta, N = N);
 
 # Define initial conditions and domain of integration
 t0 = 0.0;
@@ -36,14 +29,14 @@ tf = 1e2;
 S0 = 89.0;
 I0 = 11.0;
 R0 = 0.0;
-conds = [S0 I0 R0];
+conds = [S0; I0; R0];
 
 # Step size and error tolerance
 epsilon = 1e-11;
 dtInitial = 0.1;
 
 # Solve problem
-solution = RKF45(f, params, t0, tf, conds, epsilon, dtInitial);
+solution = RKF45(SIR, params, t0, tf, conds, epsilon, dtInitial);
 
 # Extract solution values
 t = solution.t;

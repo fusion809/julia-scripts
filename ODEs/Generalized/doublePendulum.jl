@@ -3,15 +3,7 @@ using PyPlot;
 # pyplot();
 include("RKF45.jl");
 
-struct paramObj
-    g::Float64
-    l1::Float64
-    l2::Float64
-    m1::Float64
-    m2::Float64
-end
-
-function f(params::paramObj, t, vars)
+function DP(params::NamedTuple, t, vars)
     g = params.g;
     l1 = params.l1;
     l2 = params.l2;
@@ -42,7 +34,7 @@ l1 = 1.0;
 l2 = 1.0;
 m1 = 1.0;
 m2 = 1.0;
-params = paramObj(g, l1, l2, m1, m2);
+params = (g = g, l1 = l1, l2 = l2, m1 = m1, m2 = m2);
 
 # Initial conditions and domain of integration
 t0 = 0.0;
@@ -51,14 +43,14 @@ theta10 = pi/2;
 ptheta10 = 0;
 theta20 = pi/2;
 ptheta20 = 0;
-conds = [theta10 ptheta10 theta20 ptheta20];
+conds = [theta10; ptheta10; theta20; ptheta20];
 
 # Error tolerance and initial step size
 epsilon = 1e-7;
 dtInitial = 0.1;
 
 # Solve problem and extract solution values
-solution = RKF45(f, params, t0, tf, conds, epsilon, dtInitial);
+solution = RKF45(DP, params, t0, tf, conds, epsilon, dtInitial);
 vars = solution.vars;
 t = solution.t;
 theta1 = vars[:,1];

@@ -3,7 +3,7 @@ using PyPlot;
 include("RKF45.jl");
 
 # RHS of the problem expressed as a 1st order system
-function f(params, t::Float64, vars::Array{Float64,1})
+function SP(params::NamedTuple, t::Float64, vars::Array{Float64,1})
     g = params.g;
     l = params.l;
     x = vars[1];
@@ -12,20 +12,15 @@ function f(params, t::Float64, vars::Array{Float64,1})
     return array;
 end
 
-# Parameter object
-struct paramObj
-    g::Float64
-    l::Float64
-end
-
 # Problem parameters
 g = 9.81;
 l = 1.0;
-params = paramObj(g, l);
+params = (g = g, l = l);
 
 # Initial conditions
 theta0 = 0.0;
 thetaDot0 = sqrt(2*g/l)-1e-10;
+conds = [theta0; thetaDot0];
 
 # Error tolerance and step size
 epsilon = 3e-12;
@@ -45,7 +40,7 @@ else
 end
 
 # Solve problem
-solution = RKF45(f, params, t0, tf, [theta0 thetaDot0], epsilon, dtInitial);
+solution = RKF45(SP, params, t0, tf, conds, epsilon, dtInitial);
 vars = solution.vars;
 t = solution.t;
 theta = vars[:,1];

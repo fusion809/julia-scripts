@@ -1,8 +1,5 @@
-# Solution object
-struct solObj
-    t::Array{Float64,1}
-    vars::Array{Float64,2}
-end
+# StaticArrays help optimize this code
+using StaticArrays;
 
 """
     RKF45(f::Function, params, t0::Number, tf::Number, conds::Vector, epsilon::Float64, dtInitial::Float64)
@@ -31,36 +28,41 @@ conds is a row vector of the form [x1(0) x2(0) x3(0) x4(0) ... xn(0)].
 epsilon is the error tolerance for the problem.
 dtInitial is the initial choice for dt.
 """
-function RKF45(f::Function, params::NamedTuple, t0::Float64, tf::Float64, conds::Array{Float64}, epsilon::Float64, dtInitial::Float64)
-    # Initialize global variables
+function RKF45(f::Function, params::NamedTuple, t0::Float64, tf::Float64, conds::SVector, epsilon::Float64, dtInitial::Float64)
     dt = dtInitial;
     t = Float64[t0];
     vars = [conds];
     i = 1;
     ti = t0;
-
-    # Loop through each time step
     while ( ti < tf )
-        varsi =  vars[i]
-        dt = minimum((dt, tf-ti))
-        K1 = dt*f(params, ti, varsi)
-        K2 = dt*f(params, ti + dt/4, varsi + K1/4)
-        K3 = dt*f(params, ti + 3*dt/8, varsi + 3*K1/32 + 9*K2/32)
-        K4 = dt*f(params, ti + 12*dt/13, varsi + 1932*K1/2197 - 7200*K2/2197 + 7296*K3/2197)
-        K5 = dt*f(params, ti + dt, varsi + 439*K1/216 - 8*K2 + 3680*K3/513 - 845*K4/4104)
-        K6 = dt*f(params, ti + dt/2, varsi - 8*K1/27 + 2*K2 - 3544*K3/2565 + 1859*K4/4104 - 11*K5/40)
-        vars1 = varsi + 25*K1/216 + 1408*K3/2565 + 2197*K4/4104 - K5/5
-        vars2 = varsi + 16*K1/135 + 6656*K3/12825 + 28561*K4/56430 - 9*K5/50 + 2*K6/55
-        R = maximum(abs.(vars2 - vars1))/dt
-        s = (epsilon/(2*R))^(0.25)
+        varsi =  vars[i];
+        dt = minimum((dt, tf-ti));
+
+        # RKF45 approximators
+        K1 = dt*f(params, ti, varsi);
+        K2 = dt*f(params, ti + dt/4, varsi + K1/4);
+        K3 = dt*f(params, ti + 3*dt/8, varsi + 3*K1/32 + 9*K2/32);
+        K4 = dt*f(params, ti + 12*dt/13, varsi + 1932*K1/2197 - 7200*K2/2197 + 7296*K3/2197);
+        K5 = dt*f(params, ti + dt, varsi + 439*K1/216 - 8*K2 + 3680*K3/513 - 845*K4/4104);
+        K6 = dt*f(params, ti + dt/2, varsi - 8*K1/27 + 2*K2 - 3544*K3/2565 + 1859*K4/4104 - 11*K5/40);
+
+        # 4/5th order approximations to next step value
+        vars1 = varsi + 25*K1/216 + 1408*K3/2565 + 2197*K4/4104 - K5/5;
+        vars2 = varsi + 16*K1/135 + 6656*K3/12825 + 28561*K4/56430 - 9*K5/50 + 2*K6/55;
+
+        # Determine if error is small enough to move on to next step
+        R = maximum(abs.(vars2 - vars1))/dt;
+        s = (epsilon/(2*R))^(0.25);
         if (R <= epsilon)
-            push!(t, ti+dt)
-            push!(vars, vars1)
-            i += 1
-            ti = t[i]
+            Base.push!(t, ti+dt);
+            StaticArrays.push!(vars, vars1);
+            i += 1;
+            ti = t[i];
         end
-        dt *= s
+        dt *= s;
     end
-    vars = transpose(reduce(hcat, vars));
-    return solObj(t, vars);
+
+    # Transpose and enter into NamedTuple
+    vars = transpose(reduce(hcat, vars))
+    return t, vars;
 end

@@ -1,9 +1,7 @@
 using PyPlot;
-# using Plots;
-# pyplot();
 include("RKF45.jl");
 
-function DP(params::NamedTuple, t, vars)
+function DP(params::NamedTuple, t::Float64, vars::SVector{4, Float64})::SVector{4, Float64}
     g = params.g;
     l1 = params.l1;
     l2 = params.l2;
@@ -29,34 +27,24 @@ function DP(params::NamedTuple, t, vars)
 end
 
 # Problem parameters
-g = 9.81;
-l1 = 1.0;
-l2 = 1.0;
-m1 = 1.0;
-m2 = 1.0;
-params = (g = g, l1 = l1, l2 = l2, m1 = m1, m2 = m2);
+params = (g = 9.81, l1 = 1.0, l2 = 1.0, m1 = 1.0, m2 = 1.0);
 
 # Initial conditions and domain of integration
 t0 = 0.0;
-tf = 30.0;
-theta10 = pi/2;
-ptheta10 = 0;
-theta20 = pi/2;
-ptheta20 = 0;
-conds = [theta10; ptheta10; theta20; ptheta20];
+tf = 60.0;
+theta10, ptheta10, theta20, ptheta20 = pi/2, 0.0, pi/2, 0.0;
+conds = @SVector [theta10, ptheta10, theta20, ptheta20];
 
 # Error tolerance and initial step size
-epsilon = 1e-7;
+epsilon = 1e-10;
 dtInitial = 0.1;
 
 # Solve problem and extract solution values
+@time begin
 solution = RKF45(DP, params, t0, tf, conds, epsilon, dtInitial);
-vars = solution.vars;
-t = solution.t;
-theta1 = vars[:,1];
-ptheta1 = vars[:,2];
-theta2 = vars[:,3];
-ptheta2 = vars[:,4];
+end
+t, vars = solution.t, solution.vars;
+theta1, ptheta1, theta2, ptheta2 = vars[:,1], vars[:,2], vars[:,3], vars[:,4];
 # Positions of the pendulum bobs
 x1 = l1*sin.(theta1);
 y1 = -l1*cos.(theta1);

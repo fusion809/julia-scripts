@@ -1,0 +1,1 @@
+Some of the code here came from this thread on the Julia discourse forums: https://discourse.julialang.org/t/inconsistent-typing-making-adding-arrays-and-adding-a-vector-to-the-end-of-an-array-difficult/47662.

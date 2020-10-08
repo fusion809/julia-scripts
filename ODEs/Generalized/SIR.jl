@@ -2,7 +2,7 @@ using PyPlot;
 include("RKF45.jl");
 
 # Function representing the RHS of the ODE system
-function SIR(params::NamedTuple, t, vars)
+function SIR(params::NamedTuple, t::Float64, vars::SVector{3,Float64})::SVector{3,Float64}
     S     = vars[1];
     I     = vars[2];
     R     = vars[3];
@@ -29,14 +29,16 @@ tf = 1e2;
 S0 = 89.0;
 I0 = 11.0;
 R0 = 0.0;
-conds = [S0; I0; R0];
+conds = @SVector [S0, I0, R0];
 
 # Step size and error tolerance
-epsilon = 1e-11;
+epsilon = 1e-12;
 dtInitial = 0.1;
 
 # Solve problem
+@time begin
 solution = RKF45(SIR, params, t0, tf, conds, epsilon, dtInitial);
+end
 
 # Extract solution values
 t = solution.t;

@@ -1,15 +1,23 @@
 using Pkg;
-# ODE solver
-Pkg.add("ODE")
 # Python-based plotting, for more interactive and high-quality plots
 Pkg.add("PyPlot")
-# Adding Atom and VSCode deps
-Pkg.develop("Revise")
-Pkg.develop("Atom")
-Pkg.develop("Juno")
-Pkg.develop("DocumentFormat")
-Pkg.develop("CSTParser")
-Pkg.develop("StaticLint")
-Pkg.develop("SymbolServer")
-Pkg.develop("LanguageServer")
-Pkg.develop("Linter")
+# Plots
+Pkg.add("Plots")
+# IDEs
+Pkg.add("CSTParser")
+Pkg.add("StaticLint")
+Pkg.add("SymbolServer")
+Pkg.add("LanguageServer")
+Pkg.add("Linter")
+Pkg.add("Revise")
+Pkg.add("DocumentFormat")
+Pkg.add("LaTeXStrings")
+# Maths libraries
+Pkg.add("LinearAlgebra")
+Pkg.add("QuadGK")
+Pkg.add("ODE")
+Pkg.add("SpecialFunctions")
+Pkg.add("Hunagrian")
+Pkg.add("JuMP")
+Pkg.add("GLPK")
+Pkg.add("Clp")

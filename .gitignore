@@ -13,3 +13,4 @@ Chaos/*/*.png
 *.fls
 *.fdb_latexmk
 *.gif
+*.o

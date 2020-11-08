@@ -5,35 +5,39 @@ using StaticArrays;
     RKF45(f::Function, params, t0::Number, tf::Number, conds::Vector, epsilon::Float64, dtInitial::Float64)
 
 f should be a function that returns the RHS of the ODE being solved expressed as a system of first-order ODEs
-in an array of the form [dx1/dt, dx2/dt, dx3/dt, dx4/dt, ..., dxn/dt]. Its arguments should be: params 
-(an object containing problem parameters), t (a Float64) and vars::Vector (a column vector of the form 
-[element1; element2; element3; ...; elementn]).
+in an array of the form `[dx1/dt, dx2/dt, dx3/dt, dx4/dt, ..., dxn/dt]`. Its arguments should be: params 
+(an object containing problem parameters), t (a Float64) and `vars::Vector` (a column vector of the form 
+`[element1; element2; element3; ...; elementn]`).
 
-params should be an object containing parameter values to be fed to f. It should be created using:
+`params` should be a named tuple containing parameter values. For the simple
+pendulum problem with pendulum length 1 metre, for example, it can be written
+as:
 
-```julia
-struct paramObj
-    param1
-    param2
-    param3
-    ...
-    paramn
-end
-params = paramObj(param1, param2, param3, ..., paramn);
-```
+`params = (g = 9.81, l = 1.0)`.
 
-t0 is the value of t (the independent variable) at the beginning of the integration.
-tf is the value of t at the end of the integration.
-conds is a row vector of the form [x1(0) x2(0) x3(0) x4(0) ... xn(0)].
-epsilon is the error tolerance for the problem.
-dtInitial is the initial choice for dt.
+`t0` is the value of t (the independent variable) at the beginning of the integration.
+
+`tf` is the value of t at the end of the integration.
+
+`conds` is an SVector containing initial conditions. For the simple pendulum
+problem, for example, the following code may be used (where theta0 and
+thetaDot0) have been defined elsewhere:
+
+`conds = @SVector [theta0, thetaDot0]`.
+
+`epsilon` is the error tolerance for the problem.
+
+`dtInitial` is the initial guess for dt.
 """
 function RKF45(f::Function, params::NamedTuple, t0::Float64, tf::Float64, conds::SVector, epsilon::Float64, dtInitial::Float64)
+    # Initialize relevant variables
     dt = dtInitial;
     t = Float64[t0];
     vars = [conds];
     i = 1;
     ti = t0;
+
+    # Loop over t under the solution for tf has been found
     while ( ti < tf )
         varsi =  vars[i];
         dt = minimum((dt, tf-ti));
@@ -63,6 +67,6 @@ function RKF45(f::Function, params::NamedTuple, t0::Float64, tf::Float64, conds:
     end
 
     # Transpose and enter into NamedTuple
-    vars = transpose(reduce(hcat, vars))
+    vars = transpose(reduce(hcat, vars));
     return t, vars;
 end

@@ -20,7 +20,7 @@ params = (g = g, l = l);
 # Initial conditions
 theta0 = 0.0;
 thetaDot0 = sqrt(2*g/l)-1e-10;
-conds = @SVector [theta0,thetaDot0];
+conds = @SVector [theta0, thetaDot0];
 
 # Error tolerance and step size
 epsilon = 3e-12;

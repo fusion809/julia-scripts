@@ -37,12 +37,10 @@ dtInitial = 0.1;
 
 # Solve problem
 @time begin
-solution = RKF45(SIR, params, t0, tf, conds, epsilon, dtInitial);
+t, vars = RKF45(SIR, params, t0, tf, conds, epsilon, dtInitial);
 end
 
 # Extract solution values
-t = solution.t;
-vars = solution.vars;
 S = vars[:,1];
 I = vars[:,2];
 R = vars[:,3];

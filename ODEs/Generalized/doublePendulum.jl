@@ -41,9 +41,8 @@ dtInitial = 0.1;
 
 # Solve problem and extract solution values
 @time begin
-solution = RKF45(DP, params, t0, tf, conds, epsilon, dtInitial);
+t, vars = RKF45(DP, params, t0, tf, conds, epsilon, dtInitial);
 end
-t, vars = solution.t, solution.vars;
 theta1, ptheta1, theta2, ptheta2 = vars[:,1], vars[:,2], vars[:,3], vars[:,4];
 # Positions of the pendulum bobs
 x1 = l1*sin.(theta1);

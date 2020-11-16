@@ -14,3 +14,4 @@ Chaos/*/*.png
 *.fdb_latexmk
 *.gif
 *.o
+tableaux-display*

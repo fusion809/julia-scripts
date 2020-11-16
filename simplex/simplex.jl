@@ -4,7 +4,7 @@ function minNonNeg(arr)
     minVal = Inf;
     index = 0;
     for i in 1:length(arr)
-        if arr[i] >= 0 && arr[i] < minVal
+        if 0 <= arr[i] < minVal
             @inbounds minVal = arr[i];
             @inbounds index = i;
         end
@@ -101,7 +101,7 @@ function simplexIterator(A, b, cj, x, xB)
 
     while minimum(zc) < 0 || minimum(b) < 0
         A, b, cj, x, xB, cB, z, zc, ratio, pivColIdx, pivRowIdx = simplex(A, b, cj, x, xB);
-        genTableau(A, b, cj, x, xB, cB, z, zc, ratio, pivColIdx, pivRowIdx);
+        genTableau(A, b, cj, x, xB, cB, z, zc, ratio);
         rowOps(A, pivColIdx, pivRowIdx);
     end
 

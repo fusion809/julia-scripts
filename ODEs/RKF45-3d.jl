@@ -24,7 +24,7 @@ A function that, using the [Runge-Kutta-Fehlberg method](https://en.wikipedia.or
 
 with adaptive step size. 
 """
-function RKF45(f, dtInitial, epsilon, t0, tf, x0, y0, z0)
+function RKF45(f::Function, dtInitial, epsilon::Float64, t0, tf, x0, y0, z0)
     # Initialize globals
     i = 1;
     t = Float64[t0];
@@ -87,10 +87,7 @@ function RKF45(f, dtInitial, epsilon, t0, tf, x0, y0, z0)
         
         # What our step sixe should be multiplied by in order to achieve 
         # an error tolerance of epsilon
-        sx = 0.84*(epsilon/Rx)^(1/4);
-        sy = 0.84*(epsilon/Ry)^(1/4);
-        sz = 0.84*(epsilon/Rz)^(1/4);
-        s = min(sx, sy, sz);
+        s = 0.84*(epsilon/R)^(0.25);
 
         # If R is less than or equal to epsilon, move onto the next step, 
         # otherwise repeat the iteration with our corrected h value
@@ -100,10 +97,8 @@ function RKF45(f, dtInitial, epsilon, t0, tf, x0, y0, z0)
             push!(y, y1);
             push!(z, z1);
             i += 1;
-            dt *= s;
-        else
-            dt *= s;
         end
+        dt *= s;
     end
     
     return [t, x, y, z]
@@ -116,11 +111,11 @@ tf = 200;
 x0 = 10;
 y0 = 10;
 z0 = 10;
-epsilon = 1e-8;
+epsilon = 1e-9;
 dtInitial = 0.1;
 
 # Solve the problem and write it to t, x, y, and z arrays
-t, x, y, z = RKF45(f, dtInitial, epsilon, t0, tf, x0, y0, z0);
+@time t, x, y, z = RKF45(f, dtInitial, epsilon, t0, tf, x0, y0, z0);
 
 # Plot the solution
 using PyPlot

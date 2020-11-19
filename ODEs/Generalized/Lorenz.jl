@@ -2,7 +2,8 @@ using PyPlot;
 include("RKF45.jl");
 
 # Function representing the RHS of the problem
-function Lorenz(params::NamedTuple, t::Float64, vars::SVector{3,Float64})::SVector{3,Float64}
+function Lorenz(params::NamedTuple, t::Float64, 
+    vars::SVector{3,Float64})::SVector{3,Float64}
     sigma, beta, rho = params.sigma, params.beta, params.rho;
     x, y, z = vars[1], vars[2], vars[3];
     dx    = sigma*(y-x);
@@ -16,7 +17,7 @@ params = (sigma = 10.0, beta = 8.0/3.0, rho = 28.0);
 
 # Initial conditions and domain of integration
 t0 = 0.0;
-tf = 60.0;
+tf = 200.0;
 x0, y0, z0 = 1.0, 1.0, 1.0;
 conds = @SVector [x0, y0, z0];
 

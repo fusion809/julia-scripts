@@ -21,21 +21,19 @@ function rkf45()
         y1 = y[i] + 25*k1/216+1408*k3/2565+2197*k4/4104-k5/5;
         y2 = y[i] + 16*k1/135+6656*k3/12825+28561*k4/56430-9*k5/50+2*k6/55;
         R = abs(y1-y2)/h;
-        s = 0.84*(epsilon/R)^(1/4);
+        s = 0.84*(epsilon/R)^(0.25);
         if R<=epsilon
             push!(x, x[i]+h)
             push!(y, y1)
-            i = i+1;
+            i += 1;
             push!(error_in_y, abs(y[i]-tan(x[i])));
-            h = s*h;
-        else
-            h = s*h;
         end
+        h *= s;
     end
     return [x, y, error_in_y]
 end
 
-x, y, error = rkf45();
+@time x, y, error = rkf45();
 using PyPlot;
 PyPlot.figure(1)
 PyPlot.plot(x,y)

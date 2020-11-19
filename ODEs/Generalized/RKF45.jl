@@ -2,7 +2,7 @@
 using StaticArrays;
 
 """
-    RKF45(f::Function, params, t0::Number, tf::Number, conds::Vector, epsilon::Float64, dtInitial::Float64)
+    RKF45(f::Function, params, t0::Number, tf::Number, conds::Vector, epsilon, dtInitial)
 
 f should be a function that returns the RHS of the ODE being solved expressed as a system of first-order ODEs
 in an array of the form `[dx1/dt, dx2/dt, dx3/dt, dx4/dt, ..., dxn/dt]`. Its arguments should be: params 

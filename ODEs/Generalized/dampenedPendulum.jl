@@ -3,7 +3,7 @@ using LaTeXStrings;
 include("RKF45.jl");
 
 # RHS of the problem expressed as a 1st order system
-function SP(params::NamedTuple, t::Float64, vars::SVector{2,Float64})::SVector{2,Float64}
+function dampPen(params::NamedTuple, t::Float64, vars::SVector{2,Float64})::SVector{2,Float64}
     g = params.g;
     l = params.l;
     mu = params.mu;
@@ -34,7 +34,7 @@ tf = 10.0;
 
 # Solve problem
 @time begin
-t, vars = RKF45(SP, params, t0, tf, conds, epsilon, dtInitial);
+t, vars = RKF45(dampPen, params, t0, tf, conds, epsilon, dtInitial);
 end
 theta = vars[:,1];
 thetaCor = rem.(theta, 2*pi);

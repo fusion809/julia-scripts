@@ -1,12 +1,15 @@
 using PyPlot;
 include("RKF45.jl");
 
-function DP(params::NamedTuple, t::Float64, vars::SVector{4, Float64})::SVector{4, Float64}
+function doublePen(params::NamedTuple, t::Float64, vars::SVector{4, Float64})::SVector{4, Float64}
+    # Extract parameters
     g = params.g;
     l1 = params.l1;
     l2 = params.l2;
     m1 = params.m1;
     m2 = params.m2;
+
+    # Dependent variables
     theta1 = vars[1];
     ptheta1 = vars[2];
     theta2 = vars[3];
@@ -41,9 +44,12 @@ dtInitial = 0.1;
 
 # Solve problem and extract solution values
 @time begin
-t, vars = RKF45(DP, params, t0, tf, conds, epsilon, dtInitial);
+t, vars = RKF45(doublePen, params, t0, tf, conds, epsilon, dtInitial);
 end
+
+# Extract dependent variables
 theta1, ptheta1, theta2, ptheta2 = vars[:,1], vars[:,2], vars[:,3], vars[:,4];
+
 # Positions of the pendulum bobs
 x1 = l1*sin.(theta1);
 y1 = -l1*cos.(theta1);

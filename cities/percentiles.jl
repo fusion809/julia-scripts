@@ -5,6 +5,69 @@ using Statistics;
 using StatsBase;
 percentiles = 10:10:90;
 
+function printArrEl(arr)
+    """
+    Print array elements with proper punctuation between elements
+
+    arr: the array whose elements are to be printed.
+    """
+    N = length(arr);
+    if N == 2
+        println(arr[1], " and ", arr[2])
+    elseif N == 1
+        println(arr[1])
+    elseif N != 0
+        for i = 1:N-1
+            print(arr[i]);
+            if i < N-1
+                print(", ");
+            end
+        end
+        print(" and ");
+        println(arr[N]);
+    end
+end
+
+function percentilesMsg(cities, data, dataStr)
+    """
+    Generates a message listing which cities are within each decile for the metric
+    in the specified data array whose plain name is in specified string.
+
+    cities:    array of city names as strings.
+    data:      numerical data corresponding to each city in cities.
+    dataStr:   string stating what data pertains to.
+    """
+    percentiles = 10:10:90;
+    percData = percentile(data, percentiles);
+
+    for i = 1:10
+        if i == 1
+            decile = data .< percData[i];
+            print("1st decile for ", dataStr, " comprises ");
+            printArrEl(cities[decile]);
+        elseif i == 10
+            decile = data .> percData[i-1];
+            print("10th decile for ", dataStr, " comprises ");
+            printArrEl(cities[decile]);
+        elseif i == 2
+            decile = percData[i-1] .< data .< percData[i];
+            print(i, "nd decile for ", dataStr, " comprises ");
+            printArrEl(cities[decile]);
+        elseif i == 3
+            decile = percData[i-1] .< data .< percData[i];
+            print(i, "rd decile for ", dataStr, " comprises ");
+            printArrEl(cities[decile]);
+        else
+            decile = percData[i-1] .< data .< percData[i];
+            print(i, "th decile for ", dataStr, " comprises ");
+            printArrEl(cities[decile]);
+        end
+    end
+
+    print("\n");
+end
+
+
 # Aussie cities with universities that have mathematics departments
 cities = ["Adelaide"
 "Albany"
@@ -23,7 +86,7 @@ cities = ["Adelaide"
 "Sydney"
 "Toowoomba"
 "Townsville"
-"Wollongong"]
+"Wollongong"];
 
 # Populations in thousands
 pops = [1346
@@ -44,7 +107,7 @@ pops = [1346
 137
 181
 303];
-popsPerc = percentile(L, percentiles);
+popsPerc = percentile(pops, percentiles);
 
 # Minimum recorded temperature
 recMin = [-0.4
@@ -197,4 +260,13 @@ janMeanMax = [29.6
 31.5
 25.6];
 janMeanMaxPerc = percentile(janMeanMax, percentiles);
-print([percentiles janMeanMaxPerc]);
+# print([percentiles janMeanMaxPerc]);
+
+percentilesMsg(cities, pops, "population");
+percentilesMsg(cities, recMin, "minimum record temperature");
+percentilesMsg(cities, annMeanMin, "annual average minimum temperature");
+percentilesMsg(cities, julMeanMin, "July average minimum temperature");
+percentilesMsg(cities, recMax, "maximum recorded temperature");
+percentilesMsg(cities, annMeanMax, "annual average maximum temperature");
+percentilesMsg(cities, janMeanMax, "January average maximum temperature");
+percentilesMsg(cities, annRain, "average annual rainfall");

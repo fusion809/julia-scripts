@@ -1,6 +1,3 @@
-using Pkg;
-Pkg.add("Statistics");
-Pkg.add("StatsBase");
 using Statistics;
 using StatsBase;
 percentiles = 10:10:90;

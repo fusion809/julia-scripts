@@ -104,7 +104,6 @@ pops = [1346
 137
 181
 303];
-popsPerc = percentile(pops, percentiles);
 
 # Minimum recorded temperature
 recMin = [-0.4
@@ -125,7 +124,6 @@ recMin = [-0.4
 -1.8
 1.1
 0.8];
-recMinPerc = percentile(recMin, percentiles);
 
 # Annual mean minimum temperature
 annMeanMin = [12.3
@@ -146,8 +144,6 @@ annMeanMin = [12.3
 12.7
 19.8
 13.3];
-annMeanMinPerc = percentile(annMeanMin, percentiles);
-#print([percentiles annMeanMinPerc]);
 
 # Mean annual rainfall
 annRain = [547.1
@@ -168,8 +164,6 @@ annRain = [547.1
 699.6
 1136
 1348.6];
-annRainPerc = percentile(annRain, percentiles);
-# print([percentiles annRainPerc]);
 
 # Maximum record temperature
 recMax = [47.7
@@ -190,8 +184,6 @@ recMax = [47.7
 40.8
 44.3
 44.1];
-recMaxPerc = percentile(recMax, percentiles);
-# print([percentiles recMaxPerc]);
 
 # Mean July minimum temperature
 julMeanMin = [7.6
@@ -212,8 +204,6 @@ julMeanMin = [7.6
 6.6
 13.7
 8.3];
-julMeanMinPerc = percentile(julMeanMin, percentiles);
-# print([percentiles julMeanMinPerc]);
 
 # Mean maximum temperature
 annMeanMax = [22.5
@@ -234,8 +224,6 @@ annMeanMax = [22.5
 23.3
 29
 21.8];
-annMeanMaxPerc = percentile(annMeanMax, percentiles);
-# print([percentiles annMeanMaxPerc]);
 
 # Mean January maximum temperature
 janMeanMax = [29.6
@@ -256,8 +244,6 @@ janMeanMax = [29.6
 28.5
 31.5
 25.6];
-janMeanMaxPerc = percentile(janMeanMax, percentiles);
-# print([percentiles janMeanMaxPerc]);
 
 percentilesMsg(cities, pops, "population");
 percentilesMsg(cities, recMin, "minimum record temperature");

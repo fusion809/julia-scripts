@@ -245,6 +245,7 @@ janMeanMax = [29.6
 31.5
 25.6];
 
+# Percentile messages
 percentilesMsg(cities, pops, "population");
 percentilesMsg(cities, recMin, "minimum record temperature");
 percentilesMsg(cities, annMeanMin, "annual average minimum temperature");

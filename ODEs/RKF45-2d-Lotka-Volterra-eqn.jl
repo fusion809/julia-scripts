@@ -39,6 +39,9 @@ function rkf45(t0, tf, x0, y0, epsilon, dtInitial)
         y2 = y[i] + 16*l1/135+6656*l3/12825+28561*l4/56430-9*l5/50+2*l6/55;
         R = abs(x1-x2)/h;
         s = 0.84*(epsilon/R)^(1/4);
+        if i > 1e7
+            println("Step $(i): R is $(R), t is $(t[i])")
+        end
         if R<=epsilon
             push!(t, t[i]+h);
             push!(x, x2);

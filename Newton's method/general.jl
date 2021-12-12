@@ -68,16 +68,21 @@ end
 # This is where you specify the function you want to
 # find the root of
 function f(x)
-    return x^4 + x^3 - 10x^2 - 4x + 16
+    return x^4 + 3x^3 - 4x^2 + 3x + 1
 end
 
 h = 1e-10
 tol = 1e-15
 itMax = 1000
-a = -100
-b = 100
+a = -1000
+b = 1000
 N = 100000
 sol, count = findRoot(f, h, tol, itMax, a, b, N)
-for i=1:length(sol)
-    println("The $(i)th root = ", sol[i], " count = ", count[i])
+
+if (length(sol) == 1)
+    println("Root = ", sol[1], ", count = ", count[1])
+else
+    for i=1:length(sol)
+        println("The $(i)th root = ", sol[i], ", count = ", count[i])
+    end
 end

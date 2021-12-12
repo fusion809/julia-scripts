@@ -61,7 +61,7 @@ function newtons(f, h, tol, itMax, initGuess)
                 # Third order Householder's method
                 diff = (6*fn*der^2 - 3*fn^2*der2)/(6*der^3-6*fn*der*der2 + fn^2*der3)
             elseif (der ≈ 0)
-                # Second order, Hailey's method
+                # Second order, Halley's method
                 diff = 2*fn*der/(-fn*der2 + 2*der^2)
             else
                 # First order, Newton's method

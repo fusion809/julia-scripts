@@ -44,7 +44,8 @@ function newtons(f, h, tol, itMax, initGuess)
             count[j] += 1
         end
         if (count[j] == itMax)
-            println("Maximum iterations exceeded and the amount by which Newton's last updated the solution was: ", diff)
+            print("Maximum iterations exceeded and the amount by which ")
+            println("Newton's last updated the solution was: ", diff)
         end
     end
     return sol, count
@@ -60,8 +61,8 @@ used to approximate the derivative.
 """
 function findRoot(f, h, tol, itMax, a, b, N)
     initGuess = bisection(f, N, a, b)
-    sol = newtons(f, h, tol, itMax, initGuess);
-    return sol
+    sol, count = newtons(f, h, tol, itMax, initGuess);
+    return sol, count
 end
 
 # This is where you specify the function you want to
@@ -76,4 +77,7 @@ itMax = 1000
 a = -100
 b = 100
 N = 100000
-sol = findRoot(f, h, tol, itMax, a, b, N)
+sol, count = findRoot(f, h, tol, itMax, a, b, N)
+for i=1:length(sol)
+    println("The $(i)th root = ", sol[i], " count = ", count[i])
+end

@@ -65,10 +65,25 @@ function findRoot(f, h, tol, itMax, a, b, N)
     return sol, count
 end
 
+"""
+    printSoln(sol::Vector{Float}, count::Vector{Integer})
+
+Print the solution and the number of iterations used.
+"""
+function printSoln(sol, count)
+    if (length(sol) == 1)
+        println("Root = ", sol[1], ", count = ", count[1])
+    else
+        for i=1:length(sol)
+            println("The $(i)th root = ", sol[i], ", count = ", count[i])
+        end
+    end
+end
+
 # This is where you specify the function you want to
 # find the root of
 function f(x)
-    return x^4 + 3x^3 - 4x^2 + 3x + 1
+    return x^4 - 3x^3 - 4x^2 - 3x - 100
 end
 
 h = 1e-10
@@ -78,11 +93,4 @@ a = -1000
 b = 1000
 N = 100000
 sol, count = findRoot(f, h, tol, itMax, a, b, N)
-
-if (length(sol) == 1)
-    println("Root = ", sol[1], ", count = ", count[1])
-else
-    for i=1:length(sol)
-        println("The $(i)th root = ", sol[i], ", count = ", count[i])
-    end
-end
+printSoln(sol, count)

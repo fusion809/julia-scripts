@@ -34,12 +34,36 @@ function newtons(f, h, tol, itMax, initGuess)
     function fd(x, h)
         return (f(x+h)-f(x-h))/(2*h)
     end
+    function f2d(x, h)
+        return (f(x+h)-2*f(x)+f(x-h))/(h^2)
+    end
+    function f3d(x, h)
+        return (f(x+2*h)-2*f(x+h)+f(x-h)-f(x-2*h))/(2*h^3)
+    end
+    function tolCheck(diff, sol)
+        if ! (sol ≈ 0)
+            check = abs(diff/sol) > tol
+        else
+            check = abs(diff) > tol
+        end
+        return check
+    end
     sol = initGuess
     count = Int64.(zeros(size(initGuess)))
     for j=1:length(initGuess)
         diff = 1
-        while (abs(diff/sol[j]) > tol && count[j] < itMax)
-            diff = f(sol[j])/fd(sol[j], h)
+        while (tolCheck(diff, sol[j]) && count[j] < itMax)
+            fn = f(sol[j])
+            der = fd(sol[j], h)
+            der2 = f2d(sol[j], h)
+            der3 = f3d(sol[j], h)
+            if (der ≈ 0) && (der2 ≈ 0)
+                diff = (6*fn*der^2 - 3*fn^2*der2)/(6*der^3-6*fn*der*der2 + fn^2*der3)
+            elseif (der ≈ 0)
+                diff = 2*fn*der/(-fn*der2 + 2*der^2)
+            else
+                diff = fn/der
+            end
             sol[j] -= diff
             count[j] += 1
         end
@@ -83,7 +107,7 @@ end
 # This is where you specify the function you want to
 # find the root of
 function f(x)
-    return x^4 - 3x^3 - 4x^2 - 3x - 100
+    return x^4 + 3x^3 + 4x^2 + 3x + 1
 end
 
 h = 1e-10

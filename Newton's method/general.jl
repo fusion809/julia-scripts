@@ -121,15 +121,15 @@ end
 # This is where you specify the function you want to
 # find the root of
 function f(x)
-    return x^4 + 3x^3 + 4x^2 + 3x + 1
+    return x^6 - 9x^5 - 5x^4 + 165x^3 + 4x^2 - 876x - 720
 end
 
 # Initialize required variables
 h = 1e-10
 tol = 1e-15
 itMax = 1000
-a = -100
-b = 100
-N = 100000
+a = -3
+b = 6
+N = 1000000
 sol, count = findRoot(f, h, tol, itMax, a, b, N)
 printSoln(sol, count)

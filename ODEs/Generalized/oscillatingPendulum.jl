@@ -46,21 +46,22 @@ thetaDot = vars[:,4];
 PyPlot.figure(1);
 PyPlot.clf();
 PyPlot.plot(t, vars[:,1], label=L"$r$");
-PyPlot.plot(t, vars[:,2], label=L"$\dot{r}$");
+PyPlot.plot(t, vars[:,2], label=L"$\frac{dr}{dt}$");
 PyPlot.xlabel(L"$t$")
 PyPlot.legend();
 PyPlot.figure(2);
 PyPlot.clf();
 PyPlot.plot(t, vars[:,3], label=L"$\theta$");
-PyPlot.plot(t, vars[:,4], label=L"$\dot{\theta}$");
+PyPlot.plot(t, vars[:,4], label=L"$\frac{d\theta}{dt}$");
+PyPlot.xlabel(L"$t$")
 PyPlot.legend();
 PyPlot.figure(3);
 PyPlot.clf();
 PyPlot.plot(vars[:,1], vars[:,2]);
 PyPlot.xlabel(L"$r$")
-PyPlot.ylabel(L"$\dot{r}$")
+PyPlot.ylabel(L"$\frac{dr}{dt}$", rotation=0)
 PyPlot.figure(4);
 PyPlot.clf();
 PyPlot.plot(vars[:,3], vars[:,4]);
 PyPlot.xlabel(L"$\theta$")
-PyPlot.ylabel(L"$\dot{\theta}$")
+PyPlot.ylabel(L"$\frac{d\theta}{dt}$", rotation=0)

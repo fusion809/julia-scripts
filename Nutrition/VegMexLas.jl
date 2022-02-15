@@ -160,16 +160,18 @@ end
 
 # Print food-specific info for specific nutrient
 function printNutr(nutr, no, unit)
-    str = nutr * " per serve " * (" "^(13-length(nutr))) * "= "
+    str = nutr * (" "^(14-length(nutr))) * "| "
     unit = (" "^ (2 - length(unit))) * unit
     sigfigs = 4
     val = string(signifChop(nutrServ[no], sigfigs))
     lenVal = length(val)
     val = val * (" "^(sigfigs+1-lenVal))
 
-    println(str, val, " " * unit)
+    println(str, val, " " * unit, " |")
 end
 
+println("Per serve")
+println("--------------------------")
 printNutr("Energy", 1, "kJ")
 printNutr("Protein", 2, "g")
 printNutr("Fat", 3, "g")
@@ -178,3 +180,4 @@ printNutr("Carbohydrate", 5, "g")
 printNutr("Sugars", 6, "g")
 printNutr("Dietary fibre", 7, "g")
 printNutr("Sodium", 8, "mg")
+println("--------------------------")

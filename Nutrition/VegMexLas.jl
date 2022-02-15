@@ -141,11 +141,33 @@ redCapsicumServ = 2.44/4; # NUTTAB estimates red capsicum size is 244 g
 
 nutrServ = mozCheesePer100g * mozCheeseServ + multGrainTortPer100g * multGrainServ + cornPer100g * cornServ + kidneyBeanPer100g * kidneyBeanServ + tacoSeasonRdSaltPer100g * tacoSeasonRdSaltServ + pastaSaucePer100g * pastaSauceServ + onionPer100g * onionServ + garlicClovePer100g * garlicCloveServ + zucchiniPer100g * zucchiniServ + redCapsicumPer100g * redCapsicumServ
 
-println("Energy per serve        = ", nutrServ[1], "         kJ")
-println("Protein per serve       = ", nutrServ[2], "           g")
-println("Fat per serve           = ", nutrServ[3], " g")
-println("Saturated fat per serve = ", nutrServ[4], "           g")
-println("Carbohydrate per serve  = ", nutrServ[5], " g")
-println("Sugar per serve         = ", nutrServ[6], "          g")
-println("Dietary fibre per serve = ", nutrServ[7], " g")
-println("Sodium per serve        = ", nutrServ[8], "            mg")
+# From https://stackoverflow.com/a/46292069/1876983
+function signifChop(num, digits)
+    if num == 0.0 then
+        return num
+    else
+        e = ceil(log10(abs(num)))
+        scale = 10^(digits - e)
+        return trunc(num * scale) / scale
+    end
+end
+
+# Print food-specific info for specific nutrient
+function printNutr(nutr, no, unit)
+    str = nutr * " per serve " * (" "^(13-length(nutr))) * "= "
+    unit = (" "^ (2 - length(unit))) * unit
+    val = string(signifChop(nutrServ[no], 9))
+    lenVal = length(val)
+    val = val * (" "^(10-lenVal))
+
+    println(str, val, " " * unit)
+end
+
+printNutr("Energy", 1, "kJ")
+printNutr("Protein", 2, "g")
+printNutr("Fat", 3, "g")
+printNutr("Saturated fat", 4, "g")
+printNutr("Carbohydrate", 5, "g")
+printNutr("Sugars", 6, "g")
+printNutr("Dietary fibre", 7, "g")
+printNutr("Sodium", 8, "mg")

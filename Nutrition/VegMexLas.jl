@@ -142,13 +142,19 @@ redCapsicumServ = 2.44/4; # NUTTAB estimates red capsicum size is 244 g
 nutrServ = mozCheesePer100g * mozCheeseServ + multGrainTortPer100g * multGrainServ + cornPer100g * cornServ + kidneyBeanPer100g * kidneyBeanServ + tacoSeasonRdSaltPer100g * tacoSeasonRdSaltServ + pastaSaucePer100g * pastaSauceServ + onionPer100g * onionServ + garlicClovePer100g * garlicCloveServ + zucchiniPer100g * zucchiniServ + redCapsicumPer100g * redCapsicumServ
 
 # From https://stackoverflow.com/a/46292069/1876983
+# With some modification
 function signifChop(num, digits)
     if num == 0.0 then
         return num
     else
         e = ceil(log10(abs(num)))
         scale = 10^(digits - e)
-        return trunc(num * scale) / scale
+        res = trunc(num * scale) / scale
+        if res == round(res)
+            Int64(res) # Show as integer without .0, if integer
+        else
+            return res
+        end
     end
 end
 
@@ -156,9 +162,10 @@ end
 function printNutr(nutr, no, unit)
     str = nutr * " per serve " * (" "^(13-length(nutr))) * "= "
     unit = (" "^ (2 - length(unit))) * unit
-    val = string(signifChop(nutrServ[no], 9))
+    sigfigs = 4
+    val = string(signifChop(nutrServ[no], sigfigs))
     lenVal = length(val)
-    val = val * (" "^(10-lenVal))
+    val = val * (" "^(sigfigs+1-lenVal))
 
     println(str, val, " " * unit)
 end

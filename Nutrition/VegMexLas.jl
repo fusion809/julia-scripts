@@ -18,19 +18,28 @@ mozCheesePer100g = [1250,
 0.1,
 0,
 527]
-mozCheeseServ = 4/4 * 2.5/4 # Per serving size in units of 100g
+mozCheeseServ = 3/4 * 2.5/4 # Per serving size in units of 100g
 
 # Multigrain tortilla
 # URL: https://www.woolworths.com.au/shop/productdetails/333917/mission-multigrain-tortillas
-multGrainTortPer100g = [1280,
-8.6,
-9.1,
-4.3,
-44.5,
-5.2,
-4.4,
-1070]
-multGrainServ = 5*0.48/4 # Tortillas are 48 g each and we're using 5 giving us 4 serves
+# multGrainTortPer100g = [1280,
+# 8.6,
+# 9.1,
+# 4.3,
+# 44.5,
+# 5.2,
+# 4.4,
+# 1070]
+# multGrainServ = 5*0.48/4 # Tortillas are 48 g each and we're using 5 giving us 4 serves
+regTortPer100g = [1300,
+7.9,
+8.7,
+4.2,
+48.8,
+4.2,
+2.2,
+730]
+regTortServ = 8 * 0.46/4
 
 # Edgell Corn Kernels 300 g (closest available at time of writing to 310g)
 # URL: https://www.woolworths.com.au/shop/productdetails/966533/edgell-corn-kernels
@@ -139,7 +148,17 @@ redCapsicumPer100g = [106,
 2];
 redCapsicumServ = 2.44/4; # NUTTAB estimates red capsicum size is 244 g
 
-nutrServ = mozCheesePer100g * mozCheeseServ + multGrainTortPer100g * multGrainServ + cornPer100g * cornServ + kidneyBeanPer100g * kidneyBeanServ + tacoSeasonRdSaltPer100g * tacoSeasonRdSaltServ + pastaSaucePer100g * pastaSauceServ + onionPer100g * onionServ + garlicClovePer100g * garlicCloveServ + zucchiniPer100g * zucchiniServ + redCapsicumPer100g * redCapsicumServ
+vegDelCasMincPer100g = [460,
+17.1,
+2.0,
+0.4,
+5.0,
+1.6,
+1.2,
+290]
+vegDelCasMincServ = 3*1.38/4
+
+nutrServ = mozCheesePer100g * mozCheeseServ + regTortPer100g * regTortServ + cornPer100g * cornServ + kidneyBeanPer100g * kidneyBeanServ + tacoSeasonRdSaltPer100g * tacoSeasonRdSaltServ + pastaSaucePer100g * pastaSauceServ + onionPer100g * onionServ + garlicClovePer100g * garlicCloveServ + zucchiniPer100g * zucchiniServ + redCapsicumPer100g * redCapsicumServ + vegDelCasMincPer100g * vegDelCasMincServ
 
 # From https://stackoverflow.com/a/46292069/1876983
 # With some modification

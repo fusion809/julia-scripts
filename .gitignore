@@ -16,3 +16,5 @@ Chaos/*/*.png
 *.o
 tableaux-display*
 my_env2/
+*.png
+*.mp4

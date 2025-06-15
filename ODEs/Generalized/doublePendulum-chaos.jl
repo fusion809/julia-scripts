@@ -65,7 +65,7 @@ c1b = 0.00, c1r = 0.00, c2b = 0.00, c2r = 0.00);
 t0 = 0.0;
 tf = 60.0;
 theta10, dtheta10, theta20, dtheta20 = 0.0, 0.0, 0.0, 0.0;
-theta11, dtheta11, theta21, dtheta21 = 0.05*pi/180, 0.0, 0.0, 0.0;
+theta11, dtheta11, theta21, dtheta21 = 0.001*pi/180, 0.0, 0.0, 0.0;
 conds0 = @SVector [theta10, dtheta10, theta20, dtheta20];
 conds1 = @SVector [theta11, dtheta11, theta21, dtheta21];
 
@@ -102,14 +102,16 @@ PyPlot.plot(t_0, theta1_0, label=L"\theta_{1,0}");
 PyPlot.xlabel(L"t");
 PyPlot.ylabel(L"\theta_{1,0}");
 PyPlot.legend();
+PyPlot.title("\$\\theta_{1,0}\$ vs \$t\$")
 PyPlot.savefig("graphics/Figure 1 Time plot of theta1_0.png")
 # Time plot of dtheta1
 PyPlot.figure(2);
 PyPlot.clf();
-PyPlot.plot(t_0, dtheta1_0, label=L"\dfrac{d\theta_{1,0}}{dt}");
+PyPlot.plot(t_0, dtheta1_0, label=L"\dot{\theta}_{1,0}");
 PyPlot.xlabel(L"t");
-PyPlot.ylabel(L"\dfrac{d\theta_{1,0}}{dt}");
+PyPlot.ylabel(L"\dot{\theta}_{1,0}");
 PyPlot.legend();
+PyPlot.title("\$\\dot{\\theta}_{1,0}\$ vs \$t\$")
 PyPlot.savefig("graphics/Figure 2 Time plot of dtheta1_0.png")
 # Time plot of theta2
 PyPlot.figure(3);
@@ -118,14 +120,16 @@ PyPlot.plot(t_0, theta2_0, label=L"\theta_{2,0}");
 PyPlot.xlabel(L"t");
 PyPlot.ylabel(L"\theta_{2,0}");
 PyPlot.legend();
+PyPlot.title("\$\\theta_{2,0}\$ vs \$t\$")
 PyPlot.savefig("graphics/Figure 3 Time plot of theta2_0.png")
 # Time plot of dtheta2
 PyPlot.figure(4);
 PyPlot.clf();
-PyPlot.plot(t_0, dtheta2_0, label=L"\dfrac{d\theta_{2,0}}{dt}");
+PyPlot.plot(t_0, dtheta2_0, label=L"\dot{\theta}_{2,0}");
 PyPlot.xlabel(L"t");
-PyPlot.ylabel(L"\dfrac{d\theta_{2,0}}{dt}");
+PyPlot.ylabel(L"\dot{\theta}_{2,0}");
 PyPlot.legend();
+PyPlot.title("\$\\dot{\\theta}_{2,0}\$ vs \$t\$")
 PyPlot.savefig("graphics/Figure 4 Time plot of dtheta2_0.png")
 # Phase plot theta2 vs theta1
 PyPlot.figure(5);
@@ -134,32 +138,36 @@ PyPlot.plot(theta1_0, theta2_0, label=L"\theta_{2,0}");
 PyPlot.xlabel(L"\theta_{1,0}");
 PyPlot.ylabel(L"\theta_{2,0}");
 PyPlot.legend();
+PyPlot.title("\$\\theta_{2,0}\$ vs \$\\theta_{1,0}\$")
 PyPlot.savefig("graphics/Figure 5 Phase plot of theta2_0 against theta1_0.png")
 # Phase plot dtheta1 vs theta1
 PyPlot.figure(6);
 PyPlot.clf();
-PyPlot.plot(theta1_0, dtheta1_0, label=L"\dfrac{d\theta_{1,0}}{dt}");
+PyPlot.plot(theta1_0, dtheta1_0, label=L"\dot{\theta}_{1,0}");
 PyPlot.xlabel(L"\theta_{1,0}");
-PyPlot.ylabel(L"\dfrac{d\theta_{1,0}}{dt}");
+PyPlot.ylabel(L"\dot{\theta}_{1,0}");
 PyPlot.legend();
+PyPlot.title("\$\\dot{\\theta}_{1,0}\$ vs \$\\theta_{1,0}\$")
 PyPlot.savefig("graphics/Figure 6 Phase plot of dtheta1_0 against theta1_0.png")
 # Phase plot dtheta2 vs theta2
 PyPlot.figure(7);
 PyPlot.clf();
-PyPlot.plot(theta2_0, dtheta2_0, label=L"\dfrac{d\theta_{2,0}}{dt}");
+PyPlot.plot(theta2_0, dtheta2_0, label=L"\dot{\theta}_{2,0}");
 PyPlot.xlabel(L"\theta_{2,0}");
-PyPlot.ylabel(L"\dfrac{d\theta_{2,0}}{dt}");
+PyPlot.ylabel(L"\dot{\theta}_{2,0}");
 PyPlot.legend();
+PyPlot.title("\$\\dot{\\theta}_{2,0}\$ vs \$\\theta_{2,0}\$")
 PyPlot.savefig("graphics/Figure 7 Phase plot of dtheta2_0 against theta2_0.png")
 # All angles and derivatives
 PyPlot.figure(8);
 PyPlot.clf();
 PyPlot.plot(t_0, vars0[:,1], label=L"\theta_{1,0}");
-PyPlot.plot(t_0, vars0[:,2], label=L"\dfrac{d\theta_{1,0}}{dt}");
+PyPlot.plot(t_0, vars0[:,2], label=L"\dot{\theta}_{1,0}");
 PyPlot.plot(t_0, vars0[:,3], label=L"\theta_{2,0}");
-PyPlot.plot(t_0, vars0[:,4], label=L"\dfrac{d\theta_{2,0}}{dt}");
+PyPlot.plot(t_0, vars0[:,4], label=L"\dot{\theta}_{2,0}");
 PyPlot.xlabel(L"t")
 PyPlot.legend()
+PyPlot.title("All angles and derivatives for first init conds against time")
 PyPlot.savefig("graphics/Figure 8 All angles and derivatives for first init conds against time.png")
 # Time plot of theta1
 PyPlot.figure(9);
@@ -168,14 +176,16 @@ PyPlot.plot(t_1, theta1_1, label=L"\theta_{1,1}");
 PyPlot.xlabel(L"t");
 PyPlot.ylabel(L"\theta_{1,1}");
 PyPlot.legend();
+PyPlot.title("\$\\theta_{1,1}\$ vs \$t\$")
 PyPlot.savefig("graphics/Figure 9 Time plot of theta1_1.png")
 # Time plot of dtheta1
 PyPlot.figure(10);
 PyPlot.clf();
-PyPlot.plot(t_1, dtheta1_1, label=L"\dfrac{d\theta_{1,1}}{dt}");
+PyPlot.plot(t_1, dtheta1_1, label=L"\dot{\theta}_{1,1}");
 PyPlot.xlabel(L"t");
-PyPlot.ylabel(L"\dfrac{d\theta_{1,1}}{dt}");
+PyPlot.ylabel(L"\dot{\theta}_{1,1}");
 PyPlot.legend();
+PyPlot.title("\$\\dot{\\theta}_{1,1}\$ vs \$t\$")
 PyPlot.savefig("graphics/Figure 10 Time plot of dtheta1_1.png")
 # Time plot of theta2
 PyPlot.figure(11);
@@ -184,14 +194,16 @@ PyPlot.plot(t_1, theta2_1, label=L"\theta_{2,1}");
 PyPlot.xlabel(L"t");
 PyPlot.ylabel(L"\theta_{2,1}");
 PyPlot.legend();
+PyPlot.title("\$\\theta_{2,1}\$ vs \$t\$")
 PyPlot.savefig("graphics/Figure 11 Time plot of theta2_1.png")
 # Time plot of dtheta2
 PyPlot.figure(12);
 PyPlot.clf();
-PyPlot.plot(t_1, dtheta2_1, label=L"\dfrac{d\theta_{2,1}}{dt}");
+PyPlot.plot(t_1, dtheta2_1, label=L"\dot{\theta}_{2,1}");
 PyPlot.xlabel(L"t");
-PyPlot.ylabel(L"\dfrac{d\theta_{2,1}}{dt}");
+PyPlot.ylabel(L"\dot{\theta}_{2,1}");
 PyPlot.legend();
+PyPlot.title("\$\\dot{\\theta}_{2,1}\$ vs \$t\$")
 PyPlot.savefig("graphics/Figure 12 Time plot of dtheta2_1.png")
 # Phase plot theta2 vs theta1
 PyPlot.figure(13);
@@ -200,33 +212,37 @@ PyPlot.plot(theta1_1, theta2_1, label=L"\theta_{2,1}");
 PyPlot.xlabel(L"\theta_{1,1}");
 PyPlot.ylabel(L"\theta_{2,1}");
 PyPlot.legend();
+PyPlot.title("\$\\theta_{2,1}\$ vs \$\\theta_{1,1}\$")
 PyPlot.savefig("graphics/Figure 13 Phase plot of theta2_1 against theta1_1.png")
 # Phase plot dtheta1 vs theta1
 PyPlot.figure(14);
 PyPlot.clf();
-PyPlot.plot(theta1_1, dtheta1_1, label=L"\dfrac{d\theta_{1,1}}{dt}");
+PyPlot.plot(theta1_1, dtheta1_1, label=L"\dot{\theta}_{1,1}");
 PyPlot.xlabel(L"\theta_{1,1}");
-PyPlot.ylabel(L"\dfrac{d\theta_{1,1}}{dt}");
+PyPlot.ylabel(L"\dot{\theta}_{1,1}");
 PyPlot.legend();
+PyPlot.title("\$\\dot{\\theta}_{1,1}\$ vs \$\\theta_{1,1}\$")
 PyPlot.savefig("graphics/Figure 14 Phase plot of dtheta1_1 against theta1_1.png")
 # Phase plot dtheta2 vs theta2
 PyPlot.figure(15);
 PyPlot.clf();
-PyPlot.plot(theta2_1, dtheta2_1, label=L"\dfrac{d\theta_{2,1}}{dt}");
+PyPlot.plot(theta2_1, dtheta2_1, label=L"\dot{\theta}_{2,1}");
 PyPlot.xlabel(L"\theta_{2,1}");
-PyPlot.ylabel(L"\dfrac{d\theta_{2,1}}{dt}");
+PyPlot.ylabel(L"\dot{\theta}_{2,1}");
 PyPlot.legend();
+PyPlot.title("\$\\dot{\\theta}_{2,1}\$ vs \$\\theta_{2,1}\$")
 PyPlot.savefig("graphics/Figure 15 Phase plot of dtheta2_1 against theta2_1.png")
 # All angles and derivatives
 PyPlot.figure(16);
 PyPlot.clf();
 PyPlot.plot(t_1, vars1[:,1], label=L"\theta_{1,1}");
-PyPlot.plot(t_1, vars1[:,2], label=L"\dfrac{d\theta_{1,1}}{dt}");
+PyPlot.plot(t_1, vars1[:,2], label=L"\dot{\theta}_{1,1}");
 PyPlot.plot(t_1, vars1[:,3], label=L"\theta_{2,1}");
-PyPlot.plot(t_1, vars1[:,4], label=L"\dfrac{d\theta_{2,1}}{dt}");
+PyPlot.plot(t_1, vars1[:,4], label=L"\dot{d\theta}_{2,1}");
 PyPlot.xlabel(L"t")
-PyPlot.legend()
-PyPlot.savefig("graphics/Figure 16 All angles and derivatives for first init conds against time.png")
+PyPlot.title("All angles and derivatives for second init conds against time")
+PyPlot.legend("Figure 16 All angles and derivatives for second init conds against time")
+PyPlot.savefig("graphics/Figure 16 All angles and derivatives for second init conds against time.png")
 
 # # Setup figure and scene
 # using CairoMakie;

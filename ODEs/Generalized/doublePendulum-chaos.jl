@@ -244,24 +244,7 @@ PyPlot.title("All angles and derivatives for second init conds against time")
 PyPlot.legend("Figure 16 All angles and derivatives for second init conds against time")
 PyPlot.savefig("graphics/Figure 16 All angles and derivatives for second init conds against time.png")
 
-# # Setup figure and scene
-# using CairoMakie;
-# line1_data0 = Observable([[0.0, x1_0[1]], [0.0, y1_0[1]]])
-# line2_data0 = Observable([[x1_0[1], x2_0[1]], [y1_0[1], y2_0[1]]])
-# mass_data0  = Observable((x=[x1_0[1], x2_0[1]], y=[y1_0[1], y2_0[1]]))
-# line1_data1 = Observable([[0.0, x1_1[1]], [0.0, y1_1[1]]])
-# line2_data1 = Observable([[x1_1[1], x2_1[1]], [y1_1[1], y2_1[1]]])
-# mass_data1  = Observable((x=[x1_1[1], x2_1[1]], y=[y1_1[1], y2_1[1]]))
-# time_text  = Observable("t = 0.00 s")
-# f = CairoMakie.Figure(resolution = (600, 600))
-# ax = Axis(f[1, 1], aspect = 1, limits = (-2.2*(params.r1+params.r2)/2, 2.2*(params.r1+params.r2)/2, -2.2*(params.r1+params.r2)/2, 2.2*(params.r1+params.r2)/2))
-# pendulum_line1 = lines!(ax, line1_data0[][1], line1_data0[][2], color = :blue)
-# pendulum_line2 = lines!(ax, line2_data0[][1], line2_data0[][2], color = :red)
-# pendulum_line3 = lines!(ax, line1_data1[][1], line1_data1[][2], color = :pink)
-# pendulum_line4 = lines!(ax, line2_data1[][1], line2_data1[][2], color = :green)
-
-# masses0 = scatter!(ax, mass_data0[].x, mass_data0[].y, color = [:blue, :red], markersize = 10)
-# masses1 = scatter!(ax, mass_data1[].x, mass_data1[].y, color = [:pink, :green], markersize = 10)
+# Setup animation
 t_uni = LinRange(t0, tf, 6001);
 splx1_0 = Spline1D(t_0, x1_0)
 splx2_0 = Spline1D(t_0, x2_0)
@@ -279,25 +262,6 @@ x1_uni_1 = evaluate(splx1_1, t_uni)
 x2_uni_1 = evaluate(splx2_1, t_uni)
 y1_uni_1 = evaluate(sply1_1, t_uni)
 y2_uni_1 = evaluate(sply2_1, t_uni)
-# text!(ax, time_text, position = Point2f(0, 2.1), align = (:left, :top), fontsize = 18, color = :black)
-
-# # Create and save animation
-# Dt = step(t_uni)
-# record(f, "graphics/Figure 12 Double pendulum animation.mp4", 1:length(t_uni); framerate = round(Int, 1/Dt)) do i
-#     pendulum_line1[1] = [0, x1_uni_0[i]]
-#     pendulum_line1[2] = [0, y1_uni_0[i]]
-#     pendulum_line2[1] = [x1_uni_0[i], x2_uni_0[i]]
-#     pendulum_line2[2] = [y1_uni_0[i], y2_uni_0[i]]
-#     pendulum_line3[1] = [0, x1_uni_1[i]]
-#     pendulum_line3[2] = [0, y1_uni_1[i]]
-#     pendulum_line4[1] = [x1_uni_1[i], x2_uni_1[i]]
-#     pendulum_line4[2] = [y1_uni_1[i], y2_uni_1[i]]
-#     masses0[1] = [x1_uni_0[i], x2_uni_0[i]]
-#     masses0[2] = [y1_uni_0[i], y2_uni_0[i]]
-#     masses1[1] = [x1_uni_1[i], x2_uni_1[i]]
-#     masses1[2] = [y1_uni_1[i], y2_uni_1[i]]
-#     time_text[]  = "t = $(round(t_uni[i], digits = 2)) s"
-# end
 
 using CairoMakie
 

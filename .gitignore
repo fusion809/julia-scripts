@@ -18,3 +18,5 @@ tableaux-display*
 my_env2/
 *.png
 *.mp4
+*.toc
+*.pdf

@@ -58,13 +58,13 @@ b1b = 0.15, b1r = 0.15, b2b = 0.15, b2r = 0.15,
 c1b = 0.06, c1r = 0.06, c2b = 0.06, c2r = 0.06);
 
 # Initial conditions and domain of integration
-t0 = 0.0;
-tf = 60.0;
+t0    = 0.0;
+tf    = 60.0;
 theta10, dtheta10, theta20, dtheta20 = 0.0, 0.0, 0.0, 0.0;
 conds = @SVector [theta10, dtheta10, theta20, dtheta20];
 
 # Error tolerance and initial step size
-epsilon = 1e-10;
+epsilon   = 1e-10;
 dtInitial = 0.1;
 
 # Solve problem and extract solution values
@@ -169,25 +169,28 @@ PyPlot.savefig("graphics/Figure 11 Pendulum bob 1 and 2 location.png")
 
 # Setup figure and scene
 using CairoMakie;
-line1_data = Observable([[0.0, x1[1]], [0.0, y1[1]]])
-line2_data = Observable([[x1[1], x2[1]], [y1[1], y2[1]]])
-mass_data  = Observable((x=[x1[1], x2[1]], y=[y1[1], y2[1]]))
-time_text  = Observable("t = 0.00 s")
-f = CairoMakie.Figure(resolution = (600, 600))
-ax = Axis(f[1, 1], aspect = 1, limits = (-2.2*(params.r1+params.r2)/2, 2.2*(params.r1+params.r2)/2, -2.2*(params.r1+params.r2)/2, 2.2*(params.r1+params.r2)/2))
+line1_data     = Observable([[0.0, x1[1]], [0.0, y1[1]]])
+line2_data     = Observable([[x1[1], x2[1]], [y1[1], y2[1]]])
+mass_data      = Observable((x=[x1[1], x2[1]], y=[y1[1], y2[1]]))
+time_text      = Observable("t = 0.00 s")
+f              = CairoMakie.Figure(resolution = (600, 600))
+ax             = Axis(f[1, 1], aspect = 1, 
+limits = (-2.2*(params.r1+params.r2)/2, 2.2*(params.r1+params.r2)/2, 
+-2.2*(params.r1+params.r2)/2, 2.2*(params.r1+params.r2)/2))
 pendulum_line1 = lines!(ax, line1_data[][1], line1_data[][2], color = :blue)
 pendulum_line2 = lines!(ax, line2_data[][1], line2_data[][2], color = :red)
-masses = scatter!(ax, mass_data[].x, mass_data[].y, color = [:blue, :red], markersize = 10)
-t_uni = LinRange(t0, tf, 10001);
-splx1 = Spline1D(t, x1)
-splx2 = Spline1D(t, x2)
-sply1 = Spline1D(t, y1)
-sply2 = Spline1D(t, y2)
-x1_uni = evaluate(splx1, t_uni)
-x2_uni = evaluate(splx2, t_uni)
-y1_uni = evaluate(sply1, t_uni)
-y2_uni = evaluate(sply2, t_uni)
-text!(ax, time_text, position = Point2f(0, 2.1), align = (:left, :top), fontsize = 18, color = :black)
+masses         = scatter!(ax, mass_data[].x, mass_data[].y, color = [:blue, :red], markersize = 10)
+t_uni          = LinRange(t0, tf, 10001);
+splx1          = Spline1D(t, x1)
+splx2          = Spline1D(t, x2)
+sply1          = Spline1D(t, y1)
+sply2          = Spline1D(t, y2)
+x1_uni         = evaluate(splx1, t_uni)
+x2_uni         = evaluate(splx2, t_uni)
+y1_uni         = evaluate(sply1, t_uni)
+y2_uni         = evaluate(sply2, t_uni)
+text!(ax, time_text, position = Point2f(0, 2.1), align = (:left, :top), 
+fontsize = 18, color = :black)
 
 # Create and save animation
 Dt = step(t_uni)
@@ -196,7 +199,7 @@ record(f, "graphics/Figure 12 Double pendulum animation.mp4", 1:length(t_uni); f
     pendulum_line1[2] = [0, y1_uni[i]]
     pendulum_line2[1] = [x1_uni[i], x2_uni[i]]
     pendulum_line2[2] = [y1_uni[i], y2_uni[i]]
-    masses[1] = [x1_uni[i], x2_uni[i]]
-    masses[2] = [y1_uni[i], y2_uni[i]]
-    time_text[]  = "t = $(round(t_uni[i], digits = 2)) s"
+    masses[1]         = [x1_uni[i], x2_uni[i]]
+    masses[2]         = [y1_uni[i], y2_uni[i]]
+    time_text[]       = "t = $(round(t_uni[i], digits = 2)) s"
 end

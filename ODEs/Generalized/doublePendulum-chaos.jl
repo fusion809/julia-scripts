@@ -53,7 +53,7 @@ end
 
 # Problem parameters
 params = (g = 9.81, r1 = 1.0, r2 = 1.0, 
-m1r =  1.0, m1b =  1.0, m2r =  1.0, m2b =  1.0, 
+m1r =  0.0, m1b =  1.0, m2r =  0.0, m2b =  1.0, 
 b1b = 0.00, b1r = 0.00, b2b = 0.00, b2r = 0.00, 
 c1b = 0.00, c1r = 0.00, c2b = 0.00, c2r = 0.00);
 # params = (g = 9.81, r1 = 1.0, r2 = 1.0, 
@@ -299,7 +299,7 @@ ylims!(ax, minimum(y_all) - 0.5, maximum(y_all) + 0.5)
 
 # Animate
 Dt = step(t_uni)
-record(f, "graphics/Figure 17 Double pendulums.mp4", 1:N; framerate = round(Int, 1/Dt)) do i
+record(f, "graphics/Figure 17 Double pendulums masslessrods no dissipation.mp4", 1:N; framerate = round(Int, 1/Dt)) do i
     pendulum_line0[1][] = [Point2f(0, 0), Point2f(x1_uni_0[i], y1_uni_0[i]), 
     Point2f(x2_uni_0[i], y2_uni_0[i])]
     bob1_0[1][] = [Point2f(x1_uni_0[i], y1_uni_0[i])]

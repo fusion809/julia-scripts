@@ -72,9 +72,9 @@ PyPlot.title("Simple pendulum: integrated using Yoshida's 4th-order symplectic m
 H1 = Hamiltonian(params, theta1, p1);
 H2 = Hamiltonian_dth(params, theta2, dtheta2);
 PyPlot.figure(4)
-PyPlot.plot(t1, H1, label="Yoshida (symplectic)", color=:red)
-PyPlot.plot(t2, H2, label="RKF45 (non-symplectic)", color=:blue)
+PyPlot.semilogy(t1, abs.(H1), label="Yoshida (symplectic)", color=:red)
+PyPlot.semilogy(t2, abs.(H2), label="RKF45 (non-symplectic)", color=:blue)
 PyPlot.legend()
 PyPlot.xlabel(L"t")
 PyPlot.ylabel(L"H", rotation=0)
-PyPlot.title("Hamiltonian over time")
+PyPlot.title("Absolute value of the Hamiltonian over time")

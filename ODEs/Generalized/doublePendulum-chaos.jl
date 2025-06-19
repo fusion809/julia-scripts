@@ -246,6 +246,7 @@ PyPlot.savefig("graphics/Figure 16 All angles and derivatives for second init co
 
 # Setup animation
 t_uni = LinRange(t0, tf, 6001);
+using Dierckx;
 splx1_0 = Spline1D(t_0, x1_0)
 splx2_0 = Spline1D(t_0, x2_0)
 sply1_0 = Spline1D(t_0, y1_0)

@@ -78,18 +78,18 @@
 \begin{document}
 	\maketitle
 	
-	In this document, we will derive the equations of motion for three bodies acting on each other solely through gravity. 
+	In this document, we will derive the equations of motion for three bodies acting on each other solely through gravity, in other words, the \href{https://en.wikipedia.org/wiki/Three-body_problem}{three-body problem}. 
 	\begin{figure}[H]
 		\includegraphics[width=300px]{Three body problem.png}
 	\end{figure}
 	
-	Here we have ignored the third dimension of space, as in many real-life problems bodies move largely in a 2D plane. We will be approaching finding the equations of motion for this system using the Euler-Lagrange equations:
+	Here we have ignored the third dimension of space, as in many real-life problems bodies move largely in a 2D plane. We will be approaching finding the equations of motion for this system using the \href{https://en.wikipedia.org/wiki/Euler-Lagrange_equations}{Euler-Lagrange equations}:
 	
 	\begin{align}
 		\dfrac{d}{dt}\dfrac{\partial \mathcal{L}}{\partial \dot{q}_i} - \dfrac{\partial \mathcal{L}}{\partial q_i} &= 0.\label{ELE}
 	\end{align}
 	
-	And Hamilton's equations:
+	And \href{https://en.wikipedia.org/wiki/Hamilton's_equations}{Hamilton's equations}:
 	
 	\begin{align}
 		\dot{q}_i &= \dfrac{\partial \mathcal{H}}{\partial p_i} \\
@@ -285,19 +285,94 @@
 	\end{align*}
 	
 	\subsection{Euler-Lagrange equations}
+	\subsubsection{$r_1$}
 	\begin{align*}
 		p_{r_1} &= \dfrac{\partial \mathcal{L}}{\partial \dot{r}_1} & F_{r_1} &= \dfrac{\partial \mathcal{L}}{\partial r_1} \\
-		&= m_2\dot{r}_1 & &= m_2 r_1\dot{\theta}_1^2\\
-		\dot{p}_{r_1} &= m_2\ddot{r}_1 \\
+		&= m_2\dot{r}_1 & &= m_2 r_1\dot{\theta}_1^2 \\
+		\dot{p}_{r_1} &= m_2\ddot{r}_1.
+	\end{align*}
+	
+	Hence the Euler-Lagrange equation for $r_1$ is:
+	
+	\begin{align*}
+		m_2\ddot{r}_1 - m_2 r_1\dot{\theta}_1^2 &= 0 \\
+		\ddot{r}_1 - r_1 \dot{\theta}_1^2 &= 0 \\
+		\ddot{r}_1 &= r_1 \dot{\theta}_1^2.
+	\end{align*}
+		
+	\subsubsection{$r_2$}
+	\begin{align*}
 		p_{r_2} &= \dfrac{\partial \mathcal{L}}{\partial \dot{r}_2} & F_{r_2} &= \dfrac{\partial \mathcal{L}}{\partial r_2} \\
 		&= m_3\dot{r}_2 & &= m_3 r_2\dot{\theta}_2^2\\
-		\dot{p}_{r_2} &= m_3\ddot{r}_2 \\
+		\dot{p}_{r_2} &= m_3\ddot{r}_2.
+	\end{align*}
+	Hence the Euler-Lagrange equation for $r_2$ is:
+	\begin{align*}
+		m_3 \ddot{r}_2 - m_3 r_2 \dot{\theta}_2^2 &= 0 \\
+		\ddot{r}_2 - r_2 \dot{\theta}_2^2 &= 0 \\
+		\ddot{r}_2 &= r_2 \dot{\theta}_2^2.
+	\end{align*}
+	
+	\subsubsection{$\theta_1$}
+	\begin{align*}
 		p_{\theta_1} &= \dfrac{\partial \mathcal{L}}{\partial \dot{\theta}_1} & F_{\theta_1} &= \dfrac{\partial \mathcal{L}}{\partial \theta_1}\\
 		&= m_2 r_1^2 \dot{\theta}_1 & &= \dfrac{Gm_2 m_3\cdot-\dfrac{1}{2}\cdot (-2r_1r_2\cdot -\sin{(\theta_2-\theta_1)\cdot -1})}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}} \\
-		\dot{p}_{\theta_1} &= 2m_2 r_1\dot{r}_1 \dot{\theta}_1 + m_2 r_1^2 \ddot{\theta}_1 & &= \dfrac{Gm_2 m_3 r_1 r_2 \sin{(\theta_2-\theta_1)}}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}} \\
+		\dot{p}_{\theta_1} &= 2m_2 r_1\dot{r}_1 \dot{\theta}_1 + m_2 r_1^2 \ddot{\theta}_1 & &= \dfrac{Gm_2 m_3 r_1 r_2 \sin{(\theta_2-\theta_1)}}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}}.
+	\end{align*}
+	Hence the Euler-Lagrange equation for $\theta_1$ is:
+	\begin{align*}
+		2m_2 r_1\dot{r}_1 \dot{\theta}_1 + m_2 r_1^2 \ddot{\theta}_1 - \dfrac{Gm_2 m_3 r_1 r_2 \sin{(\theta_2-\theta_1)}}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}} &= 0 \\
+		\dfrac{2\dot{r}_1 \dot{\theta}_1}{r_1} + \ddot{\theta}_1 - \dfrac{Gm_3r_2\sin{(\theta_2-\theta_1)}}{r_1(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}} &= 0\\
+		\ddot{\theta}_1 &= -\dfrac{2\dot{r}_1 \dot{\theta}_1}{r_1} + \dfrac{Gm_3r_2\sin{(\theta_2-\theta_1)}}{r_1(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}}.
+	\end{align*}
+	
+	\subsubsection{$\theta_2$}
+	\begin{align*}	
 		p_{\theta_2} &= \dfrac{\partial \mathcal{L}}{\partial \dot{\theta}_2} & F_{\theta_2} &= \dfrac{\partial \mathcal{L}}{\partial \theta_2}\\
 		&= m_3 r_2^2 \dot{\theta}_2 & &= \dfrac{Gm_2m_3\cdot -\dfrac{1}{2} \cdot (-2r_1r_2 \cdot -\sin{(\theta_1-\theta_2)\cdot -1})}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}}\\
 		\dot{p}_{\theta_2} &= 2m_3 r_2 \dot{r}_2 \dot{\theta}_2 + m_3r_2^2 \ddot{\theta}_2 & &= \dfrac{Gm_2m_3r_1r_2 \sin{(\theta_1-\theta_2)}}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}}
 	\end{align*}
-		
+	Hence the Euler-Lagrange equation for $\theta_2$ is:
+	\begin{align*}
+		2m_3 r_2 \dot{r}_2 \dot{\theta}_2 + m_3r_2^2 \ddot{\theta}_2 - \dfrac{Gm_2m_3r_1r_2 \sin{(\theta_1-\theta_2)}}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}} &= 0 \\
+		\dfrac{2\dot{r}_2 \dot{\theta}_2}{r_2} + \ddot{\theta}_2 - \dfrac{Gm_2r_1\sin{(\theta_1-\theta_2)}}{r_2(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}} &= 0\\
+		\ddot{\theta}_2 &= -\dfrac{2\dot{r}_2 \dot{\theta}_2}{r_2} + \dfrac{Gm_2r_1\sin{(\theta_1-\theta_2)}}{r_2(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}}.
+	\end{align*}
+	\subsection{Hamiltonian}
+	Rewriting the kinetic energy in terms of the canonical momenta:
+	
+	\begin{align*}
+		T &= \dfrac{p_{r_1}^2}{2m_2}+\dfrac{p_{\theta_1}^2}{2m_2r_1^2} + \dfrac{p_{r_2}^2}{2m_3}+\dfrac{p_{\theta_2}^2}{2m_3r_2^2}.
+	\end{align*}
+	
+	Hence the Hamiltonian is:
+	
+	\begin{align*}
+		\mathcal{H} &= \dfrac{p_{r_1}^2}{2m_2}+\dfrac{p_{\theta_1}^2}{2m_2r_1^2} + \dfrac{p_{r_2}^2}{2m_3}+\dfrac{p_{\theta_2}^2}{2m_3r_2^2} -\dfrac{Gm_1m_2}{r_1} - \dfrac{Gm_1m_3}{r_2} - \dfrac{Gm_2 m_3}{\sqrt{r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)}}}.
+	\end{align*}
+	\subsection{Hamilton's equations}
+	\subsubsection{$r_1$}
+	\begin{align*}
+		\dot{r}_1 &= \dfrac{\partial \mathcal{H}}{\partial p_{r_1}} & \dot{p}_{r_1} &= -\dfrac{\partial \mathcal{H}}{\partial r_1} \\
+		&= \dfrac{p_{r_1}}{m_2} & &=-\left[ -\dfrac{2p_{\theta_1}^2}{2m_2r_1^3} - \dfrac{Gm_1m_2\cdot -1}{r_1^2} - \dfrac{Gm_2m_3\cdot -\dfrac{1}{2} \cdot(2r_1-2r_2\cos{(\theta_2-\theta_1)})}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}} \right]\\
+		&& &= \dfrac{p_{\theta_1}^2}{m_2r_1^3} - \dfrac{Gm_1m_2}{r_1^2} - \dfrac{Gm_2m_3(r_1-r_2\cos{(\theta_2-\theta_1)})}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}}.
+	\end{align*}
+	\subsection{$r_2$}
+	\begin{align*}
+		\dot{r}_2 &= \dfrac{\partial \mathcal{H}}{\partial p_{r_2}} & \dot{p}_{r_2} &= -\dfrac{\partial \mathcal{H}}{\partial r_2}\\
+		&= \dfrac{p_{r_2}}{m_3} & &= -\left[-\dfrac{2p_{\theta_2}^2}{2m_3r_2^3} - \dfrac{Gm_1m_3\cdot-1}{r_2^2} - \dfrac{Gm_2m_3 \cdot -\dfrac{1}{2}\cdot (2r_2 -2r_1\cos{(\theta_2-\theta_1)})}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}}\right] \\
+		& & &= \dfrac{p_{\theta_2}^2}{m_3r_2^3} - \dfrac{Gm_1m_3}{r_2^2} - \dfrac{Gm_2m_3(r_2-r_1\cos{(\theta_2-\theta_1)})}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}}.
+	\end{align*}
+	\subsection{$\theta_1$}
+	\begin{align*}
+		\dot{\theta}_1 &= \dfrac{\partial \mathcal{H}}{\partial p_{\theta_1}} & \dot{p}_{\theta_1} &= -\dfrac{\partial \mathcal{H}}{\partial \theta_1} \\
+		&= \dfrac{p_{\theta_1}}{m_2r_1^2} & &=-\left[-\dfrac{Gm_2m_3\cdot -\dfrac{1}{2} \cdot -2r_1r_2\cdot -\sin{(\theta_2-\theta_1)}\cdot -1}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}}\right] \\
+		& & &= \dfrac{Gm_2m_3r_1r_2 \sin{(\theta_2-\theta_1)}}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}}
+	\end{align*}
+	\subsection{$\theta_2$}
+	\begin{align*}
+		\dot{\theta}_2 &= \dfrac{\partial \mathcal{H}}{\partial p_{\theta_2}} & \dot{p}_{\theta_2} &= -\dfrac{\partial \mathcal{H}}{\partial \theta_2} \\
+		&= \dfrac{p_{\theta_2}}{m_3r_2^2} & &= -\left[-\dfrac{Gm_2m_3\cdot -\dfrac{1}{2} \cdot -2r_1r_2 \cdot -\sin{(\theta_2-\theta_1)}\cdot 1}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}}\right] \\
+		& & &=\dfrac{Gm_2m_3 r_1r_2 \sin{(\theta_1-\theta_2)}}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}}.
+	\end{align*}
 \end{document}

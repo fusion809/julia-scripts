@@ -104,11 +104,11 @@ function animate_EP(t1, x1, y1, N)
 
     # Create a new figure and axis
     fig = CairoMakie.Figure(resolution = (900, 900))
-    resize_to_layout!(fig)
+    #resize_to_layout!(fig)
     ax = Axis(fig[1, 1],
         title = "Elastic Pendulum",
         xlabel = "x", ylabel = "y",
-        aspect = DataAspect()
+        aspect = 1.0
     )
 
     # Initialise objects as vectors of 2D points

@@ -87,11 +87,19 @@
 	
 	\begin{align}
 		\dfrac{d}{dt}\dfrac{\partial \mathcal{L}}{\partial \dot{q}_i} - \dfrac{\partial \mathcal{L}}{\partial q_i} &= 0.\label{ELE}
-	\end{align} 
+	\end{align}
+	
+	And Hamilton's equations:
+	
+	\begin{align}
+		\dot{q}_i &= \dfrac{\partial \mathcal{H}}{\partial p_i} \\
+		\dot{p}_i &= -\dfrac{\partial \mathcal{H}}{\partial q_i}.
+	\end{align}
 	
 	\tableofcontents
 	
-	\section{Velocities and distances}
+	\section{Centred first mass -- Cartesian coordinates}
+	\subsection{Velocities and distances}
 	In this diagram, we have our axes centred on the first body (whose mass is $m_1$). Hence $x_1=y_1 = 0$ and $\dot{x}_1 = \dot{y}_1 = 0$. Hence the square of $m_2$ and $m_3$'s velocity relative to our axes is: 
 	\begin{align*}
 		v_2^2 &= \dot{x}_2^2 + \dot{y}_2^2 \\
@@ -106,7 +114,7 @@
 		\left|\vec{r}_{23}\right| &= \sqrt{(x_3-x_2)^2+(y_3-y_2)^2}.
 	\end{align*}
 	
-	\section{Kinetic energies}
+	\subsection{Kinetic energies}
 	
 	The kinetic energies of the two bodies in motion are:
 	
@@ -124,7 +132,7 @@
 		&= \dfrac{m_2}{2} \left(\dot{x}_2^2 + \dot{y}_2^2\right) + \dfrac{m_3}{2} \left(\dot{x}_3^2 + \dot{y}_3^2\right)
 	\end{align*}
 	
-	\section{Potential energy}
+	\subsection{Potential energy}
 	The gravitational potential energy is:
 	
 	\begin{align*}
@@ -139,7 +147,7 @@
 		&= -G\left[\dfrac{m_1m_2}{\sqrt{x_2^2+y_2^2}} + \dfrac{m_1 m_3}{\sqrt{x_3^2+y_3^2}} + \dfrac{m_2 m_3}{\sqrt{(x_3-x_2)^2+(y_3-y_2)^2}}\right].
 	\end{align*}
 	
-	\section{Lagrangian}
+	\subsection{Lagrangian}
 	Hence the Lagrangian is:
 	
 	\begin{align*}
@@ -147,8 +155,8 @@
 		&= \dfrac{m_2}{2} \left(\dot{x}_2^2 + \dot{y}_2^2\right) + \dfrac{m_3}{2} \left(\dot{x}_3^2 + \dot{y}_3^2\right) + G\left[\dfrac{m_1m_2}{\sqrt{x_2^2+y_2^2}} + \dfrac{m_1 m_3}{\sqrt{x_3^2+y_3^2}} + \dfrac{m_2 m_3}{\sqrt{(x_3-x_2)^2+(y_3-y_2)^2}}\right].\\
 	\end{align*}
 	
-	\section{Euler-Lagrange equations}
-	\subsection{$x_2$}
+	\subsection{Euler-Lagrange equations}
+	\subsubsection{$x_2$}
 	First we calculate the generalized momentum and its time derivative:
 	\begin{align*}
 		p_{x_2} &= \dfrac{\partial \mathcal{L}}{\partial \dot{x}_2} \\
@@ -175,24 +183,121 @@
 		\ddot{x}_2 &= -\dfrac{Gm_1x_2}{\left(x_2^2+y_2^2\right)^{3/2}} -\dfrac{Gm_3(x_2-x_3)}{\left((x_3-x_2)^2+(y_3-y_2)^2\right)^{3/2}}.
 	\end{align*}
 	
-	\subsection{$y_2$}
+	\subsubsection{$y_2$}
 	Our equations are symmetric about $x$ and $y$ coordinates, so the equation for $y_2$ should be:
 	
 	\begin{align*}
 		\ddot{y}_2 &= -\dfrac{Gm_1y_2}{\left(x_2^2+y_2^2\right)^{3/2}} -\dfrac{Gm_3(y_2-y_3)}{\left((x_3-x_2)^2+(y_3-y_2)^2\right)^{3/2}}
 	\end{align*}
 	
-	\subsection{$x_3$}
+	\subsubsection{$x_3$}
 	Our equations are also fairly symmetric about the body under study. So $x_3$'s equation should be similar to that of $x_2$:
 	
 	\begin{align*}
 		\ddot{x}_3 &= -\dfrac{Gm_1x_3}{\left(x_3^2+y_3^2\right)^{3/2}} -\dfrac{Gm_2(x_3-x_2)}{\left((x_3-x_2)^2+(y_3-y_2)^2\right)^{3/2}}.
 	\end{align*}
 	
-	\subsection{$y_3$}
+	\subsubsection{$y_3$}
 	Utilizing symmetry again, yields:
 	
 	\begin{align*}
 		\ddot{y}_3 &= -\dfrac{Gm_1y_3}{\left(x_3^2+y_3^2\right)^{3/2}} -\dfrac{Gm_2(y_3-y_2)}{\left((x_3-x_2)^2+(y_3-y_2)^2\right)^{3/2}}.
 	\end{align*}
+	
+	\subsection{Hamiltonian}
+	By symmetry:
+	\begin{align*}
+		p_{x_2} &= m_2 \dot{x}_2 & p_{y_2} &= m_2 \dot{y}_2\\
+		p_{x_3} &= m_3 \dot{x}_3 & p_{y_3} &= m_3 \dot{y}_3.
+	\end{align*}
+	Hence:
+	
+	\begin{align*}
+		T &= \dfrac{p_{x_2}^2 + p_{y_2}^2}{2m_2} + \dfrac{p_{x_3}^2 + p_{y_3}^2}{2m_3}.
+	\end{align*}
+	
+	Which means the Hamiltonian is:
+	
+	\begin{align*}
+		\mathcal{H} &= \dfrac{p_{x_2}^2 + p_{y_2}^2}{2m_2} + \dfrac{p_{x_3}^2 + p_{y_3}^2}{2m_3} -G\left[\dfrac{m_1m_2}{\sqrt{x_2^2+y_2^2}} + \dfrac{m_1 m_3}{\sqrt{x_3^2+y_3^2}} + \dfrac{m_2 m_3}{\sqrt{(x_3-x_2)^2+(y_3-y_2)^2}}\right].
+	\end{align*}
+	The Hamiltonian is separable into a kinetic energy term that depends on momenta only and a potential that depends on generalized coordinates only. Consequently, it can be integrated using symplectic integrators such as Yoshida's 4th-order method. 
+	
+	\subsection{Hamilton's equations}
+	Hamilton's equations for spatial coordinate time derivatives are therefore:
+	
+	\begin{align*}
+		\dot{x}_2 &= \dfrac{\partial \mathcal{H}}{\partial p_{x_2}} & \dot{y}_2 &= \dfrac{\partial \mathcal{H}}{\partial p_{y_2}} \\
+		&= \dfrac{p_{x_2}}{m_2} & &= \dfrac{p_{y_2}}{m_2} \\
+		\dot{x}_3 &= \dfrac{\partial \mathcal{H}}{\partial p_{x_3}} & \dot{y}_3 &= \dfrac{\partial \mathcal{H}}{\partial p_{y_3}} \\
+		&= \dfrac{p_{x_3}}{m_3} & &= \dfrac{p_{y_3}}{m_3}
+	\end{align*}
+	
+	As for the time derivatives of momenta:
+	\begin{align*}
+		\dot{p}_{x_2} &= -\dfrac{\partial \mathcal{H}}{\partial x_2} \\
+		&= -\left[-\dfrac{-\dfrac{1}{2}Gm_1m_2 \cdot 2x_2}{(x_2^2+y_2^2)^{3/2}} - \dfrac{-\dfrac{1}{2}Gm_2m_3 \cdot 2(x_3-x_2)\cdot -1}{((x_3-x_2)^2+(y_3-y_2)^2)^{3/2}}\right] \\
+		&= -\dfrac{Gm_1m_2x_2}{(x_2^2+y_2^2)^{3/2}} - \dfrac{Gm_2m_3(x_2-x_3)}{((x_3-x_2)^2+(y_3-y_2)^2)^{3/2}} \\
+		&= -Gm_2\left[\dfrac{m_1x_2}{(x_2^2+y_2^2)^{3/2}} + \dfrac{m_3(x_2-x_3)}{((x_3-x_2)^2+(y_3-y_2)^2)^{3/2}}\right]\\
+		\dot{p}_{y_2} &= -Gm_2\left[\dfrac{m_1y_2}{(x_2^2+y_2^2)^{3/2}} + \dfrac{m_3(y_2-y_3)}{((x_3-x_2)^2+(y_3-y_2)^2)^{3/2}}\right]\\
+		\dot{p}_{x_3} &= -Gm_3\left[\dfrac{m_1x_3}{(x_3^2+y_3^2)^{3/2}} + \dfrac{m_2(x_3-x_2)}{((x_3-x_2)^2+(y_3-y_2)^2)^{3/2}}\right]\\
+		\dot{p}_{y_3} &= -Gm_3\left[\dfrac{m_1y_3}{(x_3^2+y_3^2)^{3/2}} + \dfrac{m_2(y_3-y_2)}{((x_3-x_2)^2+(y_3-y_2)^2)^{3/2}}\right]
+	\end{align*}
+	
+	\section{Centred first mass -- polar coordinates}
+	\subsection{Positions, velocities and distances}
+	\begin{align*}
+		x_2 &= r_1 \cos{\theta_1} & y_2 &= r_1 \sin{\theta_1}\\
+		x_3 &= r_2 \cos{\theta_2} & y_3 &= rt_2 \sin{\theta_2} \\
+		\dot{x}_2 &= \dot{r}_1 \cos{\theta_1} - r_1 \dot{\theta}_1 \sin{\theta_1} & \dot{y}_2 &= \dot{r}_1 \sin{\theta_1} + r_1 \dot{\theta}_1 \cos{\theta_1} \\
+		\dot{x}_3 &= \dot{r}_2 \cos{\theta_2} - r_2 \dot{\theta}_2 \sin{\theta_2} & \dot{y}_3 &= \dot{r}_2 \sin{\theta_2} + r_2 \dot{\theta}_2 \cos{\theta_2}.
+	\end{align*}
+	
+	Hence the square of the velocities are:
+	\begin{align*}
+		v_2^2 &= \dot{x}_2^2 + \dot{y}_2^2 & v_3^2 &= \dot{x}_3^2 + \dot{y}_3^2\\
+		&= (\dot{r}_1 \cos{\theta_1} - r_1 \dot{\theta}_1 \sin{\theta_1})^2 + (\dot{r}_1 \sin{\theta_1} + r_1 \dot{\theta}_1 \cos{\theta_1})^2 & &= \dot{r}_2^2 + r_2^2 \dot{\theta}_2^2.\\
+		&= \dot{r}_1^2 + r_1^2 \dot{\theta}_1^2.
+	\end{align*}
+	
+	As for the distance between masses 2 and 3, it is:
+	
+	\begin{align*}
+		\left|\Delta \vec{r}_{23}\right| &= \left|(r_1\cos{\theta_1} - r_2\cos{\theta_2}, r_1\sin{\theta_1} - r_2\sin{\theta_2})\right| \\
+		&= \sqrt{(r_1\cos{\theta_1} - r_2\cos{\theta_2})^2+(r_1\sin{\theta_1} - r_2\sin{\theta_2})^2} \\
+		&= \sqrt{r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)}}.
+	\end{align*}
+	
+	\subsection{Kinetic energy}
+	\begin{align*}
+		T &= \dfrac{m_2v_2^2}{2}  + \dfrac{m_3v_3^2}{2} \\
+		&= \dfrac{m_2}{2} (\dot{r}_1^2 + r_1^2 \dot{\theta}_1^2) + \dfrac{m_3}{2}(\dot{r}_2^2 + r_2^2 \dot{\theta}_2^2).
+	\end{align*}
+	
+	\subsection{Potential energy}
+	\begin{align*}
+		V &= -\dfrac{Gm_1m_2}{r_1} - \dfrac{Gm_1m_3}{r_2} - \dfrac{Gm_2 m_3}{\sqrt{r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)}}}.
+	\end{align*}
+	
+	\subsection{Lagrangian}
+	\begin{align*}
+		\mathcal{L} &= \dfrac{m_2}{2} (\dot{r}_1^2 + r_1^2 \dot{\theta}_1^2) + \dfrac{m_3}{2}(\dot{r}_2^2 + r_2^2 \dot{\theta}_2^2) + \dfrac{Gm_1m_2}{r_1} + \dfrac{Gm_1m_3}{r_2} + \dfrac{Gm_2 m_3}{\sqrt{r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)}}}.
+	\end{align*}
+	
+	\subsection{Euler-Lagrange equations}
+	\begin{align*}
+		p_{r_1} &= \dfrac{\partial \mathcal{L}}{\partial \dot{r}_1} & F_{r_1} &= \dfrac{\partial \mathcal{L}}{\partial r_1} \\
+		&= m_2\dot{r}_1 & &= m_2 r_1\dot{\theta}_1^2\\
+		\dot{p}_{r_1} &= m_2\ddot{r}_1 \\
+		p_{r_2} &= \dfrac{\partial \mathcal{L}}{\partial \dot{r}_2} & F_{r_2} &= \dfrac{\partial \mathcal{L}}{\partial r_2} \\
+		&= m_3\dot{r}_2 & &= m_3 r_2\dot{\theta}_2^2\\
+		\dot{p}_{r_2} &= m_3\ddot{r}_2 \\
+		p_{\theta_1} &= \dfrac{\partial \mathcal{L}}{\partial \dot{\theta}_1} & F_{\theta_1} &= \dfrac{\partial \mathcal{L}}{\partial \theta_1}\\
+		&= m_2 r_1^2 \dot{\theta}_1 & &= \dfrac{Gm_2 m_3\cdot-\dfrac{1}{2}\cdot (-2r_1r_2\cdot -\sin{(\theta_2-\theta_1)\cdot -1})}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}} \\
+		\dot{p}_{\theta_1} &= 2m_2 r_1\dot{r}_1 \dot{\theta}_1 + m_2 r_1^2 \ddot{\theta}_1 & &= \dfrac{Gm_2 m_3 r_1 r_2 \sin{(\theta_2-\theta_1)}}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}} \\
+		p_{\theta_2} &= \dfrac{\partial \mathcal{L}}{\partial \dot{\theta}_2} & F_{\theta_2} &= \dfrac{\partial \mathcal{L}}{\partial \theta_2}\\
+		&= m_3 r_2^2 \dot{\theta}_2 & &= \dfrac{Gm_2m_3\cdot -\dfrac{1}{2} \cdot (-2r_1r_2 \cdot -\sin{(\theta_1-\theta_2)\cdot -1})}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}}\\
+		\dot{p}_{\theta_2} &= 2m_3 r_2 \dot{r}_2 \dot{\theta}_2 + m_3r_2^2 \ddot{\theta}_2 & &= \dfrac{Gm_2m_3r_1r_2 \sin{(\theta_1-\theta_2)}}{(r_1^2 + r_2^2 - 2r_1 r_2 \cos{(\theta_2-\theta_1)})^{3/2}}
+	\end{align*}
+		
 \end{document}

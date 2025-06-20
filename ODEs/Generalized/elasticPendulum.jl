@@ -89,10 +89,12 @@ PyPlot.xlabel(L"t")
 PyPlot.ylabel(L"H", rotation=0)
 x1 = (x.+l).*cos.(theta);
 y1 = (x.+l).*sin.(theta);
-using CairoMakie, Dierckx
+using CairoMakie, Dierckx, FFMPEG
 function animate_EP(t1, x1, y1, N)
     tf = t1[end];
     t0 = t1[1];
+    #t1 = t;
+    #N=1000;
     dt = (tf-t0)/N;
     t_uni = t0:dt:tf;
     splx1 = Spline1D(t1, x1)
@@ -101,7 +103,8 @@ function animate_EP(t1, x1, y1, N)
     y1_uni = evaluate(sply1, t_uni)
 
     # Create a new figure and axis
-    fig = CairoMakie.Figure(resolution = (9000, 900))
+    fig = CairoMakie.Figure(resolution = (900, 900))
+    resize_to_layout!(fig)
     ax = Axis(fig[1, 1],
         title = "Elastic Pendulum",
         xlabel = "x", ylabel = "y",
@@ -116,9 +119,13 @@ function animate_EP(t1, x1, y1, N)
     bob = scatter!(ax, bob_data, color=:red, markersize=10)
 
     # Output path
-    output_path = "graphics/elastic_pendulum.gif"
-    xlims!(ax, minimum(x1) - 0.5, maximum(x1) + 0.5)
-    ylims!(ax, minimum(y1) - 0.5, maximum(y1) + 0.5)
+    output_path = "graphics/elastic_pendulum.mp4"
+    padding = 0.5
+    xrange = extrema(x1)
+    yrange = extrema(y1)
+
+    xlims!(ax, xrange[1] - padding, xrange[2] + padding)
+    ylims!(ax, yrange[1] - padding, yrange[2] + padding)
 
     # Animation loop
     record(fig, output_path, 1:N; framerate=round(Int, 1/dt)) do i

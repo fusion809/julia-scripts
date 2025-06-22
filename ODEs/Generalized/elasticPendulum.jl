@@ -134,5 +134,5 @@ function animate_EP(t1, x1, y1, N)
         bob[1][] = [Point2f(x1_uni[i], y1_uni[i])]
     end
 end
-N=1000;
+N=6000;
 animate_EP(t, x1, y1, N)

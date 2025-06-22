@@ -9,7 +9,8 @@ function SYosh(fp::Function, fq::Function, params::NamedTuple, t0::Float64, tf::
     q = zeros(N, dims);
     p = zeros(N, dims);
 
-    vars = [conds];
+    q[1,:] = conds[1:dims];
+    p[1,:] = conds[(dims+1):length(conds)];
     # Coefficients
     w1 = 1 / (2 - 2^(1/3))
     w2 = -2^(1/3) / (2 - 2^(1/3))

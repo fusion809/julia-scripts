@@ -7,7 +7,7 @@ dz0 = 10.0;
 theta0 = 0.0;
 dtheta0 = 0.0;
 t0 = 0.0;
-tf = 20.0;
+tf = 200.0;
 conds = @SVector [z0, dz0, theta0, dtheta0];
 dtInit = 1e-3;
 epsilon = 1e-5;
@@ -66,9 +66,20 @@ end
 
 tspan = (t0, tf);
 prob = ODEProblem{false}(cartPen_wrapped!, conds, tspan, params);
-sol = solve(prob, Tsit5(), abstol=1e-9, reltol=1e-9);
+sol = solve(prob, Tsit5(), abstol=1e-11, reltol=1e-11);
 t = sol.t;
 u = sol.u;
+z = zeros(length(u), 1);
+dz = zeros(length(u), 1);
+theta = zeros(length(u), 1);
+dtheta = zeros(length(u), 1);
+for i in 1:length(u)
+    ui = u[i];
+    z[i]      = ui[1];
+    dz[i]     = ui[2];
+    theta[i]  = ui[3];
+    dtheta[i] = ui[4];
+end
 # t, coords = RKF45(cartPen, params, t0, tf, conds, epsilon, dtInit);
 # using PyPlot;
 # PyPlot.figure(1)
@@ -89,18 +100,18 @@ u = sol.u;
 # PyPlot.ylabel(L"\dot{\theta}")
 using PyPlot;
 PyPlot.figure(1);
-PyPlot.plot(t, u[:,1])
+PyPlot.plot(t, z)
 PyPlot.xlabel(L"t")
 PyPlot.ylabel(L"z")
 PyPlot.figure(2);
-PyPlot.plot(t, u[:,2])
+PyPlot.plot(t, dz)
 PyPlot.xlabel(L"t")
 PyPlot.ylabel(L"\dot{z}")
 PyPlot.figure(3);
-PyPlot.plot(t, u[:,3])
+PyPlot.plot(t, theta)
 PyPlot.xlabel(L"t")
 PyPlot.ylabel(L"\theta")
 PyPlot.figure(4);
-PyPlot.plot(t, u[:,4])
+PyPlot.plot(t, dtheta)
 PyPlot.xlabel(L"t")
 PyPlot.ylabel(L"\dot{\theta}")

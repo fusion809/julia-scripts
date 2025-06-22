@@ -1,13 +1,13 @@
 include("RKF45.jl")
 using DifferentialEquations
-params = (m1 = 1, m2r=1, m2b=1, l=1, g=9.81, alpha=5*pi/6, bcart = 0.01, 
-ccart = 0.001, brod = 0.01, crod = 0.001, bbob = 0.01, cbob = 0.001);
+params = (m1 = 1, m2r=0, m2b=1, l=1, g=9.81, alpha=5*pi/6, bcart = 0.000, 
+ccart = 0.000, brod = 0.000, crod = 0.0000, bbob = 0.000, cbob = 0.00);
 z0 = 100.0;
 dz0 = 100.0;
-theta0 = -pi;
-dtheta0 = 2;
+theta0 = 0;
+dtheta0 = 0;
 t0 = 0.0;
-tf = 20.0;
+tf = 200.0;
 conds = @SVector [z0, dz0, theta0, dtheta0];
 dtInit = 1e-3;
 epsilon = 1e-5;
@@ -55,7 +55,14 @@ function cartPen(params::NamedTuple, t::Float64, coords::SVector{4,Float64})::SV
     firstterm = (6*g*massps1*masssum*cos(alpha)*cos(theta))/l;
     coef1 = 6*sin(theta)*massps1/l;
     secterm = massps1/2 * dtheta^2 * l*cos(theta);
-    d2theta = 1/denom * (firstterm + coef1*(secterm-cartdr - roddr1 - bobdr1) - 6*masssum/l*(roddr2 + 2*bobdr2));
+    # Based on TeX doc working out
+    # d2theta = 1/denom * (firstterm + coef1*(secterm-cartdr - roddr1 - bobdr1) - 6*masssum/l*(roddr2 + 2*bobdr2));
+    den2 = 4*massps2*l-3*massps1^2*l/masssum*(sin(theta))^2;
+    coef = 6*massps1/den2;
+    Qz = -cartdr - roddr1 - bobdr1;
+    Qtheta = -roddr2 - bobdr2;
+    # Based on hand working it out
+    d2theta = coef*(g*cos(alpha)*cos(theta) + massps1*l/(4*masssum)-sin(theta)/masssum * Qz) + 12/(l*den2)*Qtheta;
     d2z = -g*sin(alpha) - 1/masssum * (massps1*l/2 *(d2theta*sin(theta)+(dtheta^2)*cos(theta))-cartdr - roddr1 - bobdr1);
     return [dz, d2z, dtheta, d2theta];
 end

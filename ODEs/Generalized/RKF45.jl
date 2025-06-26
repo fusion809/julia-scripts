@@ -29,7 +29,7 @@ thetaDot0) have been defined elsewhere:
 
 `dtInitial` is the initial guess for dt.
 """
-function RKF45(f::Function, params::NamedTuple, t0::Float64, tf::Float64, conds::SVector, epsilon::Float64, dtInitial::Float64)
+function RKF45(f::Function, params::NamedTuple, t0::Float64, tf::Float64, conds::SVector, epsilon::Float64, dtInitial::Float64, tolType::String = "absolute", dtMin::Float64 = (tf-t0)/1e6)
     # Initialize relevant variables
     dt = dtInitial;
     t = Float64[t0];
@@ -55,7 +55,13 @@ function RKF45(f::Function, params::NamedTuple, t0::Float64, tf::Float64, conds:
         vars2 = varsi + 16*K1/135 + 6656*K3/12825 + 28561*K4/56430 - 9*K5/50 + 2*K6/55;
 
         # Determine if error is small enough to move on to next step
-        R = maximum(abs.(vars2 - vars1))/dt;
+        if (tolType in ["relative", "rel", "R", "r", "Rel", "Relative"])
+            R = maximum(abs.(vars2 - vars1)/abs.(vars1))/dt;
+        elseif (tolType in ["absolute", "abs", "A", "a", "Abs", "Absolute"])
+            R = maximum(abs.(vars2 - vars1))/dt;
+        else
+            error("tolType is set to an invalid value ($tolType), so exiting...")
+        end
         s = (epsilon/(2*R))^(0.25);
         if (R <= epsilon)
             Base.push!(t, ti+dt);
@@ -64,6 +70,18 @@ function RKF45(f::Function, params::NamedTuple, t0::Float64, tf::Float64, conds:
             ti = t[i];
         end
         dt *= s;
+        if (dt < dtMin)
+            @warn("dt has reached $dt at t=$ti which is less than dtMin=$dtMin")
+            if (tolType in ["absolute", "abs", "A", "a", "Abs", "Absolute"])
+                tolType = "relative";
+                @warn("As you are using an absolute tolerance type, we will switch to relative tolerance to see if this fixes the problem...")
+            elseif (tolType in ["relative", "rel", "R", "r", "Rel", "Relative"])
+                @warn("Breaking out of loop as tolerance type is already set to relative.")
+                break
+            else
+                error("tolType is set to an invalid value ($tolType), so exiting...")
+            end
+        end
     end
 
     # Transpose and enter into NamedTuple

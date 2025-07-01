@@ -1,18 +1,18 @@
 include("RKF45.jl")
-params = (m1 = 1.0, m2 = 1.0, l=1.0, g=9.81, r=1, k=1, 
+params = (m1 = 1.0, m2 = 1.0, l=1.0, g=9.81, r=1, k=2, 
 b1=0.0, c1=0.0, b2=0.0, c2=0.0);
-z0      = 0.0; 
-dz0     = 0.0;
-pz0     = 0.0;
-theta0  = 0.0;
-dtheta0 = 0.0;
-ptheta0 = 0.0;
-t0 = 0.0;
-tf = 100.0;
+z0        = 10.0; 
+dz0       = 10.0;
+pz0       = 0.0;
+theta0    = 0.0;
+dtheta0   = 1.0;
+ptheta0   = 0.0;
+t0        = 0.0;
+tf        = 60.0;
 phSpconds = @SVector [z0, pz0, theta0, ptheta0];
-conds = @SVector [z0, dz0, theta0, dtheta0];
-dtInit = 1e-3;
-epsilon = 1e-9;
+conds     = @SVector [z0, dz0, theta0, dtheta0];
+dtInit    = 1e-3;
+epsilon   = 1e-11;
 
 function Hsystem(params::NamedTuple, t::Float64, phaseSpace::SVector{4, Float64})::SVector{4,Float64}
     z           = phaseSpace[1];
@@ -95,6 +95,7 @@ PyPlot.plot(t, theta)
 PyPlot.xlabel(L"t", fontsize=14)
 PyPlot.ylabel(L"\theta", rotation=0, fontsize=14)
 PyPlot.title("Single pendulum attached to a spring: \$\\theta\$ vs t", fontsize=16)
+PyPlot.savefig("Figure 1 Single pendulum attached to a spring theta vs t.png")
 if @isdefined(p2)
     PyPlot.close(p2)
 end
@@ -103,7 +104,7 @@ PyPlot.plot(t, z)
 PyPlot.xlabel(L"t", fontsize=14)
 PyPlot.ylabel(L"z", rotation=0, fontsize=14)
 PyPlot.title("Single pendulum attached to a spring: \$z\$ vs t", fontsize=16)
-
+PyPlot.savefig("Figure 2 Single pendulum attached to a spring z vs t.png")
 if @isdefined(p3)
     PyPlot.close(p3)
 end
@@ -112,7 +113,7 @@ PyPlot.plot(z, dz)
 PyPlot.xlabel(L"z", fontsize=14)
 PyPlot.ylabel(L"\dot{z}", rotation=0, fontsize=14)
 PyPlot.title("Single pendulum attached to a spring: \$\\dot{z}\$ vs z", fontsize=16)
-
+PyPlot.savefig("Figure 3 Single pendulum attached to a spring zdot vs t.png")
 if @isdefined(p4)
     PyPlot.close(p4)
 end
@@ -121,7 +122,7 @@ PyPlot.plot(theta, dtheta)
 PyPlot.xlabel(L"\theta", fontsize=14)
 PyPlot.ylabel(L"\dot{\theta}", rotation=0, fontsize=14)
 PyPlot.title("Single pendulum attached to a spring: \$\\dot{\\theta}\$ vs \$\\theta\$", fontsize=16)
-
+PyPlot.savefig("Figure 4 Single pendulum attached to a spring thetadot vs theta.png")
 if @isdefined(p5)
     PyPlot.close(p5)
 end
@@ -130,7 +131,7 @@ PyPlot.plot(z, dz)
 PyPlot.xlabel(L"z", fontsize=14)
 PyPlot.ylabel(L"\theta", rotation=0, fontsize=14)
 PyPlot.title("Single pendulum attached to a spring: \$\\theta\$ vs z", fontsize=16)
-
+PyPlot.savefig("Figure 5 Single pendulum attached to a spring theta vs z.png")
 if @isdefined(p6)
     PyPlot.close(p6)
 end
@@ -139,7 +140,7 @@ PyPlot.plot(t, dz)
 PyPlot.xlabel(L"t", fontsize=14)
 PyPlot.ylabel(L"\dot{z}", rotation=0, fontsize=14)
 PyPlot.title("Single pendulum attached to a spring: \$\\dot{z}\$ vs t", fontsize=16)
-
+PyPlot.savefig("Figure 6 Single pendulum attached to a spring zdot vs t.png")
 if @isdefined(p7)
     PyPlot.close(p7)
 end
@@ -148,20 +149,23 @@ PyPlot.plot(t, dtheta)
 PyPlot.xlabel(L"t", fontsize=14)
 PyPlot.ylabel(L"\dot{\theta}", rotation=0, fontsize=14)
 PyPlot.title("Single pendulum attached to a spring: \$\\dot{\\theta}\$ vs t", fontsize=16)
-
+PyPlot.savefig("Figure 7 Single pendulum attached to a spring thetadot vs t.png")
 x1 = params.r*cos.(theta);
 y1 = params.l .+ z .+ params.r*sin.(theta);
 using Dierckx, CairoMakie
 
-function animate(t1, x1, y1, N)
+function animate(l, t1, x1, y1, z1, N)
     tf = t1[end];
     t0 = t1[1];
     dt = (tf-t0)/N;
     t_uni = t0:dt:tf;
     splx1 = Spline1D(t1, x1)
     sply1 = Spline1D(t1, y1)
+    splz1 = Spline1D(t1, z1)
     x1_uni = evaluate(splx1, t_uni)
     y1_uni = evaluate(sply1, t_uni)
+    z1_uni = evaluate(splz1, t_uni)
+    bob1y  = l .+ z1_uni
 
     # Create a new figure and axis
     fig = CairoMakie.Figure(resolution = (800, 1200))
@@ -173,14 +177,18 @@ function animate(t1, x1, y1, N)
     )
 
     # Initialise objects as vectors of 2D points
-    line_data = [Point2f(0.0, 0.0), Point2f(x1_uni[1], y1_uni[1])]
-    bob_data = [Point2f(x1_uni[1], y1_uni[1])]
+    line1_data = [Point2f(0.0, 0.0), Point2f(0.0, bob1y[1])]
+    line2_data = [Point2f(0.0, bob1y[1]), Point2f(x1_uni[1], y1_uni[1])]
+    bob1_data = [Point2f(0.0, l+z1_uni[1])]
+    bob2_data = [Point2f(x1_uni[1], y1_uni[1])]
 
-    pendulum_line = lines!(ax, line_data, linewidth=2)
-    bob = scatter!(ax, bob_data, color=:red, markersize=10)
+    spring_line = lines!(ax, line1_data, color=:blue, linewidth=2)
+    pendulum_line = lines!(ax, line2_data, color=:red, linewidth=2)
+    bob1 = scatter!(ax, bob1_data, color=:blue, markersize=10)
+    bob2 = scatter!(ax, bob2_data, color=:red, markersize=10)
 
     # Output path
-    output_path = "graphics/springed_pendulumLag.mp4"
+    output_path = "graphics/springed_pendulumLag1mDragfree.mp4"
     padding = 0.5
     xrange = extrema(x1)
     yrange = extrema(y1)
@@ -191,9 +199,11 @@ function animate(t1, x1, y1, N)
     # Animation loop
     record(fig, output_path, 1:N; framerate=round(Int, 1/dt)) do i
         # Update line and bob by replacing the full vectors of points
-        pendulum_line[1][] = [Point2f(0.0, 0.0), Point2f(x1_uni[i], y1_uni[i])]
-        bob[1][] = [Point2f(x1_uni[i], y1_uni[i])]
+        spring_line[1][] = [Point2f(0.0, 0.0), Point2f(0.0, bob1y[i])]
+        pendulum_line[1][] = [Point2f(0.0, bob1y[i]), Point2f(x1_uni[i], y1_uni[i])]
+        bob1[1][] = [Point2f(0, bob1y[i])]
+        bob2[1][] = [Point2f(x1_uni[i], y1_uni[i])]
     end
 end
 
-#animate(t, x1, y1, round(Int, tf*100))
+animate(params.l, t, x1, y1, z, round(Int, tf*100))

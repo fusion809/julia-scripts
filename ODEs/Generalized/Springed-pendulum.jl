@@ -131,6 +131,24 @@ PyPlot.xlabel(L"z", fontsize=14)
 PyPlot.ylabel(L"\theta", rotation=0, fontsize=14)
 PyPlot.title("Single pendulum attached to a spring: \$\\theta\$ vs z", fontsize=16)
 
+if @isdefined(p6)
+    PyPlot.close(p6)
+end
+p6 = PyPlot.figure(6)
+PyPlot.plot(t, dz)
+PyPlot.xlabel(L"t", fontsize=14)
+PyPlot.ylabel(L"\dot{z}", rotation=0, fontsize=14)
+PyPlot.title("Single pendulum attached to a spring: \$\\dot{z}\$ vs t", fontsize=16)
+
+if @isdefined(p7)
+    PyPlot.close(p7)
+end
+p7 = PyPlot.figure(7)
+PyPlot.plot(t, dtheta)
+PyPlot.xlabel(L"t", fontsize=14)
+PyPlot.ylabel(L"\dot{\theta}", rotation=0, fontsize=14)
+PyPlot.title("Single pendulum attached to a spring: \$\\dot{\\theta}\$ vs t", fontsize=16)
+
 x1 = params.r*cos.(theta);
 y1 = params.l .+ z .+ params.r*sin.(theta);
 using Dierckx, CairoMakie

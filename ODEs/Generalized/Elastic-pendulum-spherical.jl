@@ -93,10 +93,8 @@ conds          = @SVector [xi0, xidot0, theta0, thetadot0, varphi0, varphidot0]
 qpconds        = @SVector [xi0, pxi0, theta0, ptheta0, varphi0, pvarphi0];
 epsilon        = 1e-10;
 dtInit         = 1e-3;
-t1, coords     = RKF45(ELE, params, t0, tf, conds, epsilon, dtInit, 
-tolType="relative", dtMin=1e-3)
-t2, phaseSpace = RKF45(HE, params, t0, tf, qpconds, epsilon, dtInit, 
-tolType="relative", dtMin=1e-3)
+t1, coords     = RKF45(ELE, params, t0, tf, conds, epsilon, dtInit, "relative", 1e-4)
+t2, phaseSpace = RKF45(HE, params, t0, tf, qpconds, epsilon, dtInit, "relative", 1e-4)
 using PyPlot
 if @isdefined(p1)
     PyPlot.close(p1)
@@ -290,7 +288,7 @@ function animate_elastic_pendulum(coords, tvec, l, N; savepath = "graphics/elast
 
     fig = CairoMakie.Figure(resolution = (800, 600))
     padding = 0.01
-    ax = Axis3(fig[1, 1], xlabel = "x", ylabel = "y", zlabel = "z")
+    ax = Axis3(fig[1, 1], xlabel = L"x", ylabel = L"y", zlabel = L"z")
     limits!(ax, minimum(xuni)-padding, maximum(xuni)+padding, minimum(yuni)-padding, maximum(yuni)+padding, minimum(zuni)-padding, maximum(zuni)+padding)
 
     bob_pos = Point3f(xuni[1], yuni[1], zuni[1])
@@ -325,7 +323,7 @@ function animate_elastic_pendulum_2d(coords, t1, l, N)
     #resize_to_layout!(fig)
     ax = Axis(fig[1, 1],
         title = "Elastic Pendulum",
-        xlabel = "x", ylabel = "z",
+        xlabel = L"x", ylabel = L"z",
         aspect = 1.0
     )
 

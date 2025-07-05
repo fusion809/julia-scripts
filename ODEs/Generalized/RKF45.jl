@@ -29,7 +29,7 @@ thetaDot0) have been defined elsewhere:
 
 `dtInitial` is the initial guess for dt.
 """
-function RKF45(f::Function, params::NamedTuple, t0::Float64, tf::Float64, conds::SVector, epsilon::Float64, dtInitial::Float64, tolType::String = "absolute", dtMin::Float64 = (tf-t0)/1e6)
+function RKF45(f::Function, params::NamedTuple, t0::Float64, tf::Float64, conds::SVector, epsilon::Float64, dtInitial::Float64, tolType::String = "absolute", dtMin::Float64 = (tf-t0)/1e8)
     # Initialize relevant variables
     dt = dtInitial;
     t = Float64[t0];

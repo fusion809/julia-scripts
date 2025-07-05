@@ -1,7 +1,6 @@
 include("RKF45.jl")
 using LinearAlgebra;
-function elastic_double_pendulum!(params::NamedTuple, t::Float64, u::SVector{8,Float64})::SVector{8,Float64}
-    # Unpack variables
+function dissipation(params::NamedTuple, u::SVector{8,Float64})::SVector{4,Float64}
     m1 = params.m1;
     m2 = params.m2;
     l1 = params.l1;
@@ -28,8 +27,34 @@ function elastic_double_pendulum!(params::NamedTuple, t::Float64, u::SVector{8,F
     Qr2 = -(b2 + c2*v2)*(dr1*cos(del) + r1*dth1*sin(del)+dr2);
     Qt1 = -(b1 + c1*v1)*r1^2*dth1 - (b2 + c2*v2)*(r1^2*dth1 + r1*dr2*sin(del) + r1*r2*dth2*cos(del))
     Qt2 = -(b2 + c2*v2)*(r2^2*dth2 - dr1*r2*sin(del) + r1*r2*dth1*cos(del))
+    return Qr1, Qr2, Qt1, Qt2
+end
+
+function second_derivatives(params::NamedTuple, u::SVector{8,Float64})::SVector{4,Float64}
+# Unpack variables
+    m1 = params.m1;
+    m2 = params.m2;
+    l1 = params.l1;
+    l2 = params.l2;
+    k1 = params.k1;
+    k2 = params.k2;
+    b1 = params.b1;
+    c1 = params.c1;
+    b2 = params.b2;
+    c2 = params.c2;
+    g  = params.g;
+    r1   = u[1];
+    dr1  = u[2];
+    r2   = u[3];
+    dr2  = u[4];
+    th1  = u[5];
+    dth1 = u[6];
+    th2  = u[7];
+    dth2 = u[8];
+    del = th2 - th1
     # Force equations (from your full system)
     # Use the original non-rearranged equations here, e.g.:
+    Qr1, Qr2, Qt1, Qt2 = dissipation(params, u);
 
     A = Matrix{Float64}(I, 4, 4);
     b = zeros(Float64, 4,1);
@@ -46,28 +71,29 @@ function elastic_double_pendulum!(params::NamedTuple, t::Float64, u::SVector{8,F
     b[3] = -2*dr1*dth1/r1 - g*cos(th1)/r1 - m2/((m1+m2)*r1)*(cos(del)*2*dr2*dth2-sin(del)*r2*dth2^2) + Qt1/((m1+m2)*r1^2);
     b[4] = -2*dr2*dth2/r2 - g*cos(th2)/r2 - cos(del)/r2*2*dr1*dth1 - sin(del)*r1*dth1^2/r2 + Qt2/(m2*r2^2);
     d2m = A\b;
-    return [dr1, d2m[1], dr2, d2m[2], dth1, d2m[3], dth2, d2m[4]];
+    return d2m;
+end
+function elastic_double_pendulum(params::NamedTuple, t::Float64, u::SVector{8,Float64})::SVector{8,Float64}
+    d2m = second_derivatives(params, u);
+    return [u[2], d2m[1], u[4], d2m[2], u[6], d2m[3], u[8], d2m[4]];
 end
 
 # Initial conditions
-u0 = @SVector [1.0, 0.0, 1, 0, 0, 0, 0, 0]
-
-params = (m1=1.0, m2=1.0, g=9.81, k1=1.0, k2=1.0, l1=1.0, l2=1.0, b1=0.0, c1=0.0, b2=0.0, c2=0.0)
-
-#tspan = (0.0, 1.0)
-t0 = 0.0;
-tf = 300.0;
-epsilon = 1e-9;
+u0        = @SVector [1.0, 0.0, 1, 0, 0, 0, 0, 0]
+params    = (m1=1.0, m2=1.0, g=9.81, k1=1.0, k2=1.0, l1=1.0, l2=1.0, b1=0.0, c1=0.0, b2=0.0, c2=0.0)
+t0        = 0.0;
+tf        = 300.0;
+epsilon   = 1e-9;
 dtInitial = 1e-3;
-t, vars = RKF45(elastic_double_pendulum!, params, t0, tf, u0, epsilon, dtInitial)
-r1   = vars[:,1];
-dr1  = vars[:,2];
-r2   = vars[:,3];
-dr2  = vars[:,4];
-th1  = vars[:,5];
-dth1 = vars[:,6];
-th2  = vars[:,7];
-dth2 = vars[:,8];
+t, vars   = RKF45(elastic_double_pendulum, params, t0, tf, u0, epsilon, dtInitial)
+r1        = vars[:,1];
+dr1       = vars[:,2];
+r2        = vars[:,3];
+dr2       = vars[:,4];
+th1       = vars[:,5];
+dth1      = vars[:,6];
+th2       = vars[:,7];
+dth2      = vars[:,8];
 using PyPlot;
 if @isdefined(p1)
         PyPlot.close(p1)

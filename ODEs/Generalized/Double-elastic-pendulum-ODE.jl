@@ -179,7 +179,7 @@ PyPlot.title("Figure 12 Double elastic pendulum \$\\dot{\\theta}_2\$ vs \$\\thet
 PyPlot.savefig("graphics/Figure 12 Double elastic pendulum theta2dot vs theta2.png")
 
 using CairoMakie, Dierckx;
-function double_pendulum_anim(t0, tf, r1, r2, theta1, theta2, N=10001, padrat = 0.1, filename="Figure 13 Double elastic pendulum animation.mp4")
+function pendpos(r1, r2, theta1, theta2)
         if (length(r1) == 1)
                 x1 = r1*cos.(th1);
                 y1 = r1*sin.(th1);
@@ -194,8 +194,28 @@ function double_pendulum_anim(t0, tf, r1, r2, theta1, theta2, N=10001, padrat = 
                 x2 = x1 .+ r2.*cos.(th2);
                 y2 = y1 .+ r2.*sin.(th2);
         end
+        return x1, y1, x2, y2;
+end
+
+function spline_double_pendulum(t, t_uni, x1, y1, x2, y2)
+        splx1          = Spline1D(t, x1)
+        splx2          = Spline1D(t, x2)
+        sply1          = Spline1D(t, y1)
+        sply2          = Spline1D(t, y2)
+        x1_uni         = evaluate(splx1, t_uni)
+        x2_uni         = evaluate(splx2, t_uni)
+        y1_uni         = evaluate(sply1, t_uni)
+        y2_uni         = evaluate(sply2, t_uni)
+        return x1_uni, y1_uni, x2_uni, y2_uni
+end
+
+function double_pendulum_anim(t, r1, r2, theta1, theta2, N=10001, padrat = 0.1, filename="Figure 13 Double elastic pendulum animation.mp4")
+        x1, y1, x2, y2 = pendpos(r1, r2, theta1, theta2);
         # Setup animation
-        t_uni = LinRange(t0, tf, N);
+        tf             = maximum(t)
+        t0             = minimum(t)
+        dt             = (tf-t0)/N;
+        t_uni          = t0:dt:tf;
         if (length(r1) > 1)
                 padding = padrat*maximum(r1 .+ r2);
         else
@@ -212,20 +232,12 @@ function double_pendulum_anim(t0, tf, r1, r2, theta1, theta2, N=10001, padrat = 
         pendulum_line1 = lines!(ax, line1_data[][1], line1_data[][2], color = :blue)
         pendulum_line2 = lines!(ax, line2_data[][1], line2_data[][2], color = :red)
         masses         = scatter!(ax, mass_data[].x, mass_data[].y, color = [:blue, :red], markersize = 10)
-        splx1          = Spline1D(t, x1)
-        splx2          = Spline1D(t, x2)
-        sply1          = Spline1D(t, y1)
-        sply2          = Spline1D(t, y2)
-        x1_uni         = evaluate(splx1, t_uni)
-        x2_uni         = evaluate(splx2, t_uni)
-        y1_uni         = evaluate(sply1, t_uni)
-        y2_uni         = evaluate(sply2, t_uni)
         text!(ax, time_text, position = Point2f(0, 2.1), align = (:left, :top), 
         fontsize = 18, color = :black)
+        x1_uni, y1_uni, x2_uni, y2_uni = spline_double_pendulum(t, t_uni, x1, y1, x2, y2)
 
         # Create and save animation
-        Dt = step(t_uni)
-        record(f, "graphics/$filename", 1:length(t_uni); framerate = round(Int, 1/Dt)) do i
+        record(f, "graphics/$filename", 1:N; framerate = round(Int, 1/dt)) do i
         pendulum_line1[1] = [0, x1_uni[i]]
         pendulum_line1[2] = [0, y1_uni[i]]
         pendulum_line2[1] = [x1_uni[i], x2_uni[i]]
@@ -235,4 +247,4 @@ function double_pendulum_anim(t0, tf, r1, r2, theta1, theta2, N=10001, padrat = 
         time_text[]       = "t = $(round(t_uni[i], digits = 2)) s"
         end
 end
-double_pendulum_anim(t0, tf, r1, r2, th1, th2)
+double_pendulum_anim(t, r1, r2, th1, th2)
